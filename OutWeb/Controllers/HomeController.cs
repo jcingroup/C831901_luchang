@@ -1,29 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace OutWeb.Controllers
 {
+    
     public class HomeController : Controller
     {
+        public HomeController()
+        {
+            ViewBag.IsFirstPage = false;
+        }
+
         public ActionResult Index()
         {
+            ViewBag.IsFirstPage = true; //是否為首頁，請在首頁的Action此值設為True
             return View();
         }
 
-        public ActionResult About()
+        [Route("Team")]
+        public ActionResult Team()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
-        public ActionResult Contact()
+        [Route("Profession")]
+        public ActionResult Profession()
         {
-            ViewBag.Message = "Your contact page.";
+            return View();
+        }
 
+        [Route("ContactUs")]
+        public ActionResult ContactUs()
+        {
             return View();
         }
     }

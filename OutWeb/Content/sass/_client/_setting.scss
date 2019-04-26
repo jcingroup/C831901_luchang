@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+// == 這裡放自定義變數 + 覆寫 variables 裡的變數
+// import 順序最好在 variables 前面。但如果要放後面的話，下面要覆寫的變數不能加 !default
+
+$img-path:                '../images';
+$isClient:                false; // index or page
+
+// == color
+// ----------------------------------------------------------------------
+$colors: (
+    primary:       #e58210,
+    secondary:     #4c2B1C,
+    success:       #F8AD3B,
+    info:          #c3996d,
+    warning:       #F79709,
+    danger:        #ee5a24,
+    muted:         #bcb298
+);
+
+
+// == ref: basic> custom
+// ----------------------------------------------------------------------
+$body-bg:                   #FFF7EA url(#{$img-path}/bg.gif) repeat-x 0 0;
+$body-color:                #666;
+$font-family-sp:            'Noto Sans'; // https://fonts.google.com/specimen/Noto+Sans
+
+$link-color:                #222;
+$link-hover-color:          #68AB00;
+
+$font-size: (tiny: 11);
+
+$border-radius:             .3em;
+$border-color:              #EBDECF;
+
+// input+btn
+$input-btn-height:          26px;
+
+// btn
+$btn-height:                $input-btn-height - 2;
+$btn-bg:                    #FBFBFB;
+$btn-color:                 #333;
+$btn-pd-ratio:              4.2;
+$btn-stylus: (
+    border: 1px solid #e3e3e3,
+    box-shadow: inset 0 5px 3px rgba(#000, .103)
+);
+
+// form
+$input-bg:                  #F7F3EA;
+$input-radius:              false;
+$input-disabled-bg:         tint(color(muted), 45);
+
+$field-spacer:              10px;
+$field-label-width:         78px;
+
+
+// == layout
+// ----------------------------------------------------------------------
+// wrapper
+$max-width:             992px !default;
+$min-width:             940px !default;
+$footBeBottom:          false !default; // 頁腳是否置底 true / false
+
+$wrapper-b-spacing:     72px !default; // 與頁腳的間距
+$header-height:         104px !default; // 頁頭高度
+$footer-height:         78px !default; // 頁腳最小高度
+$wrap-x-spacing:        10px !default; // rwd時的左邊留空間距
+
+$sidebar-width:         22.5% !default; // 左選單寬度
+
+// z-index
+$z-index: (
+    header:             3,
+    main:               1,
+    footer:             2,
+    goTop:              99,
+    overlay:            999,
+);
+
+
+// nav rwd
+$mobile-menu-bk:        $min-width;

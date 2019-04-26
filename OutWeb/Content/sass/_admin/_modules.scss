@@ -1,0 +1,256 @@
+@charset "UTF-8";
+
+// == btn plug
+// ------------------------------------------------------------
+.btn {
+    @each $class, $color in $btn-theme {
+        &.#{$class} {
+            background: $color;
+            box-shadow: 0 2px 0 shade($color, 5);
+            margin-top: -2px;
+
+            // 自動反轉文字顏色
+            @include color-contrast($color, $btn-color);
+
+            &:hover, &:active {
+                background: darken($color, 5);
+            }
+            &:hover {
+                box-shadow: 0;
+            }
+        }
+    }
+}
+
+
+// == font
+// ------------------------------------------------------------
+//
+// src: w3.css v4
+.font-tiny   { @include rem('font-size', 12); }  // 13px
+.font-sm     { @include rem('font-size', 14); }
+.font-md     { @include rem('font-size', 15); }
+.font-lg     { @include rem('font-size', 18); }  // 20px
+.font-xl     { @include rem('font-size', 24); }
+.font-xxl    { @include rem('font-size', 32); }
+.font-xxxl   { @include rem('font-size', 48); }
+.font-jumbo  { @include rem('font-size', 64); }
+
+
+// == form control plug (radio,checkbox)
+// ------------------------------------------------------------
+// 使用方法 1
+// <input class="checkbox" type="checkbox" id="c1" name="checkbox">
+// <label for="c1" class="icon"></label>
+
+// 使用方法 2 > 有字的時候用
+// <label class="control-group">
+//     <input class="radio" type="radio" name="r1">
+//     <i class="icon"></i> 選項
+// </label>
+
+$icon: '.icon';
+$controls-color: shade(color(warning), 8);
+$controls-size: $input-height*.8;
+
+// comm
+.checkbox, .radio {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+
+    + #{$icon} {
+        cursor: pointer;
+        display: inline-block;
+        vertical-align: middle;
+        position: relative;
+        outline: none;
+        user-select: none;
+        margin: 0;
+        transition: $input-transition, background ease-in-out .2s;
+
+        // this proj
+        @if $input-bg { background: $input-bg; }
+        border: 1px solid $input-border-color;
+        text-align: center;
+        width: $controls-size;
+        height: $controls-size;
+    }
+
+    &:hover + #{$icon} {
+        border-color: $controls-color;
+    }
+
+    &[disabled] + #{$icon} {
+        @extend .bg-muted;
+        cursor: $cursor-disabled;
+    }
+}
+
+// 各別設定(換圖及調大小)
+.checkbox {
+    + #{$icon} {
+        @if $input-radius { border-radius: $input-radius; }
+
+        // font icon
+        &:before {
+            opacity: 0;
+            color: $controls-color;
+            line-height: $controls-size;
+
+            @include center;
+        }
+    }
+    &:hover + #{$icon}:before {
+        opacity: 0.6;
+    }
+    &:checked {
+        + #{$icon} {
+            border-color: $controls-color;
+            background: $controls-color;
+            &:before {
+                opacity: 1;
+                color: if($input-bg, $input-bg, #fff);
+            }
+        }
+    }
+}
+.radio {
+    + #{$icon} {
+        @extend .circle;
+    }
+    &:checked {
+        + #{$icon} {
+            box-shadow: 0 0 0 3px rgba($controls-color, .45), 0 0 0 1px $controls-color;
+            border: 3px solid if($input-bg, $input-bg, #fff);
+            background: $controls-color;
+        }
+    }
+}
+
+// 方法2
+%congroup-all {
+    cursor: pointer;
+    line-height: $controls-size;
+
+    #{$icon} { margin-right: .1em; }
+}
+.control-group {
+    @extend %congroup-all;
+
+    display: inline-block;
+
+    &:not(:last-of-type) { margin-right: em($gutter)*.6; }
+
+    &-stacked {
+        @extend %congroup-all;
+
+        display: block;
+
+        &:not(:last-of-type) { margin-bottom: em($gutter)*.6;}
+    }
+}
+
+// == custom (this proj add)
+// ------------------------------------------------------------
+.arrow {
+    display: inline-block;
+    border: solid color(success);
+    border-width: 0 2px 2px 0;
+    padding: 4px;
+    transition: .35s ease;
+
+    &.right { transform: rotate(-45deg); }
+    &.left  { transform: rotate(135deg); }
+    &.up    { transform: rotate(-135deg); }
+    &.down  { transform: rotate(45deg); }
+}
+
+.dropdown {
+    position: relative;
+
+    &-content {
+        @extend .bg-white, .text-left;
+
+        position: absolute;
+        top: 110%;
+
+        box-shadow: 1px 3px 10px rgba(#000, .2);
+        z-index: 1;
+
+        &.search-box {
+
+            min-width: 300px;
+            padding: 8px 8px 0;
+
+            .select {
+                overflow-y: auto;
+                max-height: 280px;
+                margin-left: -8px;
+                margin-right: -8px;
+            }
+        }
+    }
+
+    .arrow {
+        @extend .ml-s;
+
+        border-color: inherit;
+        position: relative;
+        top: -4px;
+    }
+    a {
+        @extend .text-primary, .p-s;
+
+        display: block;
+
+        &:hover, &.active {
+            background: tint(color(secondary), 35);
+        }
+    }
+    hr {
+        @extend .my-0;
+    }
+}
+
+// label
+[class*=label-] {
+    @extend .font-sm;
+
+    border-radius: 2px;
+    display: inline-block;
+    padding: .2em .3em;
+
+    line-height: 1.2;
+
+    &:not(:only-child) { margin: .2em; }
+}
+
+// label + panel theme
+@each $type, $color in $pale-theme {
+    .label-#{$type}, .panel-#{$type} {
+        background: $color;
+        color: shade($color, 58);
+        border: 1px solid shade($color, 7.5);
+    }
+}
+
+@each $type, $color in (muted: darken(color(muted), 6), back: #555) {
+    .label-#{$type} {
+        background: $color;
+        color: if(luma($color) > .65, shade($color, 58), tint($color, 90));
+        border: 1px solid shade($color, 7.5);
+    }
+}
+
+// 有線列表
+.list-line {
+    @extend .my-0, %list-unstyled;
+
+    li {
+        &:not(:last-child) {
+            @extend .pb-5, .mb-5;
+            border-bottom: 1px dashed $border-color;
+        }
+    }
+}

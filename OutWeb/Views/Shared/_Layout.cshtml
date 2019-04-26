@@ -1,43 +1,62 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - 我的 ASP.NET 應用程式</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <meta name="format-detection" content="telephone=no">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand:300,400">
+    <link rel="stylesheet" href="~/Content/css/vendor/open-iconic.css">
+    <link rel="stylesheet" href="~/Content/css/grid.css">
+@if (ViewBag.IsFirstPage)
+{
+    <link rel="stylesheet" href="~/Content/css/index.css">
+}
+else
+{
+    <link rel="stylesheet" href="~/Content/css/page.css">
+}
+    @RenderSection("css", required: false)
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("應用程式名稱", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("首頁", "Index", "Home")</li>
-                    <li>@Html.ActionLink("關於", "About", "Home")</li>
-                    <li>@Html.ActionLink("連絡人", "Contact", "Home")</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - 我的 ASP.NET 應用程式</p>
-        </footer>
-    </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+<body class="@ViewBag.BodyClass">
+    <div id="wrapper">
+
+        <header id="header">
+            <div class="wrap">
+                <nav class="contact-tel">
+                    <a href="tel:034265825">03-4265825</a>
+                    <a href="tel:034265925">03-4265925</a>
+                </nav>
+                <h1 class="logo pull-md-left" onclick="location.href='@Url.Content("~/Home")'" title="@ViewBag.Title" tabindex="-1">理章法律事務所 <small>Lu&Chang Attorenys-at-Law</small></h1>
+                <nav id="menu" class="pull-md-right">
+                    <a href="~/Home">首頁</a>
+                    <a href="~/Team">團隊</a>
+                    <a href="~/Profession">領域</a>
+                    <a href="~/Special">專欄</a>
+                    <a href="~/ContactUs">聯絡</a>
+                </nav>
+            </div>
+        </header>
+
+        @RenderBody()
+
+    </div><!-- wrapper //-->
+
+    <a href="#wrapper" class="goTop ti-arrow-up" title="TOP"></a>
+    <footer id="footer">
+        <ul class="list-unstyled">
+            <li>電話: <a href="tel:034265825">03-4265825</a>, <a href="tel:034265925">03-4265925</a></li>
+            <li>傳真: 03-4265625</li>
+            <li>地址: <a href="https://goo.gl/maps/xC61dfyLPwfs4Vi3A" target="new">桃園市中壢區元化路二段126號10樓</a></li>
+        </ul>
+        <aside class="copyright">
+            Lu&Chang Attorenys-at-Law &copy; 2019
+        </aside>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-latest.min.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

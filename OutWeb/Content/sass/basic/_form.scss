@@ -1,0 +1,225 @@
+@charset "UTF-8";
+
+// Forms
+// -----------------------------------------------------------------
+
+%form-element {
+    vertical-align: middle;
+    box-sizing: border-box;
+
+    border-radius: if($input-radius, $input-radius, 0);
+    height: if($input-border-width, em($input-height + ($input-border-width*2)), em($input-height));
+
+    @include size-auto($input-height, $input-font-size, $input-line-height, $input-pd-ratio);
+    // padding: $input-pd-ratio;
+    // font-size: rem($input-font-size);
+    // line-height: $input-line-height;
+
+    @if $input-color        { color: $input-color; }
+    @if $input-bg           { background-color: $input-bg; background-clip: padding-box; }
+    @if $input-border       { border: $input-border; }
+    @if $input-inner-shadow { box-shadow: $input-inner-shadow; }
+    @if $input-transition   { transition: $input-transition; }
+
+    @if $form-appearance {
+        // 元素外觀屬性: 移除預設樣式
+        -webkit-appearance: $form-appearance;
+        -moz-appearance: $form-appearance;
+        appearance: $form-appearance;
+
+        // Unstyle the caret on `<select>`s in IE10+.
+        &::-ms-expand {
+            background-color: transparent;
+            border: 0;
+            display: none; // for IE11
+        }
+    }
+
+    &:focus {
+        outline: 0;
+
+        @include stylus($input-stylus, is-focus);
+
+        // 錯誤輸入
+        &:invalid {
+            @include stylus($input-stylus, is-focus, is-invalid);
+        }
+    }
+    &::placeholder {
+        @include stylus($input-stylus, is-placeholder);
+    }
+    &:disabled,
+    &[readonly] {
+        @include stylus($input-stylus, is-disabled);
+    }
+
+    @include mq-max(sm) {
+        width: 100%;
+    }
+}
+
+.form-element {
+    @extend %form-element;
+
+    @at-root select#{&} {
+        &[size],
+        &[multiple] {
+            height: auto;
+        }
+        // IE, Edge src:https://github.com/twbs/bootstrap/issues/19398.
+        &:focus::-ms-value {
+            @if $input-bg    { background-color: $input-bg; }
+            @if $input-color { color: $input-color; }
+        }
+
+        // custom caret
+        @include stylus($select-stylus);
+    }
+    @at-root textarea#{&} {
+        height: auto;
+    }
+}
+
+.label {
+    margin-top: em($input-height - ($input-font-size * $input-line-height))/2;
+    margin-bottom: em($input-height - ($input-font-size * $input-line-height))/2;
+}
+
+fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+legend {
+    display: block;
+    width: 100%;
+    padding: .3em 0;
+    margin-bottom: .3em;
+    color: inherit;
+}
+
+.form {
+    &-stacked {
+        .form-element, .label {
+            display: block;
+            margin-bottom: em($field-spacer)*0.5;
+            width: 100%;
+        }
+        .form-element.inline {
+            display: inline;
+            width: auto;
+
+            &:not(:last-child) {
+                margin-right: em($gutter)*0.3;
+            }
+        }
+    }
+    &-msg-inline {
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
+
+// ex.
+// <div class="field"><label></label><input></div>
+// <div class="submits">
+.field {
+    margin-bottom: em($field-spacer);
+
+    @include mq(sm) {
+        .label {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: -4px;
+            padding-right: em($gutter/2);
+            width: em($field-label-width);
+            text-align: right;
+        }
+
+        input, select {
+            vertical-align: middle;
+            margin-bottom: 4px;
+        }
+        textarea {
+            vertical-align: top;
+        }
+
+        .form-msg-inline {
+            margin-left: em($field-label-width);
+        }
+        + .submits {
+            margin: em($field-spacer*.5) 0 0 em($field-label-width);
+        }
+    }
+}
+
+.help {
+    @extend .text-danger;
+    cursor: help;
+}
+
+.input-group {
+    display: flex;
+
+    &-addon, &-btn {
+        @if $input-border { border: $input-border; }
+        @if $input-radius { border-radius: $input-radius; }
+        white-space: nowrap;
+    }
+    &-addon {
+        @include size-auto($input-height, $input-font-size, $input-line-height, $input-pd-ratio);
+
+        @if $input-color { color: $input-color; }
+        @if $input-bg    { background-color: $input-bg; }
+    }
+    &-btn {
+        @if $input-bg {
+            background-color: darken($input-bg, 3);
+
+            &:hover {
+                background-color: darken($input-bg, 5);
+            }
+        }
+        &:focus {
+            @if $input-inner-shadow { box-shadow: $input-inner-shadow; }
+        }
+    }
+
+    .form-element {
+        flex: 1 1 auto;
+        width: 1%;
+
+        select#{&} {
+            width: auto;
+        }
+    }
+
+    .form-element, &-addon, &-btn {
+        &:focus {
+            z-index: 1;
+        }
+        @if $input-radius {
+            &:first-child:not(:only-child) {
+                border-bottom-right-radius: 0;
+                border-top-right-radius: 0;
+            }
+            &:last-child:not(:only-child) {
+                border-bottom-left-radius: 0;
+                border-top-left-radius: 0;
+            }
+            &:not(:first-child):not(:last-child) {
+                border-radius: 0;
+            }
+        }
+        &:last-child:not(:only-child),
+        &:not(:first-child):not(:last-child) {
+            margin-left: -$input-border-width;
+        }
+    }
+
+    &.input-inline {
+        display: inline-flex;
+    }
+}
+

@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <title>@ViewBag.Title - 理章法律 網站管理系統</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300">
+    <link rel="stylesheet" href="~/Content/css/vendor/open-iconic.css">
+    <link rel="stylesheet" href="~/Content/css/grid.css">
+@if (ViewBag.IsFirstPage) {
+    <link rel="stylesheet" href="~/Content/css/login.css">
+} else {
+    <link rel="stylesheet" href="~/Content/css/admin.css">
+}
+    @RenderSection("IncludeCSS", false)
+</head>
+
+<body class="@ViewBag.BodyClass">
+    <div id="wrapper">
+
+        @if (!ViewBag.IsFirstPage)
+        {
+            <header id="header">
+                <h1 class="site-title pull-left">理章法律 網站管理系統</h1>
+
+                <nav class="navbar pull-right">
+                    <a href="~/Home" class="nav-link oi" data-glyph="home" title="回官網首頁">首頁</a>
+                    <div class="dropdown inline-block">
+                        <button class="nav-link dropdown-toggle">管理者 <i class="arrow down"></i></button>
+                        <aside class="dropdown-content" hidden>
+                            <a href="~/_SysAdm/ChangePW">變更密碼</a>
+                            <hr>
+                            @* file in Manage/LogOut *@
+                            <a href="~/_SysAdm/LogOut" class="oi" data-glyph="power-standby">登出</a>
+                        </aside>
+                    </div>
+                </nav>
+            </header>
+        }
+
+        @if (ViewBag.IsFirstPage)
+        {
+            @RenderBody()
+        }
+        else
+        {
+            <main id="main" class="font-md">
+                <header class="title">
+                    <h2>
+                        @ViewBag.Title
+                        @RenderSection("Title", false)
+                    </h2>
+                    <ul class="breadcrumb">
+                        <li>HOME</li>
+                        @RenderSection("Breadcrumb", false)
+                    </ul>
+                </header>
+
+                @RenderBody()
+
+                <aside id="sidebar">
+                    <a href="~/_SysAdm/List/1" class='oi @(ViewBag.subnav == "Special" ? "active" : "")' data-glyph="bullhorn">專欄 管理</a>
+
+                    <header class='collapse-toggle oi @(ViewBag.subnav == "Cog" ? "active" : "")' data-glyph="cog">系統設定 <i class="arrow down"></i></header>
+                    <nav class='collapse-content @(ViewBag.subnav == "Cog" ? "in" : "")'>
+                        <a href="~/_SysAdm/ChangePW" class='@(ViewBag.subnav2 == "ChangPW" ? "active" : "")'>變更密碼</a>
+                        <a href="~/_SysAdm/LogOut">登出系統</a>
+                    </nav>
+                </aside><!-- sidebar //-->
+            </main><!-- main //-->
+        }
+
+    </div><!-- wrapper //-->
+
+    @if (ViewBag.IsFirstPage)
+    {
+        <footer id="footer">
+            <div class="copyright">Powered By <a class="hover-secondary" href="http://www.jcin.com.tw" target="new">JCIN INFORMATION CO.</a></div>
+            <small>本網站適用 Chrome, firefox, IE10.0+, 最佳瀏覽解析度為 1280*800 以上</small>
+        </footer><!-- footer //-->
+    }
+    else
+    {
+        @* 引用 jQuery *@
+        <script src="//code.jquery.com/jquery-latest.min.js"></script>
+        <script>
+            // dropdown
+            var $dropdownTog = $(".dropdown-toggle"),
+                dropdownContent = ".dropdown-content";
+            $dropdownTog.click(function (e) {
+                $dropdownTog.not(this).siblings(dropdownContent).slideUp();
+                $(this).siblings(dropdownContent).slideToggle();
+                e.preventDefault();
+            });
+
+            // 左選單縮放特效
+            var $collapse = $('.collapse-toggle');
+            var fall = '.collapse-content';
+
+            $collapse.click(function (e) {
+                $(this).toggleClass('active').next(fall).slideToggle();
+                $(this).siblings().removeClass('active').next(fall).slideUp();
+                event.preventDefault();
+            });
+        </script>
+    }
+
+    @RenderSection("IncludeScript", false)
+</body>
+</html>

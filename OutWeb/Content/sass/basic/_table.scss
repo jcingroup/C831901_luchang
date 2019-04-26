@@ -1,0 +1,69 @@
+@charset "UTF-8";
+
+// common
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    max-width: 100%;
+
+    @if $table-bg    { background-color: $table-bg; }
+    @if $table-color { color: $table-color; }
+
+    // 固定欄寬度
+    &.fixed {
+        table-layout: fixed;
+        word-wrap: break-word;
+        word-break: break-all;
+    }
+}
+
+th, td {
+    text-align: center;
+    vertical-align: middle;
+
+    padding: $table-cell-padding;
+    border: $table-cell-border;
+    border-width: $table-cell-border-width;
+}
+
+thead {
+    border-bottom: 2px solid $table-border-color;
+
+    th, td { border-width: 0; }
+}
+
+tbody + tbody {
+    border-top: 2px solid $table-border-color;
+}
+
+// plugin
+.table {
+    // 四邊框線
+    &-bordered {
+        border: $table-cell-border;
+
+        th, td {
+            border-width: nth($table-cell-border, 1);
+        }
+    }
+
+    // 斑馬紋條
+    @if $table-bg-striped {
+        &-striped {
+            :not(thead) tr:nth-child(#{$table-striped-list}) {
+                background-color: $table-bg-striped;
+            }
+        }
+    }
+
+    // 滑鼠移過變色
+    @if $table-bg-hover {
+        &-hover {
+            tbody:hover > tr > [rowspan],
+            tbody tr:hover {
+                background-color: $table-bg-hover;
+                transition: .2s ease;
+            }
+        }
+    }
+}

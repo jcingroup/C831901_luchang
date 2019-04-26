@@ -1,0 +1,341 @@
+@charset "utf-8";
+
+$isAdmin:          true;
+
+
+// import
+// ------------------------------------------------------------
+@import "core/function"; // (置頂)
+
+@import "_admin/setting"; // 本專案變數要放在 variables上，可以覆蓋掉 variables 的值
+@import "core/variables";
+@import "core/mixins";
+
+// output
+@import "basic/base";
+@import "basic/table";
+@import "basic/form";
+@import "basic/btn";
+@import "basic/util";
+
+// 本專案 plugin
+@import "_admin/layout";
+@import "_admin/modules"; // (置底)
+
+
+// main
+// ------------------------------------------------------------
+.breadcrumb {
+    @extend %list-inline, .font-sm, .mb-0;
+
+    color: tint($body-color, 35);
+
+    li {
+        &:not(:last-child):after {
+            content: "/";
+        }
+    }
+}
+
+.title {
+    @extend .mb-l, .pb-10, .underline, .text-primary;
+
+    h2 {
+        @extend .mb-10;
+        @include rem('font-size', 28);
+    }
+
+    small {
+        @extend .ml-s;
+        color: darken(color(muted), 15);
+    }
+}
+
+// == 列表
+// 上方按鈕欄(新增,下載彙總表等)
+.topBtn-bar {
+    @extend .mb-10;
+}
+
+// 列表上的搜尋
+.table-head {
+    @extend .p-s, .font-sm;
+
+    background: lighten($table-border-color, 5);
+    color: darken($table-border-color, 35);
+
+    .label {
+        vertical-align: middle;
+    }
+    .form-element {
+        font-size: inherit;
+    }
+}
+
+.table-list {
+    @extend .table-bordered, .bg-white;
+
+    width: 100%;
+
+    caption {
+        @extend .text-left, .p-s;
+        background: #F2F7FA;
+        color: #818A91;
+        font-size: em(19);
+    }
+    thead, > th {
+        @extend .text-white;
+        background: tint(desaturate(color(), 30), 10);
+    }
+    > th {
+        border-bottom-width: 2px;
+    }
+    .item-edit {
+        min-width: 54px;
+    }
+}
+
+// 點選排序
+.th-sort-toggle {
+    @extend .p-0, .pr-10, .text-white;
+
+    $arrow-size: 4px;
+    $arrow-color: rgba(#fff,.3);
+    $arrow-active-color: rgba(#fff,.8);
+    $arrow-active-color2: rgba(#fff,.1);
+
+    // display: block;
+    position: relative;
+    width: 100%;
+
+    // background: none;
+    text-align: inherit;
+    transition: color .3s;
+
+    &:hover { color: lighten(color(warning), 10); }
+
+    @include el(all) {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        border: $arrow-size solid transparent;
+    }
+    // 上
+    &:before {
+        margin-top: -($arrow-size * 2 + 1);
+        border-top-width: $arrow-size/2;
+        border-bottom: ($arrow-size + 2) solid $arrow-color;
+    }
+    // 下
+    &:after {
+        border-bottom-width: $arrow-size/2;
+        border-top: ($arrow-size + 2) solid $arrow-color;
+    }
+    // 倒序
+    &.asc {
+        &:before { border-bottom-color: $arrow-active-color; }
+        &:after { border-top-color: $arrow-active-color2; }
+    }
+    // 順序
+    &.desc {
+        &:after { border-top-color: $arrow-active-color; }
+        &:before { border-bottom-color: $arrow-active-color2; }
+    }
+}
+
+// 列表頁腳 pager
+.table-foot {
+    padding: 6px;
+    background: lighten($table-border-color, 4);
+}
+.pager {
+    @extend .font-sm, .text-center;
+
+    @include clearfix;
+
+    @include mq-max(break($phone, -1)) { clear: both; }
+
+    input, button { height: 22px; }
+    button {
+        @extend .px-2;
+        margin: 0 1px;
+        border: 1px solid lighten($table-border-color, 4);
+        transition: .35s;
+
+        &[disabled] {
+            color: darken($input-border-color, 6);
+        }
+        &:not([disabled]) {
+            @extend .bg-white;
+            color: darken($input-border-color, 10);
+
+            &:hover, &:active {
+                @extend .text-white;
+                background: darken($input-border-color, 10);
+            }
+        }
+    }
+    span { @extend .mx-s; }
+    input {
+        @extend .mx-5, .text-center;
+        padding: 0;
+        width: 80px;
+    }
+}
+
+// == 編輯
+// 分段小標
+legend {
+    &.underline {
+        font-size: em(18);
+        border-bottom-style: dashed;
+    }
+}
+
+// == 按鈕bar
+.submit-bar {
+    border-top: 2px solid darken($table-border-color,3.5);
+    background: lighten($table-border-color,4);
+
+    margin-top: em(30);
+    padding: 16px $gutter 18px 0;
+
+    @include mq-max(sm) {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        padding: 18px $gutter 20px;
+    }
+
+    &.fixed-bottom {
+        @extend .text-center;
+
+        position: fixed;
+        left: $sidebar-width;
+        right: 0;
+        bottom: 0;
+        padding: 18px $gutter 20px;
+    }
+
+    .btn {
+        &:not(:last-child) {
+            @include mq(break(sm, +1)) {
+                margin-right: map-get($spacers, s);
+            }
+        }
+    }
+}
+
+// == 檔案上傳
+.input-file {
+
+    [type=file] {
+        height: auto;
+    }
+
+    .upload {
+        cursor: pointer;
+        display: block;
+
+        &:not(:empty) {
+            @extend .mb-5;
+
+            border: $input-border;
+            padding: 1px;
+
+            @if $input-inner-shadow { box-shadow: $input-inner-shadow; }
+
+            &:hover, &:active {
+                border-color: color();
+            }
+        }
+    }
+}
+
+// 已上傳檔案
+.uploaded {
+    @extend .pull-left, .font-sm, .mr-5, .mt-s;
+
+    position: relative;
+    border: 1px solid #eee;
+    color: #aaa;
+    padding: 4px 20px 4px 4px;
+
+    // 圖片
+    img {
+        width: auto;
+        height: 38px;
+    }
+
+    // 刪除按鈕
+    .btn-del {
+        @extend .font-lg, .text-danger;
+
+        opacity: .7;
+        text-shadow: 1px 1px 0 #fff;
+        border: none;
+        outline: none;
+
+        position: absolute;
+        right: -5px;
+        top: -5px;
+
+        i {
+            @extend .font-sm;
+            text-shadow: none;
+            font-style: normal;
+            opacity: 1;
+            min-width: 115px;
+            left: -15px;
+        }
+    }
+}
+
+// == 日期元件
+.react-datepicker-popper {
+    z-index: 99;
+}
+
+// == 操作影片列表
+.list-link {
+    counter-reset: num; //計算基準
+
+    > li {
+        @extend .mb-5;
+    }
+
+    a {
+        @extend .p-s;
+
+        display: block;
+        padding-left: 45px;
+        background: color(muted);
+        border: 1px solid lighten(color(), 40);
+        position: relative;
+
+        @include el(before, $content: counter(num)) {
+            @extend .py-s, .text-center;
+
+            counter-increment: num;
+
+            width: 35px;
+            height: 100%;
+            background: darken(color(muted), 5);
+            border-right: 1px solid lighten(color(), 40);
+            transition: background .15s;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        &:hover {
+            color: #fff;
+            background: lighten(color(), 10);
+
+            &:before {
+                background: color();
+                border-right-color: color(muted);
+            }
+        }
+    }
+}

@@ -1,0 +1,60 @@
+@charset "UTF-8";
+
+//
+// == 置中
+// -----------------------------------------------------------------
+// 用法:
+// 水平-@include center(x) => transform: translateX(-50%);
+// 垂直-@include center(y) => transform: translateY(-50%);
+//
+// @include center(500px) => margin-left: -250px
+// @include center(null, 300px) => margin-top: -150px
+//
+@mixin center($width: null, $height: null) {
+
+    position: absolute;
+
+    // 預設
+    @if not $width and not $height {
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    // 水平+垂直
+    @else if $width and $height {
+        left: 50%;
+        top: 50%;
+
+        width: $width;
+        height: $height;
+        margin-top: -($height / 2);
+        margin-left: -($width / 2);
+    }
+
+    // 垂直only
+    @else if (($width == y) or $height) {
+        top: 50%;
+
+        @if type-of($height) == number {
+            height: $height;
+            margin-top: -($height / 2);
+        }
+        @else {
+            transform: translateY(-50%, -50%);
+        }
+    }
+
+    // 水平only
+    @else if $width != y {
+        left: 50%;
+
+        @if type-of($width) == number {
+            width: $width;
+            margin-left: -($width / 2);
+        }
+        @else {
+            transform: translateX(-50%, -50%);
+        }
+    }
+}

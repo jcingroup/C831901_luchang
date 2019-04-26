@@ -1,0 +1,50 @@
+@charset "utf-8";
+
+$isClient:          index;
+
+
+// import
+// ------------------------------------------------------------
+@import "core/function"; // (置頂)
+
+@import "_client/setting"; // 覆蓋下方的變數
+@import "core/variables";
+@import "core/mixins";
+
+// output
+@import "basic/base";
+@import "basic/util";
+
+// plugin
+@import "_client/layout";
+
+
+// main
+// ------------------------------------------------------------
+#banner {
+    img {
+        max-width: 100%;
+    }
+
+    @include mq(md) {
+        min-height: 420px;
+    }
+    @include mq-max(break(md, -1)) {
+        margin-left: -$wrap-x-spacing;
+        margin-right: -$wrap-x-spacing;
+    }
+}
+
+.md {
+    &-show {
+        @include mq-max(break(md, -1)) {
+            display: none;
+        }
+    }
+
+    &-hide {
+        @include mq(md) {
+            display: none;
+        }
+    }
+}

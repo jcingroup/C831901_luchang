@@ -1,0 +1,66 @@
+@charset "utf-m";
+
+
+// import
+// ------------------------------------------------------------
+@import "core/function"; // (置頂)
+
+@import "_admin/setting"; // 本專案變數要放在 variables上，可以覆蓋掉 variables 的值
+@import "core/variables";
+@import "core/mixins";
+
+// output
+@import "basic/base";
+@import "basic/table";
+@import "basic/form";
+@import "basic/btn";
+@import "basic/util";
+
+// 本專案 plugin
+@import "_admin/layout";
+@import "_admin/modules"; // (置底)
+
+
+
+// login
+// ------------------------------------------------------------
+
+// == footer
+#footer {
+    @extend .pt-s, .mx-s;
+
+    color: darken(color(muted), 20);
+    font-size: em(13);
+    letter-spacing: 1px;
+    border-top: 1px solid $border-color;
+}
+
+
+// == main
+.sub-copyright {
+    @extend .text-secondary, .mt-s;
+}
+
+.login {
+    @extend .center, .pt-10, .bg-white;
+
+    border: 1px solid $border-color;
+    box-shadow: 0 0 10px $border-color;
+    max-width: 450px;
+    margin-top: 40px;
+
+    .title, main {
+        width: 93%;
+    }
+}
+
+.label {
+    @extend .mb-5, .font-md;
+}
+
+.action-bar {
+    @extend .mt-30, .pt-10, .pb-m;
+
+    border-top: 1px solid rgba(#000, .03);
+    background: tint(color(), 42);
+}

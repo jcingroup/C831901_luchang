@@ -1,0 +1,102 @@
+@charset "UTF-8";
+
+// utils
+@import "mixins/placeholders";   // 壓縮合併樣式(佔位符%)
+@import "mixins/pseudo";         // 做偽類 after,before
+@import "mixins/shape";          // 三角形
+@import "mixins/center";         // 置中
+@import "mixins/rem";            // rem單位
+@import "mixins/text";           // 文字相關
+@import "mixins/animation";      // 動畫
+
+@import "mixins/mq";             // RWD
+@import "mixins/grid";           // 網格系統
+// @import "mixins/flex-grid";      // flex系統
+
+
+//
+// == extend 原本放在util.scss裡，改成 mixin @include 方法
+// -----------------------------------------------------------------
+@mixin clearfix($lte7:false, $ext:true) {
+    @include mixin-dryer(clearfix, $extend: $ext) {
+        @include el(after, table) { clear: both; }
+        @if $lte7 { zoom: 1; }
+    }
+}
+
+// 文字顏色依背景色變動
+@mixin color-contrast($back, $front: #fff) {
+    $lumin: if($luminance, $luminance, .65);
+
+    // if 淺字淺底 => 深字
+    @if luma($front) > $lumin and luma($back) >= $lumin {
+        color: shade($back, 70);
+    }
+    // if 深字 => 淺字
+    @else if luma($front) < $lumin and luma($back) < $lumin {
+        color: tint($front, 95);
+    }
+}
+
+// 元素給高度,字大小,行高自動算間距
+@mixin size-auto($h, $fs: $font-size-base, $lh: $line-height-base, $pd-ratio: 1.8) {
+
+    $font-size: if($fs, $fs, $font-size-base);
+    $line-height: if($lh, $lh, $line-height-base);
+    $height-inner: $font-size * $line-height;
+    $padding-y: decimal-round( em(($h - $height-inner) / 2, $font-size), 3 );
+
+    @if $font-size != $font-size-base {
+        @include rem('font-size', $font-size);
+    }
+    @if $line-height != $line-height-base {
+        line-height: $line-height;
+    }
+    @if $pd-ratio {
+        padding: $padding-y decimal-round(($padding-y * $pd-ratio), 3);
+    }
+    @else {
+        padding-top: $padding-y;
+        padding-bottom: $padding-y;
+    }
+}
+
+// https://gist.github.com/micahgodbolt/9075193
+// $navigation: (
+//   color: green,
+//   is-expanded: (
+//     background: green,
+//     is-hovered: ( background: pink, ),
+//   ),
+// );
+// @include stylus($navigation, is-expanded, is-hovered); => background: pink;
+@mixin stylus($map, $keys...) {
+    $i: 1;
+    $length: length($keys);
+    @while $length >= $i  {
+        $map: map-get($map, nth($keys, $i));
+        $i: $i + 1;
+    }
+    @each $property, $value in $map {
+        @if type-of($value) != map {
+            #{$property}: $value;
+        }
+    }
+}
+
+// RWD video src https://gist.github.com/jonathantneal/a9b8901273475d261dd3
+// @include fluid-asect(4 3, iframe);
+@mixin fluid-aspect($ratio: 1 1, $selector: "> :first-child") {
+    $selector: unquote($selector);
+
+    padding-bottom: percentage(nth($ratio, 2) / nth($ratio, 1));
+    position: relative;
+
+    #{$selector} {
+        left: 0;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+}

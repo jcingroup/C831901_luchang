@@ -1,0 +1,61 @@
+@charset "UTF-8";
+
+// mixin來源: https://codepen.io/mikemai2awesome/pen/MXvzYO
+// $breakpoints in core/variables
+
+//
+// $count可設 +1 or -1
+// 用法:
+// @include mq(break(table, -1)) => 47.9375em
+// @include mq(break(1400, -1)) => 87.4375em
+@function break($name, $count, $break: $breakpoints) {
+    $value: if(map-has-key($break, $name), map-get($break, $name), $name);
+    @return em($value + $count);
+}
+
+//
+// @include mq(sm) => 768px
+@mixin mq($min: 0, $max: 0, $orientation: 0, $breakpoint: $breakpoints) {
+    @if type-of($min) == string {
+        $min: em( map-get-deep($breakpoint, #{$min}) );
+    }
+    @else {
+        $min: em($min);
+    }
+
+    @if type-of($max) == string {
+        $max: em( map-get-deep($breakpoint, #{$max}) ) - .001em; // 0.001em is for fixing IE and FF subpixel issue.
+    }
+    @else {
+        $max: em($max);
+    }
+
+    // Defaults to all media
+    $query: "all" !default;
+    // Set both min and max
+    @if strip-unit($min) != 0 and strip-unit($max) != 0 {
+        $query: "(min-width: #{$min}) and (max-width: #{$max})";
+    }
+    // Set just min
+    @else if strip-unit($min) != 0 and strip-unit($max) == 0 {
+        $query: "(min-width: #{$min})";
+    }
+    // Set just max
+    @else if strip-unit($min) == 0 and strip-unit($max) != 0 {
+        $query: "(max-width: #{$max})";
+    }
+
+    // Set orientation
+    @if $orientation != 0 {
+        $query-orientation: "and (orientation: #{$orientation})";
+
+        @media #{$query} #{$query-orientation} { @content; }
+    }
+    @else {
+        @media #{$query} { @content; }
+    }
+}
+
+@mixin mq-max($value) {
+    @include mq($max: $value) { @content };
+}

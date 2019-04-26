@@ -1,0 +1,95 @@
+@charset "UTF-8";
+
+// 使用方法 四捨五入: decimal-round($number, 2) in function
+// width: grid(1/12, 1.6); => width: 6.86%;
+@function grid($width, $gap: false) {
+    $percentage: percentage($width);
+
+    @if $gap and unitless($gap) {
+        @return decimal-round( $percentage - ($gap - $width * $gap), 2, 'floor');
+    }
+    @else {
+        @return decimal-round( $percentage, 2, 'floor');
+    }
+}
+
+//These are the two mixins that do the work:
+@mixin flexs($margin: 0 auto, $max-row-width: 100%) {
+    @if $margin { margin: $margin; }
+    @if $max-row-width { max-width: $max-row-width; }
+    display: flex;
+    flex-wrap: wrap;
+}
+
+@mixin make-grid-columns($columns: 12, $gap: $grid-gap, $breakpoints) {
+    // 全營幕通用
+    %grid-set {
+        float: left;
+    }
+    @for $i from 1 through $columns {
+        .col-#{$i} {
+            @extend %grid-set;
+        }
+        .col-#{$i}, .flex-#{$i} {
+            width: grid($i/$columns, $gap);
+        }
+        @if $i != $columns {
+            .push-#{$i} {
+                left: grid($i/$columns, $gap) + if(unitless($gap), $gap, 0);
+            }
+            .pull-#{$i} {
+                right: grid($i/$columns, $gap) + if(unitless($gap), $gap, 0);
+            }
+            .offset-#{$i} {
+                margin-left: grid($i/$columns, $gap) + if(unitless($gap), $gap, 0);
+            }
+        }
+    }
+
+    @each $breakpoint, $value in $breakpoints {
+
+        @include mq($value) {
+            $col-selector: ();
+            $flex-selector: ();
+            $modifier-selector: ();
+
+            @for $i from 1 through $columns {
+                $col-selector: $col-selector, '.col-#{$breakpoint}-#{$i}';
+                $flex-selector: $flex-selector, '.flex-#{$breakpoint}-#{$i}';
+
+                .col-#{$breakpoint}-#{$i}, .flex-#{$breakpoint}-#{$i} {
+                    width: grid($i/$columns, $gap);
+                }
+
+                @if $i != $columns {
+                    .push-#{$breakpoint}-#{$i} {
+                        left: grid($i/$columns, $gap) + if(unitless($gap), $gap, 0);
+                    }
+                    .pull-#{$breakpoint}-#{$i} {
+                        right: grid($i/$columns, $gap) + if(unitless($gap), $gap, 0);
+                    }
+                    .offset-#{$breakpoint}-#{$i} {
+                        margin-left: grid($i/$columns, $gap) + if(unitless($gap), $gap, 0);
+                    }
+                }
+            }
+
+            #{$col-selector} {
+                float: left;
+            }
+
+            // flex
+            .flex-#{$breakpoint} {
+                flex-basis: 0;
+                flex-grow: 1px;
+                max-width: 100%;
+            }
+            .flex-#{$breakpoint}-auto {
+                flex: 0 0 auto;
+                width: auto;
+                max-width: 100%; // Reset earlier grid tiers
+            }
+        }
+    }
+}
+

@@ -1,0 +1,51 @@
+@charset "UTF-8";
+
+$breakpoints:               (xs: 480px);
+
+@import "core/function";
+@import "core/variables";
+@import "core/mixins";
+
+
+// output
+// ------------------------------------------------------------
+// 模擬 table
+.cells    { display: table; width:100%; }
+.cell     { display: table-cell; }
+
+.row {
+    // for float
+    @include clearfix;
+
+    // margin-bottom: $gutter;
+    margin: 0 ($gutter / -2) em($field-spacer) ($gutter / -2);
+}
+
+[class*='col-'], [class*='flex-'] {
+    @if type-of($gutter) == 'number' and $gutter > 0 {
+        padding-left: if(unitless($gutter), $gutter/2 *1%, $gutter/2);
+        padding-right: if(unitless($gutter), $gutter/2 *1%, $gutter/2);
+    }
+}
+
+// for flex
+.flexs {
+    @include flexs(0 ($gutter / -2) $gutter*.75 ($gutter / -2), false);
+}
+.flex {
+    flex: 1;
+    max-width: 100%;
+    padding-left: $gutter;
+    padding-right: $gutter;
+}
+
+//
+// == float
+[class*='col-'] {
+    display: block;
+    position: relative;   // For pull, push
+    min-height: 1px;      // Prevent columns from collapsing when empty
+}
+
+// 產出 col-1 ~ 12, flex-1 ~ 12
+@include make-grid-columns($grid-columns, $gutter, $breakpoints);

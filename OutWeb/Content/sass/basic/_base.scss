@@ -1,0 +1,240 @@
+@charset "UTF-8";
+
+//
+// ! Extract from normalize.css v8.0.1 | MIT License |
+// [ref] https://github.com/necolas/normalize.css
+
+// == Document
+// -----------------------------------------------------------------
+html {
+    box-sizing: border-box;
+    font-family: $font-family-base;  //git.io/normalize
+    font-size: $font-size-base;
+    line-height: $line-height-base;  // Correct the line height in all browsers.
+    -webkit-text-size-adjust: 100%;  // Prevent adjustments of font size after orientation changes in iOS.
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+// Credit: https://github.com/suitcss/base
+[tabindex="-1"]:focus {
+    outline: 0 !important;
+}
+
+
+// == Sections
+// -----------------------------------------------------------------
+body {
+    margin: 0 auto;
+    background: $body-bg;
+    color: $body-color;
+    letter-spacing: $body-letter-spacing;
+}
+
+// Render the `main` element consistently in IE.
+main {
+    display: block;
+}
+
+// Correct the font size and margin on `h1` elements within `section` and  `article` contexts in Chrome, Firefox, and Safari.
+h1 {
+    font-size: $font-size-h1;
+    margin: $h1-margin;
+}
+
+
+// == Group content
+// -----------------------------------------------------------------
+hr {
+    // Add the correct box sizing in Firefox.
+    box-sizing: content-box;
+    height: 0;
+
+    overflow: visible;  // Show the overflow in Edge and IE.
+
+    margin: $hr-margin;
+    border: 0;
+    border-top: $hr-border;
+}
+
+pre {
+    margin-top: 0;  // Remove browser default top margin
+    margin-bottom: 1rem;  // Reset browser default of `1em` to use `rem`s
+    overflow: auto;  // Don't allow content to break outside
+
+    // We have @viewport set which causes scrollbars to overlap content in IE11 and Edge, so
+    // we force a non-overlapping, non-auto-hiding scrollbar to counteract.
+    -ms-overflow-style: scrollbar;
+}
+
+// == Text-level semantics
+// -----------------------------------------------------------------
+a {
+    background-color: transparent; // Remove the gray background on active links in IE 10.
+
+    @if $link-color      { color: $link-color;}
+    @if $link-decoration { text-decoration: $link-decoration; }
+    @if $link-transition { transition: $link-transition; }
+
+    &:hover {
+        @if $link-hover-color      { color: $link-hover-color; }
+        @if $link-hover-decoration { text-decoration: $link-hover-decoration; }
+    }
+
+    &:not([href]):not([tabindex]) {
+        color: inherit;
+        @if ($link-decoration != none) { text-decoration: none; }
+
+        &:hover, &:focus {
+            color: inherit;
+            @if ($link-hover-decoration or $link-hover-decoration != none) { text-decoration: none; }
+        }
+
+        &:focus {
+            outline: 0;
+        }
+    }
+}
+
+
+abbr[title] {
+    cursor: help;
+    border-bottom: 1px dotted;
+}
+b, strong, .b, .strong {
+    font-weight: bolder;
+}
+code, kbd, samp {
+    font-family: monospace, monospace;
+    font-size: 1em; // Correct the odd `em` font sizing in all browsers.
+}
+small {
+    font-size: 80%;
+}
+sub, sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+sub {
+    bottom: -0.25em;
+}
+sup {
+    top: -0.5em;
+}
+
+
+// == Embedded content
+// -----------------------------------------------------------------
+img {
+    vertical-align: middle;
+    border-style: none;
+}
+
+
+// == Forms
+// -----------------------------------------------------------------
+// Work around a Firefox/IE bug where the transparent `button` background results in a loss of the default `button` focus styles.//
+// Credit: https://github.com/suitcss/base/
+button {
+    background: none;
+    border: none;
+
+    &:focus {
+        @if $button-focus {
+            outline: $button-focus;
+        }
+        @else {
+            outline: 1px dotted;
+            outline: 5px auto -webkit-focus-ring-color;
+        }
+    }
+}
+button, input, optgroup, select, textarea {
+    margin: 0;  // Remove the margin in Firefox and Safari
+    color: inherit;
+    font : inherit;
+}
+button, input {
+    overflow: visible;  // Show the overflow in Edge
+
+    &[disabled] {
+        cursor: $cursor-disabled;
+    }
+}
+button, select {
+    text-transform: none;  // Remove the inheritance of text transform in Firefox
+}
+
+button,
+[type=button],  // Prevent a WebKit bug where (2) destroys native `audio` and `video` controls in Android 4.
+[type=reset], [type=submit] {
+    -webkit-appearance: button ;  // Correct the inability to style clickable types in iOS and Safari.
+    cursor: pointer;
+
+    // Remove the inner border and padding in Firefox.
+    &::-moz-focus-inner {
+        border-style: none;
+        padding: 0;
+    }
+
+    // Restore the focus styles unset by the previous rule.
+    &:-moz-focusring {
+        outline: 1px dotted ButtonText;
+    }
+}
+
+progress {
+    vertical-align: baseline;  // Add the correct vertical alignment in Chrome, Firefox, and Opera.
+}
+textarea{
+    overflow: auto; // Add the correct vertical alignment in Chrome, Firefox, and Opera.
+}
+
+[type=checkbox], [type=radio] {
+    box-sizing: border-box; // Add the correct box sizing in IE 10.
+    padding: 0;             // Remove the padding in IE 10.
+}
+[type=number] {
+    &::-webkit-inner-spin-button, &::-webkit-outer-spin-button {
+        height: auto;  // Correct the cursor style of increment and decrement buttons in Chrome.
+    }
+}
+[type=search]{
+    -webkit-appearance: textfield;  // Correct the odd appearance in Chrome and Safari.
+    outline-offset: -2px;           // Correct the outline style in Safari.
+
+    // Remove the inner padding in Chrome and Safari on macOS.
+    &::-webkit-search-decoration {
+        -webkit-appearance: none;
+    }
+}
+::-webkit-file-upload-button{
+    -webkit-appearance: button;  // Correct the inability to style clickable types in iOS and Safari.
+    font: inherit;               // Change font properties to `inherit` in Safari.
+}
+
+// == Interactive
+// -----------------------------------------------------------------
+details {
+    display: block; // Add the correct display in Edge, IE 10+, and Firefox.
+}
+
+summary {
+    display: list-item; // Add the correct display in all browsers.
+}
+
+
+// == Misc
+// -----------------------------------------------------------------
+// Add the correct display in IE 10+.
+[hidden], template {
+    display: none;
+}
+
+dd {
+    margin: 0;
+}

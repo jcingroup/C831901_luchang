@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+//
+// == 插入偽類
+// -----------------------------------------------------------------
+// 用法:
+// 1 @include el => div:before, div:after { content:""; display:block; }
+// 2 @include el(before, '111', false) => div:before { content:"111"; }
+// $ext: false 時，不會將程式壓縮起來 (src: _placeholders.scss)
+//
+@mixin el($pseudo: all, $display: block, $content: '', $ext: true) {
+    $selector: if($pseudo == 'all', '&:before,&:after', '&:#{$pseudo}');
+
+    #{$selector} {
+        // content 是否要有值
+        @if $display == block and $content == '' {
+            @include mixin-dryer(pseud, $ext) {
+                content: '';
+                display: block;
+            }
+        } @else {
+            content: quote($content);
+            @if $display { display: $display; }
+        }
+
+        @content;
+    }
+}

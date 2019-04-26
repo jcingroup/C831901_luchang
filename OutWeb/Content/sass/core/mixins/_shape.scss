@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+//
+// == 三角形
+// -----------------------------------------------------------------
+@mixin arrow($dir:right, $width: 11px, $height: $width, $color: inherit) {
+    width: 0;
+    height: 0;
+    border: solid transparent;
+
+    @if ($dir == "top" or $dir =="up") {
+        border-width: 0 $width/2 $height $width/2;
+        border-bottom-color: $color;
+    }
+    @else if ($dir == "bottom" or $dir == "down") {
+        border-width: $height $width/2 0 $width/2;
+        border-top-color: $color;
+    }
+    @else if ($dir == "right") {
+        border-width: $height/2 0 $height/2 $width;
+        border-left-color: $color;
+    }
+    @else if ($dir == "left") {
+        border-width: $height/2 $width $height/2 0;
+        border-right-color: $color;
+    }
+}

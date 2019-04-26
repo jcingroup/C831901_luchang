@@ -1,0 +1,162 @@
+@charset "UTF-8";
+
+//
+// == common classes
+// 如果超過4行css或想改參數時 建議改 @include
+// ------------------------------------------------------------
+
+// 隱藏文字
+.text-hide { @include text-hide; }
+
+// 隱藏文字-但閱讀器可以看
+.sr-only {
+    @include sr-only;
+
+    // 焦點在時可以看
+    &-focusable {
+        @include sr-only-focusable;
+    }
+}
+
+// 浮動相關(對齊)
+.clearfix             { @include clearfix; }        // 清除浮動: 後面元素不會跟著浮動+母元素會被撐開
+.pull-left            { float: left; }              // 靠左浮動
+.pull-right           { float: right; }             // 靠右浮動
+@each $breakpoint, $value in $breakpoints {
+    @include mq($value) {
+        .pull-#{$breakpoint}-left    { float: left; }
+        .pull-#{$breakpoint}-right   { float: right; }
+    }
+}
+.clear                { clear: both; }              // 清除浮動: 讓後面的元素不會跟著浮動
+.rest                 { overflow: hidden; }         // 讓浮動後置的元素可以對齊: col Ref: https://www.w3schools.com/w3css/w3css_grid.asp
+
+// 元素類型
+.inline               { display: inline; }          // 行列元素: 不能設寬度
+.block                { display: block; }           // 區塊元素: 寬度預設100%
+.inline-block         { display: inline-block; }    // 區塊元素: 寬度隨內容變
+
+.img-center           { display: block; margin: auto; }           // 圖片置中
+.center               { margin-right: auto; margin-left:  auto; } // 物件置中
+
+.circle               { border-radius: 50%; }       // 圓形
+.hidden               { display: none; }            // 隱藏元素
+.disabled             { cursor: $cursor-disabled; } // 禁用符號
+.full                 { width: 100%; }              // 寬度100
+.max-full             { max-width: 100%; }          // 寬度不超過10000
+
+//
+// $spacers in variables.scss
+// src: https://gist.github.com/MatthewRDodds/8f171914ee6b826db29393f33229d509
+// ex. mt-0, p-5
+@each $prop, $abbrev in (margin: m, padding: p) {
+    @each $size, $length in $spacers {
+        .#{$abbrev}-#{$size}  { #{$prop}:        $length; } // All sides
+        .#{$abbrev}t-#{$size} { #{$prop}-top:    $length; }
+        .#{$abbrev}r-#{$size} { #{$prop}-right:  $length; }
+        .#{$abbrev}b-#{$size} { #{$prop}-bottom: $length; }
+        .#{$abbrev}l-#{$size} { #{$prop}-left:   $length; }
+
+        // Axes
+        .#{$abbrev}x-#{$size} {
+            #{$prop}-right:  $length;
+            #{$prop}-left:   $length;
+        }
+        .#{$abbrev}y-#{$size} {
+            #{$prop}-top:    $length;
+            #{$prop}-bottom: $length;
+        }
+    }
+}
+
+//
+// == vertical align
+// inline, inline-block, inline-table, and table cell elements.
+// ------------------------------------------------------------
+.align-top    { vertical-align: top; }
+.align-middle { vertical-align: middle; }
+.align-bottom { vertical-align: bottom; }
+
+
+//
+// == text
+// ------------------------------------------------------------
+.text-left    { text-align: left; }
+.text-right   { text-align: right; }
+.text-center  { text-align: center; }
+.text-nowrap  { white-space: nowrap; }
+.overflow     { @include text-overflow(null); }
+
+.font-normal  { font-style: normal; }
+
+@each $breakpoint, $value in $breakpoints {
+    @include mq($value) {
+        .text-#{$breakpoint}-left    { text-align: left; }
+        .text-#{$breakpoint}-right   { text-align: right; }
+        .text-#{$breakpoint}-center  { text-align: center; }
+    }
+}
+
+
+//
+// == font size
+// ------------------------------------------------------------
+// src: w3.css v4
+@each $abbrev, $value in $font-size {
+    .font-#{$abbrev} { @include rem('font-size', $value); }
+}
+
+
+//
+// == list
+// ------------------------------------------------------------
+%list-unstyled, %list-inline {
+    list-style: none;
+    padding-left: 0;
+}
+%list-inline {
+    > li {
+        display: inline-block;
+        &:not(:last-child) { margin-right: 5px; }
+    }
+}
+
+.list-unstyled { @extend %list-unstyled; }
+.list-inline   { @extend %list-inline; }
+
+
+//
+// == 情境 Contextual colors
+// ------------------------------------------------------------
+.text-white { color: #fff; }
+.bg-white   { background: #fff; }
+
+// $colors in variables.scss
+@each $key, $value in $colors {
+    .text-#{$key}, .hover-#{$key} {
+        color: $value;
+    }
+    a.text-#{$key}, .hover-#{$key} {
+        &:hover, &:focus {
+            color: shade($value, 15);
+        }
+    }
+    .bg-#{$key} {
+        background: $value;
+    }
+}
+
+.underline {
+    border-bottom: $border-width solid $border-color;
+}
+
+.bordered {
+    border: $border-width solid;
+}
+
+// 幫助 - 滑鼠會變問號
+// <sup class="help" title="說明項目">*</sup>
+.help {
+    color: color(danger);
+    cursor: help;
+}

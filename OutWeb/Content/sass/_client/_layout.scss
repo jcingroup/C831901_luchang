@@ -1,0 +1,293 @@
+@charset "UTF-8";
+
+/*      layout
+-----------------------------------------------------------------------*/
+.wrap {
+    @extend .center;
+
+    max-width: $max-width;
+
+    @include clearfix;
+
+    @include mq-max(break(md, -1)) {
+        @include rem('padding-left', $wrap-x-spacing);
+        @include rem('padding-right', $wrap-x-spacing);
+    }
+
+    @if not $enable-RWD {
+        @media only screen and (min-device-width: 1024px) {
+            min-width: $min-width;
+        }
+    }
+}
+
+#container {
+    // 讓頁腳置底
+    @if $footBeBottom {
+        // @if $lte7 { _height: 100%; }
+        // min-height: 100%;
+        // padding-bottom: $footer-height + $wrapper-b-spacing;
+        min-height: calc(100vh - #{$footer-height});
+
+        @include mq-max(break(sm, -1)) {
+            min-height: calc(100vh - 92px);
+        }
+        @include mq-max($phone - 1) {
+            min-height: calc(100vh - 119px);
+        }
+    }
+
+    @if not $enable-RWD {
+        @media only screen and (min-device-width: 1024px) {
+            min-width: $min-width;
+        }
+    }
+
+    // this proj only
+    background: #fff url(#{$img-path}/headerBg.gif) repeat-x 0 1px;
+    border-top: 6px solid #F49E1C;
+    position: relative;
+
+    @include mq($max-width + 16) {
+        @include el($ext: false) {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            height: 360px;
+            width: 8px;
+            background: url(#{$img-path}/bg2.png) no-repeat 0 0;
+        }
+        &:before {
+            background-position: 0 0;
+            margin-left: -($max-width/2 + 8);
+        }
+        &:after {
+            background-position: right 0;
+            margin-left: $max-width/2;
+        }
+    }
+}
+
+
+// header
+// ----------------------------------------------------------------------
+#header {
+    position: relative;
+    z-index: z(header);
+
+    // this proj only
+    @include clearfix;
+
+    @include mq(break($mobile-menu-bk, +1)) {
+        @if $header-height { height: $header-height; }
+    }
+    @include mq-max($phone) {
+        // menu height
+        padding-bottom: 43px;
+    }
+}
+
+.logo {
+    cursor: pointer;
+
+    // this proj only
+    @include text-pic('logo.png', 216px, 110px);
+
+    @include mq(break($mobile-menu-bk, +1)) {
+        position: absolute;
+        left: 27px;
+        top: 11px;
+    }
+    @include mq($phone) {
+        margin-right: 10px;
+    }
+    @include mq-max($mobile-menu-bk) {
+        float: left;
+        background-size: contain;
+        width: 130px;
+        height: 66px;
+    }
+}
+
+// 主選單
+#menu {
+    position: absolute;
+    right: 0;
+
+    $menu-bg: #fff;
+    $p-size: 16px;
+
+    @include el {
+        width: $p-size;
+        height: 80%;
+        position: absolute;
+        top: 0;
+
+        background-size: 100% 100%;
+        background-image: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjY0cHgiIGhlaWdodD0iNjRweCIgdmlld0JveD0iMCAwIDMwNiAzMDYiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDMwNiAzMDY7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8ZyBpZD0iY2hldnJvbi1yaWdodCI+CgkJPHBvbHlnb24gcG9pbnRzPSI5NC4zNSwwIDU4LjY1LDM1LjcgMTc1Ljk1LDE1MyA1OC42NSwyNzAuMyA5NC4zNSwzMDYgMjQ3LjM1LDE1MyAgICIgZmlsbD0iIzAwMDAwMCIvPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=);
+
+        opacity: 0;
+        transition: .3s;
+    }
+    // left
+    &:before {
+        left: 0;
+        transform: rotate(180deg);
+    }
+    // right
+    &:after {
+        right: 0;
+    }
+
+    // 大到小
+    @include mq(break($mobile-menu-bk, +1)) {
+        top: 66px;
+    }
+    @include mq-max($mobile-menu-bk) {
+        top: 28px;
+        left: 138px;
+    }
+    @include mq-max(780px) {
+        right: -$wrap-x-spacing;
+        padding-left: $p-size + 4;
+        padding-right: $p-size + 4;
+
+        &.left:before,
+        &.right:after {
+            opacity: .4;
+        }
+    }
+    @include mq-max($phone) {
+        top: 72px;
+        left: -$wrap-x-spacing;
+    }
+
+    .scroll-inline {
+        // 平行滑動
+        white-space: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; // 讓ios比較好滾動
+        -ms-overflow-style: -ms-autohiding-scrollbar; // 讓IE10,11,edge 滑鼠hover時會有卷軸
+    }
+
+    a {
+        @extend .font-md, .px-s, .pb-5;
+
+        background-repeat: repeat-x;
+        background-position: 0 bottom;
+        border-left: 1px solid #e3e3e3;
+        color: #888;
+        font-weight: bold;
+
+        display: inline-block;
+        min-width: 88px;
+
+        &.current, &:hover {
+            color: color();
+            background-image: url(#{$img-path}/navBg_over.gif);
+
+            small {
+                color: #969696;
+            }
+        }
+    }
+
+    small {
+        @extend .font-tiny, .text-muted;
+
+        display: block;
+        font-weight: normal;
+        letter-spacing: 0;
+    }
+}
+
+// 回首頁.加入最愛
+.topNav {
+    @extend .font-tiny;
+
+    float: right;
+    margin-top: 2px;
+
+    @include mq-max($phone) {
+        margin-right: -5px;
+    }
+
+    a {
+        @extend .px-5;
+
+        color: #b0b0b0;
+        margin-left: -2px;
+
+        &:not(:first-child) {
+            border-left: 1px solid #b0b0b0;
+        }
+        &:hover {
+            color: #666;
+        }
+    }
+}
+
+
+// footer
+// ----------------------------------------------------------------------
+
+#footer {
+    min-height: $footer-height;
+    // @if $footBeBottom { margin-top: -($footer-height); }
+    position: relative;
+    z-index: z(footer);
+
+    // this proj only
+    @extend .font-tiny, .bg-secondary, .text-info, .py-10;
+
+    @include clearfix;
+
+    @include mq-max(break(sm, -1)) {
+        text-align: center;
+    }
+}
+
+.contacts {
+    @extend .mt-0;
+
+    letter-spacing: 1px;
+    line-height: 1.6;
+    color: inherit;
+
+    @include mq(sm) {
+        text-align: left;
+    }
+    @include mq(md) {
+        margin-left: 10px;
+    }
+
+    strong, .b {
+        @include rem('font-size', 17);
+    }
+    strong {
+        // @extend .text-success;
+        color: color(success) !important;
+    }
+
+    @include mq($phone) {
+        .in-line { display: inline; }
+        li:first-child {
+            padding-right: 10px;
+            margin-right: 8px;
+            border-right: 1px solid;
+        }
+    }
+}
+
+.copyright {
+    @extend .mt-2;
+
+    color: #736357;
+
+    @include mq(sm) {
+        text-align: left;
+    }
+    @include mq(md) {
+        margin-right: 10px;
+    }
+}

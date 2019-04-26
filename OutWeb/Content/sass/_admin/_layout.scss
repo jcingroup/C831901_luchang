@@ -1,0 +1,179 @@
+@charset "UTF-8";
+
+/*      layout
+-----------------------------------------------------------------------*/
+.wrap {
+    @include clearfix;
+
+    @if not $enable-RWD {
+        @media only screen and (min-device-width: 1024px) {
+            min-width: $min-width;
+        }
+    }
+    @else {
+        @include mq-max(break($max-width, -1)) {
+            @include rem('padding-left', $gutter);
+            @include rem('padding-right', $gutter);
+        }
+    }
+}
+
+// header
+// ----------------------------------------------------------------------
+#header {
+    @if $header-bg     { background: $header-bg; }
+    @if $header-height { height: $header-height; }
+    z-index: z(header);
+
+    // this proj only
+    padding-right: $gutter;
+    padding-left: $gutter;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.site-title {
+    @extend .my-0;
+
+    cursor: pointer;
+    // text-shadow: 1px 1px 1px tint(color(secondary), 50);
+    letter-spacing: .08em;
+    line-height: $header-height;
+
+    // this proj
+    $font-size: $header-height - (10*2);
+    @include rem('font-size', $font-size);
+
+    color: rgba(#000, .65);
+}
+
+// 右上方資訊選單(回首頁,登出等)
+.navbar {
+    @extend .font-md;
+
+    margin-top: ($header-height - (15*1.2))/2;
+
+    .nav-link {
+        display: inline-block;
+        vertical-align: top;
+
+        @include rem('font-size', 17);
+
+        &:hover {
+            color: shade(color(secondary), 35);
+        }
+    }
+
+    .dropdown-content {
+        min-width: 160px;
+        right: 0;
+    }
+}
+
+
+// main
+// ----------------------------------------------------------------------
+#main {
+    @extend .text-left;
+    padding: $header-height $gutter 76px ($sidebar-width + $gutter);
+}
+
+
+// sidebar
+// ----------------------------------------------------------------------
+#sidebar {
+    @extend .text-left;
+
+    $left-padding: 16px;
+
+    z-index: z(sidebar);
+    position: fixed;
+    left: 0;
+    top: $header-height;
+    width: $sidebar-width;
+    height: 100%;
+    background: $sidebar-theme-color;
+
+    // this proj
+    box-shadow: 0 1px 1px rgba(#000, .1);
+    overflow-y: auto;
+
+    a { display: block; }
+
+    .collapse-toggle,
+    > a {
+        border-left: 4px solid color(muted);
+        padding: 12px 8px 12px $left-padding;
+
+        @include rem('font-size', 18);
+
+        &:before {
+            @extend .mr-10;
+
+            color: darken(color(muted), 8);
+        }
+        &:hover, &:active, &:focus, &.active {
+            background: shade($body-bg, 2.5);
+            border-color: color(success);
+        }
+        &:active, &:focus, &.active {
+            color: shade(color(success), 15);
+        }
+    }
+    > a {
+        color: $body-color;
+    }
+
+    // 伸縮
+    .collapse {
+
+        &-toggle {
+            cursor: pointer;
+            position: relative;
+            transition: .3s ease;
+
+            .arrow {
+                position: absolute;
+                top: 18px;
+                right: 12px;
+                border-color: darken(color(muted), 8);
+            }
+
+            &.active {
+                .arrow {
+                    border-color: color(success);
+                    transform: rotate(-135deg);
+                }
+            }
+        }
+
+        &-content {
+            display: none;
+            border-left: 4px solid shade(color(muted), 5);
+            background: tint($body-bg, 1);
+            box-shadow: inset 1px 1px 2px rgba(#000, .1);
+
+            &.in {
+                display: block;
+            }
+
+            a {
+                @extend .font-md, .text-primary;
+
+                padding: 8px 8px 8px $left-padding;
+
+                &:hover, &:active, &:focus {
+                    background: rgba(color(secondary), .5);
+                }
+                &.active {
+                    @extend .text-white;
+                    background: color(secondary);
+                }
+            }
+        }
+    }
+}
+
