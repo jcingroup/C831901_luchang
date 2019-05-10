@@ -3,40 +3,25 @@
 // == 這裡放自定義變數 + 覆寫 variables 裡的變數
 // import 順序最好在 variables 前面。但如果要放後面的話，下面要覆寫的變數不能加 !default
 
-$img-path:                '../images';
+$img-path:                '../images' !default;
+$page:                    false !default; // admin, login
 
 // == color
 // ----------------------------------------------------------------------
 
 $colors: (
-    primary:       #0e6868,
-    secondary:     #F7E885,
-    success:       #ACD157,
-    info:          #408BAA,
-    warning:       #FFE66D,
-    danger:        #e26d5c,
-    muted:         #F4F6F4
+    primary:       #7199A8,
+    secondary:     #7F9086,
+    success:       #71BF50,
+    info:          #529DCB,
+    warning:       #F3CC4F,
+    danger:        #E85E31,
+    muted:         #D6CFC4
 );
-
-$pale-theme: (
-    success:       contract(color(success), light, 50),
-    info:          contract(color(info), light, 68),
-    warning:       tint(color(warning), 56),
-    danger:        contract(color(danger), light, 50),
-);
-
-$btn-theme: (
-    success:       shade(color(success), 12),
-    info:          color(info),
-    warning:       color(warning),
-    danger:        color(danger),
-    cancel:        #999
-);
-
 
 // == ref: basic> custom
 // ----------------------------------------------------------------------
-$body-bg:                   lighten(color(muted), 2);
+$body-bg:                   tint(color(muted), 85) !default;
 $font-family-sp:            'Montserrat'; // https://fonts.google.com/specimen/Noto+Sans
 
 $component-active:          lighten(color(), 10) !default;
@@ -54,11 +39,14 @@ $input-radius:              false;
 // wrapper
 $max-width:             1400px !default;
 $min-width:             1200px !default;
-$footBeBottom:          true !default; // 頁腳是否置底 true / false
+
+// footer
+$footBeBottom:          false !default; // 頁腳是否置底 true / false
+$footer-height:         if(type-of($footBeBottom) == number, $footBeBottom, false) !default;
 
 // header
 $header-height:         46px !default;
-$header-bg:             linear-gradient(90deg, color(secondary), darken(color(warning), 10)) !default;
+$header-bg:             color() !default;
 
 // sidebar
 $sidebar-width:         220px;

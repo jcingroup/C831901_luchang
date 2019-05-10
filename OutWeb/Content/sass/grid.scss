@@ -1,6 +1,5 @@
 @charset "UTF-8";
 
-$breakpoints:               (xs: 480px);
 
 @import "core/function";
 @import "core/variables";
@@ -17,26 +16,22 @@ $breakpoints:               (xs: 480px);
     // for float
     @include clearfix;
 
-    // margin-bottom: $gutter;
-    margin: 0 ($gutter / -2) em($field-spacer) ($gutter / -2);
-}
-
-[class*='col-'], [class*='flex-'] {
-    @if type-of($gutter) == 'number' and $gutter > 0 {
-        padding-left: if(unitless($gutter), $gutter/2 *1%, $gutter/2);
-        padding-right: if(unitless($gutter), $gutter/2 *1%, $gutter/2);
-    }
+    margin-bottom: em($field-spacer);
 }
 
 // for flex
 .flexs {
-    @include flexs(0 ($gutter / -2) $gutter*.75 ($gutter / -2), false);
+    @include flexs;
+
+    @each $breakpoint, $value in $breakpoints {
+        @include mq($value) {
+            &-#{$breakpoint} { @include flexs; }
+        }
+    }
 }
 .flex {
     flex: 1;
     max-width: 100%;
-    padding-left: $gutter;
-    padding-right: $gutter;
 }
 
 //
@@ -47,5 +42,22 @@ $breakpoints:               (xs: 480px);
     min-height: 1px;      // Prevent columns from collapsing when empty
 }
 
+//
+// 預設無內距，如果要有內距時
+.row, .flexs {
+    &.padding {
+        // if 最外層沒有設 overflow: hidden; than 會出現橫向卷軸
+        margin-left: ($gutter / -2);
+        margin-right: ($gutter / -2);
+    }
+}
+.padding {
+    [class*='col-'], [class*='flex-'], .flex {
+        padding-left: if(unitless($gutter), $gutter/2 *1%, $gutter/2);
+        padding-right: if(unitless($gutter), $gutter/2 *1%, $gutter/2);
+    }
+}
+
+//
 // 產出 col-1 ~ 12, flex-1 ~ 12
 @include make-grid-columns($grid-columns, $gutter, $breakpoints);

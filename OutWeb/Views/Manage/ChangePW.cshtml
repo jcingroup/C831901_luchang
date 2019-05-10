@@ -1,7 +1,46 @@
 ﻿
 @{
-    ViewBag.Title = "ChangePW";
+    ViewBag.Title = "變更密碼";
+    ViewBag.subnav = "Cog";
+    ViewBag.subnav2 = "ChangPW";
 }
 
-<h2>ChangePW</h2>
+@section Breadcrumb {
+    <li>系統設定</li>
+    <li>@ViewBag.Title</li>
+}
 
+<form>
+    <dl class="row">
+        <dt class="col-2 text-right label">
+            <sup class="help" title="必填">*</sup>
+            舊密碼
+        </dt>
+        <dd class="col-7">
+            <input type="password" class="form-element full" required>
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-2 text-right label">
+            <sup class="help" title="必填">*</sup>
+            新密碼
+        </dt>
+        <dd class="col-7">
+            <input type="password" class="form-element full" required>
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-2 text-right label">
+            <sup class="help" title="必填">*</sup>
+            再次輸入新密碼
+        </dt>
+        <dd class="col-7">
+            <input type="password" class="form-element full" required>
+        </dd>
+    </dl>
+
+    <footer class="submit-bar">
+        <button type="submit" class="btn success oi offset-sm-2" data-glyph="circle-check">確定儲存</button>
+        <button type="button" class="btn cancel oi" data-glyph="circle-x">取消</button>
+    </footer>
+</form>

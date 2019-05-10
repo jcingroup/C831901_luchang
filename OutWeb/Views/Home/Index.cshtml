@@ -1,31 +1,109 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "WELCOME OUR SITE";
+    ViewBag.BodyClass = "Home";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+@section css {
+    <link rel="stylesheet" href="~/Content/css/vendor/swiper.min.css">
+}
+@section scripts {
+    <script src="~/Content/js/swiper.min.js"></script>
+    <script>
+        // swiper 4.1.6 (輪播效果)
+        var banner = new Swiper('#banner', {
+            speed: 1600,
+            effect: 'fade',
+            parallax: true,
+            autoplay: {
+                delay: 5400,
+            },
+            fadeEffect: {
+                crossFade: true
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+        var carousel = new Swiper('.lawyers', {
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+                renderBullet: function (index, className) {
+                    return '<i class="' + className + '"></i>';
+                },
+            },
+        });
+    </script>
+}
+
+
+<div id="banner" class="text-center swiper-container">
+    <section class="swiper-wrapper">
+        <div class="swiper-slide" style="background-image: url('@Url.Content("~/Content/images/index/banner.jpg")')">
+            <h2 class="slogan font-sp" data-swiper-parallax="-100">不動產共有人愈來愈多了<br>該如何保障權益並取得最大利益呢？</h2>
+        </div>
+        <div class="swiper-slide" style="background-image: url('@Url.Content("~/Content/images/index/banner2.jpg")')">
+            <h2 class="slogan font-sp" data-swiper-parallax="-100">承諾與信賴是我們的目標</h2>
+        </div>
+        <div class="swiper-slide" style="background-image: url('@Url.Content("~/Content/images/index/banner3.jpg")')">
+            <h2 class="slogan font-sp" data-swiper-parallax="-100">專注於真理，世界在你眼前</h2>
+        </div>
+    </section>
+    <div class="swiper-button-next swiper-button-white"></div>
+    <div class="swiper-button-prev swiper-button-white"></div>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<section class="service text-center">
+    <ul class="list-inline font-xl">
+        <li>不動產分割</li>
+        <li>遺囑、繼承</li>
+        <li>離婚、監護權</li>
+        <li>車禍糾紛</li>
+    </ul>
+    <a class="btn outline" href="~/Profession">MORE</a>
+</section>
+
+<section class="info flexs">
+    <aside class="flex-md-5 flex-lg-4 lawyers swiper-container">
+        <header class="text-white">LAWYERS</header>
+        <div class="swiper-wrapper">
+            <figure class="intro swiper-slide">
+                <h1 class="lawyer"><small>主持律師</small><br>呂浩瑋</h1>
+                <figcaption>
+                    <p>一般民商案件、不動產糾紛案件、土地分割案件、三七五組約糾紛、車禍糾紛、一般刑事案件、水土保持案件、少年案件、...</p>
+                    <a href="~/Team#p1" class="btn outline white">MORE</a>
+                </figcaption>
+            </figure>
+            <figure class="intro swiper-slide">
+                <h1 class="lawyer"><small>主持律師</small><br>張晶瑩</h1>
+                <figcaption>
+                    <p>一般民商案件、不動產糾紛案件、土地分割案件、三七五組約糾紛、車禍糾紛、一般刑事案件、少年案件...</p>
+                    <a href="~/Team#p2" class="btn outline white">MORE</a>
+                </figcaption>
+            </figure>
+        </div>
+        <div class="swiper-pagination text-right pr-m"></div>
+    </aside>
+    <div class="flex-md-7 flex-lg-8 contents padding">
+        <header class="title">專欄</header>
+        @* 最多3則 *@
+        <article class="col-sm-6 col-lg-4 article" onclick="location.href='@Url.Content("~/Special/Details/1")'">
+            <h3>吐口水在坐墊上不行嗎</h3> @* 文字不限 *@
+            <p>有一則新聞是這樣的，某地院法官助理因為不滿鄰居小孩太吵，雙方協調不成後，竟每日趁無人之時在鄰居機車座墊上吐口水...</p> @* 文字最多抓60字 *@
+            <a href="~/Special/Details/1" class="font-sm text-white more">READ MORE</a>
+        </article>
+
+        @*
+        <article class="col-sm-6 col-lg-4 article" onclick="location.href='@Url.Content("~/Special/Details/1")'">
+            <h3>吐口水在坐墊上不行嗎</h3>
+            <p>有一則新聞是這樣的，某地院法官助理因為不滿鄰居小孩太吵，雙方協調不成後，竟每日趁無人之時在鄰居機車座墊上吐口水...</p>
+            <a href="~/Special/Details/1" class="font-sm text-white more">READ MORE</a>
+        </article>
+        <article class="col-sm-6 col-lg-4 article" onclick="location.href='@Url.Content("~/Special/Details/1")'">
+            <h3>吐口水在坐墊上不行嗎不行嗎不行嗎不行嗎不行嗎</h3>
+            <p>有一則新聞是這樣的，某地院法官助理因為不滿鄰居小孩太吵，雙方協調不成後，竟每日趁無人之時在鄰居機車座墊上吐口水吐口水吐口...</p>
+            <a href="~/Special/Details/1" class="font-sm text-white more">READ MORE</a>
+        </article> *@
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+</section>

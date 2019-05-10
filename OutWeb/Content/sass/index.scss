@@ -1,6 +1,7 @@
 @charset "utf-8";
 
-$isClient:          index;
+$page:              index;
+$wrapper-b-spacing: 0;
 
 
 // import
@@ -13,38 +14,227 @@ $isClient:          index;
 
 // output
 @import "basic/base";
+@import "basic/btn";
 @import "basic/util";
 
 // plugin
 @import "_client/layout";
+@import "_client/modules";
 
 
 // main
 // ------------------------------------------------------------
 #banner {
-    img {
-        max-width: 100%;
+    // position: relative; //swiper
+    width: 100%;
+    top: -(82px - 36);
+    margin-bottom: -(82px - 36);
+
+    background: #000;
+
+    @include el(before) {
+        position: absolute;
+        width: 100%;
+        height: 216px;
+        z-index: 2;
+        background-image: linear-gradient(rgba(#000, .95), rgba(#000, 0));
     }
 
-    @include mq(md) {
+    .swiper-slide {
+        background-position: center;
+        background-repeat: no-repeat;
         min-height: 420px;
+
+        @include mq(md) {
+            min-height: 790px;
+        }
     }
-    @include mq-max(break(md, -1)) {
-        margin-left: -$wrap-x-spacing;
-        margin-right: -$wrap-x-spacing;
+}
+.slogan {
+    @extend .text-white, .font-normal, .mt-0;
+
+    text-shadow: 0 0 5px rgba(#000, .8);
+    line-height: 1.43;
+    letter-spacing: .15em;
+
+    position: absolute;
+    left: 30px;
+    right: 30px;
+    top: 274px+106;
+
+    @include mq-max(md) {
+        top: 140px+90;
+    }
+    @include mq-max(sm) {
+        font-size: rem(27);
     }
 }
 
-.md {
-    &-show {
+// 領域/服務
+.service {
+    @extend .py-30;
+
+    ul {
+        display: inline-block;
+        vertical-align: middle;
+        padding: 8px 0 4px 65px;
+        margin-right: 35px;
+
+        background: url(#{$img-path}/icon-quot.gif) 0 -5px no-repeat;
+    }
+
+    li {
+        &:not(:last-child) {
+            @include el(after, false, '/') {
+                opacity: .1;
+                margin-left: 15px;
+                font-size: 130%;
+            }
+        }
+    }
+}
+
+// 律師+專欄區
+.info {
+    @extend .bg-info;
+    margin: 0;
+}
+
+// 側欄(律師們)
+.lawyers {
+    @extend .text-center;
+
+    background: color(muted) url(#{$img-path}/badge.gif) center 65% no-repeat;
+    border-top: 3px solid color(info);
+
+    padding-top: 45px;
+
+    @include mq-max(break(md, -1)) {
+        padding-top: 24px;
+        width: 100%;
+    }
+
+    // title
+    header {
+        @include rem('font-size', 85);
+        text-shadow: 1px 3px 0 rgba(#BFD8D7, .5);
+        letter-spacing: .04em;
+
+        @include mq-max(sm) {
+            font-size: rem(64);
+        }
+        @include mq-max($phone) {
+            font-size: rem(52);
+        }
+    }
+}
+.intro {
+    @extend .m-0;
+
+    position: relative;
+
+    figcaption {
+        @extend .pt-30;
+
+        position: absolute;
+        left: em(20);
+        right: em(20);
+        top: 0;
+        height: 100%;
+
+        background: rgba(color(muted), .95);
+        line-height: 1.7;
+
+        visibility: hidden;
+        opacity: 0;
+        transition: $transition-duration*2;
+
         @include mq-max(break(md, -1)) {
-            display: none;
+            padding-top: 0;
         }
     }
 
-    &-hide {
-        @include mq(md) {
-            display: none;
+    &:hover {
+        figcaption {
+            opacity: 1;
+            visibility: visible;
         }
+    }
+}
+.lawyer {
+    @extend .font-normal;
+
+    letter-spacing: .15em;
+
+    small { font-size: 46%; }
+
+    @include rem('font-size', 58);
+
+    @include mq-max(break(md, -1)) {
+        margin-top: 0;
+        margin-bottom: 80px;
+    }
+}
+
+// 專欄
+.contents {
+    padding: 30px 16px;
+
+    .title {
+        padding: 0 (16px+8) 16px;
+
+        margin-left: -(16px);
+        margin-right: -(16px);
+    }
+
+    @include mq(sm) {
+        padding: 70px 50px;
+
+        .title {
+            padding: 0 56px 16px;
+
+            margin-left: -(50px);
+            margin-right: -(50px);
+        }
+    }
+}
+// 文章
+.article {
+    @extend .mb-l;
+
+    cursor: pointer;
+
+    h3 {
+        @extend .mt-30, .font-sp;
+
+        transition: $transition-duration*2;
+
+        @include mq(sm) {
+            margin-top: 60px;
+            @include text-overflow($ext: false);
+        }
+    }
+
+    p {
+        @extend .font-lg;
+        line-height: 1.65;
+    }
+
+    &:hover {
+        h3 {
+            letter-spacing: .1em;
+        }
+    }
+}
+
+// swiper
+.swiper-pagination-bullet {
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    opacity: 1;
+
+    &-active {
+        background: #7DDCE0;
     }
 }

@@ -42,6 +42,12 @@
     }
 }
 
+// == z-index
+// -----------------------------------------------------------------
+@function z($value) {
+    @return map-get($z-index, $value);
+}
+
 // == math
 // -----------------------------------------------------------------
 // 算平方
@@ -59,12 +65,6 @@
         }
     }
     @return $value;
-}
-
-// == z-index
-// -----------------------------------------------------------------
-@function z($value) {
-    @return map-get($z-index, $value);
 }
 
 
@@ -92,9 +92,9 @@
 }
 
 // 取顏色的亮度
-// luma(#fff) => 1
-// luma(#000) => 0
-@function luma($color) {
+// luminance(#fff) => 1
+// luminance(#000) => 0
+@function luminance($color) {
     $color-rgb: ('red': red($color),'green': green($color),'blue': blue($color));
 
     @each $name, $value in $color-rgb {
@@ -114,19 +114,39 @@
 }
 
 //  反轉色
-@function contract($color, $base:light, $deg: 50) {
+@function contract($color, $brightness: auto, $deg: 50) {
     // 亮度
-    $lumin: .65;
+    $luma: .65;
 
-    @if $base == 'light' and luma($color) < $lumin {
+    @if ($brightness == 'light') and (luminance($color) < $luma) {
         @return tint($color, $deg);
     }
-    @else if $base == 'dark' and luma($color) > $lumin {
+    @else if ($brightness == 'dark') and (luminance($color) > $luma) {
         @return shade($color, $deg);
+    }
+    @else if ($brightness == 'auto') or ($brightness == 'invert') {
+        @return if(luminance($color) < $luma, tint($color, $deg),  shade($color, $deg));
     }
     @else {
         @return $color;
     }
+}
+
+// 算顏色對比值, w3c建議對比為 4.5 以上
+@function contrast-ratio($color1, $color2) {
+  // Adapted from: https://github.com/LeaVerou/contrast-ratio/blob/gh-pages/color.js
+  // Formula: http://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef
+  $luminance1: luminance($color1) + 0.05;
+  $luminance2: luminance($color2) + 0.05;
+  $ratio: $luminance1 / $luminance2;
+
+  @if $luminance2 > $luminance1 {
+    $ratio: 1 / $ratio;
+  }
+
+  $ratio: round($ratio * 10) / 10;
+
+  @return $ratio;
 }
 
 //

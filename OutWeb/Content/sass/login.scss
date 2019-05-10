@@ -1,5 +1,9 @@
 @charset "utf-m";
 
+$page: login;
+$footBeBottom: 54px;
+$field-spacer: 12px;
+
 
 // import
 // ------------------------------------------------------------
@@ -11,19 +15,24 @@
 
 // output
 @import "basic/base";
-@import "basic/table";
 @import "basic/form";
 @import "basic/btn";
 @import "basic/util";
 
 // 本專案 plugin
 @import "_admin/layout";
-@import "_admin/modules"; // (置底)
+// @import "_admin/modules"; // (置底)
 
 
 
 // login
 // ------------------------------------------------------------
+
+// == header
+.sub-copyright {
+    @extend .mt-s;
+    color: lighten(color(secondary), 15);
+}
 
 // == footer
 #footer {
@@ -36,31 +45,35 @@
 }
 
 
-// == main
-.sub-copyright {
-    @extend .text-secondary, .mt-s;
-}
-
+// == login form
 .login {
-    @extend .center, .pt-10, .bg-white;
+    @extend .center, .p-m, .bg-white;
 
     border: 1px solid $border-color;
     box-shadow: 0 0 10px $border-color;
     max-width: 450px;
     margin-top: 40px;
+    padding-bottom: 0;
+}
 
-    .title, main {
-        width: 93%;
-    }
+.title {
+    @extend .mt-0, .pb-5;
+
+    border-bottom: 1px solid $border-color;
 }
 
 .label {
-    @extend .mb-5, .font-md;
+    @extend .font-md;
+}
+.form-element {
+    @extend .mb-m;
 }
 
 .action-bar {
-    @extend .mt-30, .pt-10, .pb-m;
+    @extend .mt-30, .py-10;
 
     border-top: 1px solid rgba(#000, .03);
     background: tint(color(), 42);
+
+    margin: rem(20) -#{map-get($spacers, m)} 0 -#{map-get($spacers, m)};
 }

@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 $isAdmin:          true;
-
+$page:             admin;
 
 // import
 // ------------------------------------------------------------
@@ -67,7 +67,7 @@ $isAdmin:          true;
     .label {
         vertical-align: middle;
     }
-    .form-element {
+    .form-element, .btn {
         font-size: inherit;
     }
 }

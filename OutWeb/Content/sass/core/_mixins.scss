@@ -26,25 +26,35 @@
 
 // 文字顏色依背景色變動
 @mixin color-contrast($back, $front: #fff) {
-    $lumin: if($luminance, $luminance, .65);
+    $luma: if($luminance, $luminance, .65);
 
-    // if 淺字淺底 => 深字
-    @if luma($front) > $lumin and luma($back) >= $lumin {
-        color: shade($back, 70);
+    // // if 淺字淺底 => 深字
+    // @if luminance($front) > $luma and luminance($back) >= $luma {
+    //     color: shade($back, 70);
+    // }
+    // // if 深字 => 淺字
+    // @else if luminance($front) < $luma and luminance($back) < $luma {
+    //     color: tint($front, 95);
+    // }
+    @if contrast-ratio($back, $front) < $contrast {
+        @if luminance($front) > $luma {
+            color: shade($front, 90);
+        }
+        content: contrast-ratio($back, $front);
     }
-    // if 深字 => 淺字
-    @else if luma($front) < $lumin and luma($back) < $lumin {
-        color: tint($front, 95);
+    @else {
+        @if luminance($front) < $luma {
+            color: tint($front, 90);
+        }
+        content: contrast-ratio($back, $front);
     }
 }
 
-// 元素給高度,字大小,行高自動算間距
-@mixin size-auto($h, $fs: $font-size-base, $lh: $line-height-base, $pd-ratio: 1.8) {
+// 用高度,字級大小,行高自動算元素間距
+@mixin size-auto($h, $font-size: $font-size-base, $line-height: $line-height-base, $pd-ratio: 1.8) {
 
-    $font-size: if($fs, $fs, $font-size-base);
-    $line-height: if($lh, $lh, $line-height-base);
-    $height-inner: $font-size * $line-height;
-    $padding-y: decimal-round( em(($h - $height-inner) / 2, $font-size), 3 );
+    $value: ($h - ($font-size * $line-height))*.5;
+    $padding-y: decimal-round( em($value, $font-size), 2 );
 
     @if $font-size != $font-size-base {
         @include rem('font-size', $font-size);
@@ -53,7 +63,8 @@
         line-height: $line-height;
     }
     @if $pd-ratio {
-        padding: $padding-y decimal-round(($padding-y * $pd-ratio), 3);
+        $padding-x: if(unit($pd-ratio) == px, em($pd-ratio, $font-size), ($padding-y * $pd-ratio) );
+        padding: $padding-y decimal-round($padding-x, 2);
     }
     @else {
         padding-top: $padding-y;

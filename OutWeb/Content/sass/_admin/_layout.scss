@@ -18,6 +18,23 @@
     }
 }
 
+#wrapper {
+    // 讓頁腳置底
+    @if $footBeBottom {
+        min-height: calc(100vh - #{$footer-height});
+    }
+
+    @if not $enable-RWD {
+        @media only screen and (min-device-width: 1024px) {
+            min-width: $min-width;
+        }
+    }
+
+    @if $page == login {
+        padding-top: 3.5%;
+    }
+}
+
 // header
 // ----------------------------------------------------------------------
 #header {
@@ -38,36 +55,43 @@
 .site-title {
     @extend .my-0;
 
-    cursor: pointer;
-    // text-shadow: 1px 1px 1px tint(color(secondary), 50);
     letter-spacing: .08em;
-    line-height: $header-height;
 
     // this proj
-    $font-size: $header-height - (10*2);
-    @include rem('font-size', $font-size);
+    @if $page == login {
+        color: rgba(#000, .7);
+        text-shadow: 2px 1px 0 rgba(#000, .07);
+    }
 
-    color: rgba(#000, .65);
+    @if $page == admin {
+        @extend .text-white;
+        line-height: $header-height;
+
+        $font-size: $header-height - (10*2);
+        @include rem('font-size', $font-size);
+    }
 }
 
 // 右上方資訊選單(回首頁,登出等)
 .navbar {
-    @extend .font-md;
-
     margin-top: ($header-height - (15*1.2))/2;
 
     .nav-link {
+        @extend .text-white;
+
         display: inline-block;
         vertical-align: top;
 
-        @include rem('font-size', 17);
+        // @include rem('font-size', 17);
 
         &:hover {
-            color: shade(color(secondary), 35);
+            color: rgba(#fff, .75);
         }
     }
 
     .dropdown-content {
+        @extend .font-md;
+
         min-width: 160px;
         right: 0;
     }
@@ -87,8 +111,6 @@
 #sidebar {
     @extend .text-left;
 
-    $left-padding: 16px;
-
     z-index: z(sidebar);
     position: fixed;
     left: 0;
@@ -103,28 +125,30 @@
 
     a { display: block; }
 
+    $left-padding: 16px;
+    $nav-border-color: color(muted);
+    $nav-active-border-color: color();
+
     .collapse-toggle,
     > a {
-        border-left: 4px solid color(muted);
+        border-left: 4px solid $nav-border-color;
         padding: 12px 8px 12px $left-padding;
 
+        color: shade($nav-active-border-color, 15);
         @include rem('font-size', 18);
 
         &:before {
             @extend .mr-10;
 
-            color: darken(color(muted), 8);
+            color: lighten($nav-border-color, 2);
         }
         &:hover, &:active, &:focus, &.active {
             background: shade($body-bg, 2.5);
-            border-color: color(success);
+            border-color: tint($nav-active-border-color, 25);
         }
         &:active, &:focus, &.active {
-            color: shade(color(success), 15);
+            color: $body-color;
         }
-    }
-    > a {
-        color: $body-color;
     }
 
     // 伸縮
@@ -137,14 +161,14 @@
 
             .arrow {
                 position: absolute;
-                top: 18px;
+                top: 19px;
                 right: 12px;
-                border-color: darken(color(muted), 8);
+                border-color: darken($nav-border-color, 8);
             }
 
             &.active {
                 .arrow {
-                    border-color: color(success);
+                    border-color: $nav-active-border-color;
                     transform: rotate(-135deg);
                 }
             }
@@ -152,7 +176,7 @@
 
         &-content {
             display: none;
-            border-left: 4px solid shade(color(muted), 5);
+            border-left: 4px solid tint($nav-border-color, 12);
             background: tint($body-bg, 1);
             box-shadow: inset 1px 1px 2px rgba(#000, .1);
 
@@ -160,17 +184,19 @@
                 display: block;
             }
 
+            $subnav-acitve-bg: color(warning);
+
             a {
-                @extend .font-md, .text-primary;
+                @extend .font-md, .text-secondary;
 
                 padding: 8px 8px 8px $left-padding;
 
                 &:hover, &:active, &:focus {
-                    background: rgba(color(secondary), .5);
+                    background: rgba($subnav-acitve-bg, .4);
                 }
                 &.active {
-                    @extend .text-white;
-                    background: color(secondary);
+                    color: darken(color(secondary), 12);
+                    background: rgba($subnav-acitve-bg, .8);
                 }
             }
         }

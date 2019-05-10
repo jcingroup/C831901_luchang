@@ -3,14 +3,20 @@
 // == btn plug
 // ------------------------------------------------------------
 .btn {
-    @each $class, $color in $btn-theme {
+    @each $class, $color in (
+        success:   shade(color(success), 12),
+        info:      color(info),
+        warning:   color(warning),
+        danger:    color(danger),
+        cancel:    #999
+    ) {
         &.#{$class} {
             background: $color;
             box-shadow: 0 2px 0 shade($color, 5);
             margin-top: -2px;
 
             // 自動反轉文字顏色
-            @include color-contrast($color, $btn-color);
+            // @include color-contrast($color, $btn-color);
 
             &:hover, &:active {
                 background: darken($color, 5);
@@ -21,20 +27,6 @@
         }
     }
 }
-
-
-// == font
-// ------------------------------------------------------------
-//
-// src: w3.css v4
-.font-tiny   { @include rem('font-size', 12); }  // 13px
-.font-sm     { @include rem('font-size', 14); }
-.font-md     { @include rem('font-size', 15); }
-.font-lg     { @include rem('font-size', 18); }  // 20px
-.font-xl     { @include rem('font-size', 24); }
-.font-xxl    { @include rem('font-size', 32); }
-.font-xxxl   { @include rem('font-size', 48); }
-.font-jumbo  { @include rem('font-size', 64); }
 
 
 // == form control plug (radio,checkbox)
@@ -67,7 +59,7 @@ $controls-size: $input-height*.8;
         outline: none;
         user-select: none;
         margin: 0;
-        transition: $input-transition, background ease-in-out .2s;
+        transition: $transition-duration, background ease-in-out .2s;
 
         // this proj
         @if $input-bg { background: $input-bg; }
@@ -151,6 +143,61 @@ $controls-size: $input-height*.8;
     }
 }
 
+// == 開關式 checkbox
+// 使用方法
+// <label class="switch">
+//   <input type="checkbox">
+//   <div class="slider round"></div>
+// </label>
+.slider {
+    cursor: pointer;
+    background-color: $input-border-color;
+    border-radius: $controls-size;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    transition: $input-transition;
+
+    @include el(before) {
+        position: absolute;
+        left: 2px;
+        bottom: 2px;
+        transition: $transition-duration;
+
+        height: $controls-size;
+        width: $controls-size;
+        background-color: white;
+        border-radius: 50%;
+    }
+}
+.switch {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    width: ($controls-size + 4)*1.5;
+    height: $controls-size + 4;
+
+    input {
+        display: none;
+
+        &:checked + .slider {
+            background: $controls-color;
+            box-shadow: inset 1px 1px 1px darken($controls-color,12);
+            &:before {
+                transform: translateX($controls-size*0.63);
+            }
+        }
+        &:focus + .slider {
+            box-shadow: 0 0 1px $controls-color;
+        }
+    }
+}
+
+
 // == custom (this proj add)
 // ------------------------------------------------------------
 .arrow {
@@ -205,7 +252,7 @@ $controls-size: $input-height*.8;
         display: block;
 
         &:hover, &.active {
-            background: tint(color(secondary), 35);
+            background: tint(color(), 80);
         }
     }
     hr {
@@ -221,36 +268,31 @@ $controls-size: $input-height*.8;
     display: inline-block;
     padding: .2em .3em;
 
-    line-height: 1.2;
-
     &:not(:only-child) { margin: .2em; }
+}
+[class*=panel-] {
+    @extend .p-5;
+    line-height: 1.5;
 }
 
 // label + panel theme
-@each $type, $color in $pale-theme {
-    .label-#{$type}, .panel-#{$type} {
+@each $theme, $color in (
+    // 淺色系 contract() => 當指定色的亮度<>於 $luminance(亮度)時，就 light(變亮)/dark(變暗)
+    success:  contract(color(success), light, 50),
+    info:     contract(color(info), light, 68),
+    warning:  tint(color(warning), 56),
+    danger:   contract(color(danger), light, 50),
+) {
+    .label-#{$theme}, .panel-#{$theme} {
         background: $color;
         color: shade($color, 58);
         border: 1px solid shade($color, 7.5);
     }
 }
+.label-muted {
+    $color: color(muted);
 
-@each $type, $color in (muted: darken(color(muted), 6), back: #555) {
-    .label-#{$type} {
-        background: $color;
-        color: if(luma($color) > .65, shade($color, 58), tint($color, 90));
-        border: 1px solid shade($color, 7.5);
-    }
-}
-
-// 有線列表
-.list-line {
-    @extend .my-0, %list-unstyled;
-
-    li {
-        &:not(:last-child) {
-            @extend .pb-5, .mb-5;
-            border-bottom: 1px dashed $border-color;
-        }
-    }
+    background: $color;
+    color: contract($color, dark, 80);
+    border: 1px solid shade($color, 7.5);
 }

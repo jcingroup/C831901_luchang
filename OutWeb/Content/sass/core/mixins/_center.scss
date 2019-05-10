@@ -33,7 +33,7 @@
     }
 
     // 垂直only
-    @else if (($width == y) or $height) {
+    @else if ($width == y) or $height {
         top: 50%;
 
         @if type-of($height) == number {
@@ -41,7 +41,7 @@
             margin-top: -($height / 2);
         }
         @else {
-            transform: translateY(-50%, -50%);
+            transform: translateY(-50%);
         }
     }
 
@@ -54,7 +54,7 @@
             margin-left: -($width / 2);
         }
         @else {
-            transform: translateX(-50%, -50%);
+            transform: translateX(-50%);
         }
     }
 }

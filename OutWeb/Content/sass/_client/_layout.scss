@@ -9,7 +9,7 @@
 
     @include clearfix;
 
-    @include mq-max(break(md, -1)) {
+    @include mq-max(break($max-width, -1)) {
         @include rem('padding-left', $wrap-x-spacing);
         @include rem('padding-right', $wrap-x-spacing);
     }
@@ -21,20 +21,18 @@
     }
 }
 
-#container {
+@if $footBeBottom {
+    html, body {
+        height: 100%;
+    }
+}
+#wrapper {
     // 讓頁腳置底
     @if $footBeBottom {
-        // @if $lte7 { _height: 100%; }
-        // min-height: 100%;
-        // padding-bottom: $footer-height + $wrapper-b-spacing;
-        min-height: calc(100vh - #{$footer-height});
-
-        @include mq-max(break(sm, -1)) {
-            min-height: calc(100vh - 92px);
-        }
-        @include mq-max($phone - 1) {
-            min-height: calc(100vh - 119px);
-        }
+        @if $lte7 { _height: 100%; }
+        min-height: 100%;
+        padding-bottom: $footer-height + $wrapper-b-spacing;
+        // min-height: calc(100vh - #{$footer-height});
     }
 
     @if not $enable-RWD {
@@ -44,28 +42,6 @@
     }
 
     // this proj only
-    background: #fff url(#{$img-path}/headerBg.gif) repeat-x 0 1px;
-    border-top: 6px solid #F49E1C;
-    position: relative;
-
-    @include mq($max-width + 16) {
-        @include el($ext: false) {
-            position: absolute;
-            left: 50%;
-            top: 0;
-            height: 360px;
-            width: 8px;
-            background: url(#{$img-path}/bg2.png) no-repeat 0 0;
-        }
-        &:before {
-            background-position: 0 0;
-            margin-left: -($max-width/2 + 8);
-        }
-        &:after {
-            background-position: right 0;
-            margin-left: $max-width/2;
-        }
-    }
 }
 
 
@@ -76,14 +52,11 @@
     z-index: z(header);
 
     // this proj only
-    @include clearfix;
-
-    @include mq(break($mobile-menu-bk, +1)) {
-        @if $header-height { height: $header-height; }
-    }
-    @include mq-max($phone) {
-        // menu height
-        padding-bottom: 43px;
+    @include el(before) {
+        position: absolute;
+        width: 100%;
+        height: 36px;
+        background: #1a1a1a;
     }
 }
 
@@ -91,138 +64,128 @@
     cursor: pointer;
 
     // this proj only
-    @include text-pic('logo.png', 216px, 110px);
+    @if $page == index {
+        @include text-pic('index/logo.png', 406px, 96px);
+        @include center(x);
+        top: 274px;
 
-    @include mq(break($mobile-menu-bk, +1)) {
-        position: absolute;
-        left: 27px;
-        top: 11px;
+        @include mq-max(md) {
+            max-width: 96%;
+            background-size: contain;
+            top: 140px;
+        }
     }
-    @include mq($phone) {
-        margin-right: 10px;
-    }
-    @include mq-max($mobile-menu-bk) {
-        float: left;
-        background-size: contain;
-        width: 130px;
-        height: 66px;
+    @if $page == page {
+        @extend .font-sp, .my-10;
+        @include rem('font-size', 27);
+
+        font-weight: normal;
+        letter-spacing: .15em;
+        text-shadow: 0 0 .01em;
+
+        @include mq($phone) {
+            float: left;
+        }
+        @include mq(break($phone, -1)) {
+            margin-bottom: 12px;
+        }
+
+        i {
+            color: tint($body-color, 70);
+            font-style: normal;
+        }
+        small {
+            display: block;
+            color: tint($body-color, 60);
+            font-size: 48%;
+            letter-spacing: .08em;
+        }
     }
 }
 
 // 主選單
-#menu {
-    position: absolute;
-    right: 0;
+.nav-link {
+    position: relative;
+    display: inline-block;
 
-    $menu-bg: #fff;
-    $p-size: 16px;
+    font-family: $font-family-sp2;
+    letter-spacing: .2em;
 
-    @include el {
-        width: $p-size;
-        height: 80%;
-        position: absolute;
-        top: 0;
+    @include rem('font-size', 21);
 
-        background-size: 100% 100%;
-        background-image: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjY0cHgiIGhlaWdodD0iNjRweCIgdmlld0JveD0iMCAwIDMwNiAzMDYiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDMwNiAzMDY7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8ZyBpZD0iY2hldnJvbi1yaWdodCI+CgkJPHBvbHlnb24gcG9pbnRzPSI5NC4zNSwwIDU4LjY1LDM1LjcgMTc1Ljk1LDE1MyA1OC42NSwyNzAuMyA5NC4zNSwzMDYgMjQ3LjM1LDE1MyAgICIgZmlsbD0iIzAwMDAwMCIvPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=);
-
+    @include el(before) {
+        @include center(x);
+        top: -4px;
+        border-top: 3px solid color(success);
+        width: 0;
         opacity: 0;
-        transition: .3s;
-    }
-    // left
-    &:before {
-        left: 0;
-        transform: rotate(180deg);
-    }
-    // right
-    &:after {
-        right: 0;
+        transition: width .35s, opacity .5s;
     }
 
-    // 大到小
-    @include mq(break($mobile-menu-bk, +1)) {
-        top: 66px;
+    @include mq(sm) {
+        margin-left: 15px;
+        padding-left: 20px;
+        padding-right: 13px;
     }
-    @include mq-max($mobile-menu-bk) {
-        top: 28px;
-        left: 138px;
+    @include mq-max(break(sm, -1)) {
+        text-align: center;
+        margin-right: -4px;
+        width: 20%;
     }
-    @include mq-max(780px) {
-        right: -$wrap-x-spacing;
-        padding-left: $p-size + 4;
-        padding-right: $p-size + 4;
 
-        &.left:before,
-        &.right:after {
-            opacity: .4;
+    @if $page == index {
+        @extend .text-white, .py-10;
+    }
+    @if $page == page {
+        @extend .py-s;
+
+        color: $body-color;
+
+        &:hover {
+            color: tint($body-color, 45);
         }
-    }
-    @include mq-max($phone) {
-        top: 72px;
-        left: -$wrap-x-spacing;
-    }
 
-    .scroll-inline {
-        // 平行滑動
-        white-space: nowrap;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch; // 讓ios比較好滾動
-        -ms-overflow-style: -ms-autohiding-scrollbar; // 讓IE10,11,edge 滑鼠hover時會有卷軸
-    }
-
-    a {
-        @extend .font-md, .px-s, .pb-5;
-
-        background-repeat: repeat-x;
-        background-position: 0 bottom;
-        border-left: 1px solid #e3e3e3;
-        color: #888;
-        font-weight: bold;
-
-        display: inline-block;
-        min-width: 88px;
-
-        &.current, &:hover {
-            color: color();
-            background-image: url(#{$img-path}/navBg_over.gif);
-
-            small {
-                color: #969696;
-            }
+        @include mq($phone) {
+            padding-top: 24px;
+            padding-bottom: 24px;
+        }
+        @include mq($phone, break(sm, -1)) {
+            width: calc(20% - 44px);
         }
     }
 
-    small {
-        @extend .font-tiny, .text-muted;
-
-        display: block;
-        font-weight: normal;
-        letter-spacing: 0;
+    &.active, &:hover {
+        &:before {
+            opacity: 1;
+            width: 100%;
+        }
     }
 }
 
-// 回首頁.加入最愛
-.topNav {
-    @extend .font-tiny;
+// 聯絡資訊
+.head-info {
+    @extend .font-sm;
 
-    float: right;
-    margin-top: 2px;
+    line-height: 36px;
+    position: relative;
+    z-index: 1;
 
-    @include mq-max($phone) {
-        margin-right: -5px;
-    }
+    background: url(#{$img-path}/icon-phone.gif) 0 center no-repeat;
+    padding-left: 24px;
 
     a {
-        @extend .px-5;
+        color: #fff;
 
-        color: #b0b0b0;
-        margin-left: -2px;
-
-        &:not(:first-child) {
-            border-left: 1px solid #b0b0b0;
+        &:not(:last-child) {
+            @include el(after, false, '/') {
+                opacity: .4;
+                margin: 0 5px 0 9px;
+                font-size: 120%;
+            }
         }
+
         &:hover {
-            color: #666;
+            color: darken(#fff, 20);
         }
     }
 }
@@ -233,61 +196,51 @@
 
 #footer {
     min-height: $footer-height;
-    // @if $footBeBottom { margin-top: -($footer-height); }
+    @if $footBeBottom { margin-top: -($footer-height); }
     position: relative;
     z-index: z(footer);
 
     // this proj only
-    @extend .font-tiny, .bg-secondary, .text-info, .py-10;
+    @extend .text-white, .text-center, .pt-30;
+
+    background: color(secondary) url(#{$img-path}/icon-foot.gif) bottom center no-repeat;
 
     @include clearfix;
 
-    @include mq-max(break(sm, -1)) {
-        text-align: center;
+    @include mq-max(break($max-width, -1)) {
+        @include rem('padding-left', $wrap-x-spacing);
+        @include rem('padding-right', $wrap-x-spacing);
     }
 }
 
-.contacts {
-    @extend .mt-0;
+.foot-info {
+    @extend .font-lg;
 
-    letter-spacing: 1px;
-    line-height: 1.6;
-    color: inherit;
+    li {
+        display: inline;
 
-    @include mq(sm) {
-        text-align: left;
-    }
-    @include mq(md) {
-        margin-left: 10px;
-    }
-
-    strong, .b {
-        @include rem('font-size', 17);
-    }
-    strong {
-        // @extend .text-success;
-        color: color(success) !important;
+        &:not(:last-child) {
+            @include el(after, false, '/') {
+                opacity: .4;
+                margin: 0 6px 0 14px;
+                font-size: em(24, 18);
+            }
+        }
     }
 
-    @include mq($phone) {
-        .in-line { display: inline; }
-        li:first-child {
-            padding-right: 10px;
-            margin-right: 8px;
-            border-right: 1px solid;
+    a {
+        @extend .text-white;
+
+        border-bottom: 0 dotted rgba(#fff, 0);
+        transition: border-bottom .15s;
+
+        &:hover, &:active {
+            border-bottom: 1px dotted rgba(#fff, .5);
         }
     }
 }
 
 .copyright {
-    @extend .mt-2;
-
-    color: #736357;
-
-    @include mq(sm) {
-        text-align: left;
-    }
-    @include mq(md) {
-        margin-right: 10px;
-    }
+    @extend .font-sm;
+    opacity: .5;
 }

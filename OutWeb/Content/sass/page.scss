@@ -1,9 +1,6 @@
 @charset "utf-8";
 
-$isClient:          page;
-$footBeBottom:      true;
-$img-products-path: '../product/images';
-$img-order-path:    '../order/images';
+$page:          page;
 
 
 // import
@@ -25,550 +22,207 @@ $img-order-path:    '../order/images';
 @import "_client/modules";
 
 
-// head
+// output
 // ------------------------------------------------------------
-#banner {
-    background: url(#{$img-path}/banner.jpg) no-repeat 0 0/cover;
-    height: 125px;
-
-    @include mq-max(break(md, -1)) {
-        margin-left: -$wrap-x-spacing;
-        margin-right: -$wrap-x-spacing;
-    }
-}
 
 // == 麵包屑
 .breadcrumb {
-    @extend %list-inline, .font-tiny, .text-right, .my-5, .mr-10;
+    @extend %list-inline, .font-sm;
 
     a {
-        @extend .py-2, .pr-s;
+        @extend .py-2;
 
-        color: #b0b0b0;
-        background: url(#{$img-path}/icon_arrow.gif) no-repeat right center;
+        color: $body-color;
 
-        &:hover {
-            color: #4d4d4d;
+        &:after {
+            @extend .ml-5;
+            content: '/';
+        }
+        &:active, &:hover {
+            @extend .text-primary;
         }
     }
 }
+#banner {
+    margin-top: -46px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 
-// == 會員登入+購物車
-$member-strong-color: #896239;
-.login {
-    @extend .bg-success;
-
-    position: relative;
-    padding: 10px 6px;
-
-    @include mq(md) {
-        position: absolute;
-        left: 0;
-        margin: -22px 0 0 2px;
-        width: $sidebar-width;
+    .Team & {
+        background-image: url(#{$img-path}/banner-team.jpg);
     }
-
-    // 登入前
-    input {
-        width: 115px;
-        border: 1px solid #e3e3e3;
-        background: #f7f7f7;
-
-        @include mq-max(380px) {
-            width: calc(100% - 45px);
-        }
+    .Profession & {
+        background-image: url(#{$img-path}/banner-profession.jpg);
     }
-
-    .field {
-        @include mq(380px, break(md, -1)) {
-            display: inline-block;
-        }
+    .Special & {
+        background-image: url(#{$img-path}/banner-special.jpg);
     }
-
-    // 註冊+忘記密碼
-    .submits {
-        margin-left: 36px;
-
-        @include mq(568px, break(md, -1)) {
-            display: inline-block;
-            margin-left: 8px;
-        }
-
-        a {
-            @extend .mx-2;
-
-            color: #a37c52;
-
-            &:hover { text-decoration: underline; }
-        }
+    .ContactUs & {
+        background-image: url(#{$img-path}/banner-contactus.jpg);
     }
+}
+.slogan {
+    @extend .my-0, .font-normal;
 
-    // all btn
-    .btn {
-        @extend .text-center;
+    @include rem('font-size', 85);
 
-        padding: .114em .45em;
+    color: #404040;
+    letter-spacing: .11em;
+    line-height: 1.1;
+    text-shadow: 1px 3px 0 rgba(#BFD8D7, .5);
+
+    padding-top: 64px;
+    padding-bottom: 40px;
+
+    @include mq-max(md) {
+        font-size: rem(64);
+    }
+    @include mq-max(sm) {
+        font-size: rem(48);
+    }
+}
+
+// == 團隊
+.profile {
+    @extend .bg-info;
+
+    border-top: 3px solid color(info);
+
+    .contents {
+        padding: 32px 42px 50px;
+
+        background: url(#{$img-path}/profile-bg.gif) 0 0 no-repeat;
+    }
+    .title {
+        @extend .mt-0, .text-white, .font-normal;
+
+        padding: 0 42px 8px;
+
+        margin-left: -(42px);
+        margin-right: -(42px);
+    }
+    // 左大標
+    header {
+        padding: 42px 16px;
 
         @include mq(md) {
-            position: absolute;
-            right: 8px;
-        }
-    }
-
-    // 登入鈕
-    .submit {
-        @include mq(568px) {
-            margin-top: -2px;
-        }
-        @include mq(md) {
-            top: 46px;
-        }
-    }
-
-    // 我要結帳
-    .payment {
-        color: $member-strong-color;
-
-        @include mq(md) {
-            top: 54px;
-        }
-        @include mq(420px, break(md, -1)) {
-            position: absolute;
-            bottom: 18px;
-            left: 300px;
-        }
-
-        &:hover { color: #E81700; }
-    }
-
-    // 登入後
-    .bill {
-        @include mq-max(break(md, -1)) {
-            display: inline;
-
-            &:last-child {
-                margin-left: 10px;
-            }
-        }
-    }
-    .user {
-        color: #FCDCAD;
-    }
-    .name {
-        @extend .mx-5;
-        color: $member-strong-color;
-        font-weight: bolder;
-    }
-    .total {
-        @extend .font-md;
-        color: #E81700
-    }
-    .logout {
-        padding-left: 5px;
-        text-decoration: underline;
-        border-left: 1px solid #FCDCAD;
-        color: #FCDCAD;
-        font-size:11px;
-
-        &:hover {
-            color:#E81700
+            padding-top: 60px;
         }
     }
 }
+.side {
+    @extend .text-center;
 
-// main
-// ------------------------------------------------------------
-#main {
-    @include clearfix;
+    @include mq($max-width + 1) {
+        $width: $max-width*41.66/100;
+        max-width: $width;
+        position: relative;
+        left: 100%;
+        transform: translateX(-100%);
 
-    @include mq(md) {
-        background: url(#{$img-path}/sidebarBg.gif) ($sidebar-width - .7) 90px no-repeat;
-    }
-}
-#sidebar {
-    @include mq(md) {
-        width: $sidebar-width;
-        margin-top: 70px;
-        padding-left: 10px;
-    }
-    @include mq-max(break(md, -1)) {
-        margin-bottom: 20px;
-    }
-}
-#content {
-    @extend .pb-30;
-
-    @include mq(md) {
-        margin-right: 10px;
-        width: 100 - $sidebar-width - 6;
-    }
-
-    // 裝飾圖> 品牌故事
-    .deck {
-        @extend .mb-10;
-
-        &.pull-sm-right {
-            @include mq(sm) {
-                margin-left: 10px;
-            }
-            @include mq-max(break(sm, -1)) {
-                display: block;
-                margin: auto;
-            }
+        .callus {
+            margin-left: -30px; //暫時放，等後面有更好方法再換
         }
     }
-}
+    h1 {
+        @extend .font-normal, .mt-0;
 
-
-// sidebar
-// ------------------------------------------------------------
-
-// 標題
-.sub-title {
-    @extend .mb-5;
-
-    background: url(#{$img-path}/icon_h4.gif) no-repeat 0 center;
-    color: #e58210;
-    line-height: 1.4;
-
-    padding-left: 27px;
-
+        @include rem('font-size', 72);
+        letter-spacing: .46em;
+    }
     small {
-        @extend .ml-5;
-        color: #b0b0b0;
-    }
-}
-// 分類
-.nav-kind {
-    @extend .font-sm;
-
-    display: block;
-    padding: 6px 4px;
-
-    border-top: 1px solid #F1F1F1;
-    border-bottom: 1px solid #F1F1F1;
-    color: #754c24;
-
-    &:hover, &.current {
-        background: #f2f2f2;
-        color: #666;
-    }
-
-    small {
-        display: none;
-    }
-}
-// 分類子選單
-.sub-navs {
-    @extend .font-tiny, .mb-2;
-
-    @include mq(md) {
-        margin-left: 10px;
-    }
-    @include mq-max(break(md, -1)) {
-        br { display: none; }
-    }
-    @include mq($mobile, break(md, -1)) {
-        margin-top: -25px;
-        margin-left: 66px;
-    }
-
-    a {
-        display: inline-block;
-        padding: 3px 8px 3px 4px;
-
-        background-repeat: no-repeat;
-        background-position: right center;
-        color: #888;
-
-        @include mq(md) {
-            padding-right: 12px;
-            padding-left: 9px;
-        }
-        @include mq-max(break(md, -1)) {
-            margin-right: 5px;
-        }
-
-        &:hover, &.current {
-            color: $link-hover-color;
-            background-image: url(#{$img-path}/icon_arrow.gif);
-        }
-    }
-}
-
-
-// content
-// ------------------------------------------------------------
-
-// == aboutus
-.article {
-    p {
-        @extend .font-md;
-
-        text-indent: 2em;
-        line-height: 1.42;
-    }
-}
-
-// == products
-
-// 最新產品
-.new-product {
-    @extend .font-md;
-
-    color: #808080;
-
-    // 產品圖
-    &-pic {
+        @extend .mt-s;
         display: block;
-        margin: auto;
-        padding-right: 8px;
-        padding-bottom: 7px;
-        background: url(#{$img-products-path}/newpro_bg.gif) no-repeat center bottom/contain;
-    }
-
-    // 產品說明
-    &-info {
-        @extend .p-15;
-
-        background: url(#{$img-products-path}/infor_bg_middle.gif) repeat-y 0 0;
-        border-radius: .8em 0 0 .8em;
-    }
-
-    // 產品名稱
-    h4 {
-        @extend .mt-0, .mb-s;
-
-        color: #6B9E23;
-    }
-
-    // 價格
-    .prices {
-        @extend .ml-15, .mt-10;
-        color: darken(color(danger), 12);
+        font-size: 50%;
+        letter-spacing: .2em;
     }
 }
 
-// 產品列表
-.catalog {
-    @extend .m-0;
+.file-list {
+    @extend .font-lg;
 
+    // 學經歷小標
+    h4 {
+        @extend .my-0, .font-xl, .font-sp;
+
+        @include mq(sm) {
+            margin-right: 20px;
+        }
+    }
+    ul {
+        @extend .mb-30, .mt-10;
+    }
+    li {
+        line-height: 1.7;
+    }
+}
+
+// == 專欄
+.article-list {
+
+}
+.article {
+    @extend .pb-l, .mb-l;
+
+    &:not(:last-child) {
+        border-bottom: 2px solid color(muted);
+    }
+    @include mq(md) {
+        &:nth-last-child(2) {
+            border-bottom: 0;
+        }
+    }
+
+    p {
+        line-height: 1.7;
+    }
+}
+.header {
+    @extend .font-sp, .font-xxl, .mb-s, .mt-0;
+}
+.author {
+    @extend .font-normal, .mt-0, .font-lg;
+
+    color: lighten($body-color, 32);
     position: relative;
-    min-height: 255px;
+    padding-left: 2.2em;
 
-    // 產品介紹連結
-    > a {
-        z-index: 1;
-        opacity: 0;
-        background: #fff; // for IE10 bugfix
-        position: absolute;
+    @include el(before) {
+        width: 1.8em;
+        border-top: 1px solid $border-color;
+
+        @include center(y);
         left: 0;
-        top: 0;
+    }
+}
+
+// == 聯絡
+.contacts {
+    @extend .bg-muted;
+
+    border-top: 3px solid color(info);
+    line-height: 1.6;
+
+    @include rem('font-size', 20);
+
+    address {
+        @extend .pl-l;
+    }
+}
+.map {
+    @include mq(sm) {
+        height: 450px;
+    }
+    iframe {
         width: 100%;
         height: 100%;
-    }
-    .pic {
-        @extend .text-center;
-        border: 1px solid #EAEAEA;
-        padding: 3px;
-        height: 160px;
-    }
-    img {
-        max-height: 100%;
-    }
-    h4 {
-        color: #754c24;
-        background: #e4e2d0;
-        margin: 3px 0 5px 0;
-        padding: 5px;
-    }
-}
-
-// 產品介紹 detail
-.show {
-    &-pic {
-        padding: 7px;
-        background: #FFEBCA;
-    }
-    .list-line {
-        li {
-            text-indent: -(em(83));
-            padding-left: em(83);
-        }
-        span {
-            color: #754C24;
-        }
-    }
-}
-
-
-// == 最新消息
-.news {
-    @extend .font-md;
-
-    // list
-    .date {
-        color: #aaa;
-    }
-}
-
-// == 會員專區
-// 會會登入註冊
-.member-login {
-    @extend .font-sm, .mb-m;
-
-    input {
-        @include mq-max(break(sm, -1)) {
-            width: 100%;
-            margin-bottom: $field-spacer;
-        }
-    }
-}
-
-// 會員編輯
-.member-edit {
-    @extend .font-sm;
-
-    dt {
-        @extend .text-info, .text-sm-right;
-    }
-
-    @include mq-max(break(sm, -1)) {
-        .pwd {
-            margin-bottom: 0;
-        }
-        .in-line {
-            dt, dd { display: inline-block; }
-        }
-        [name=code] {
-            width: 80px;
-        }
-        [name=tel] {
-            width: calc(100% - 95px);
-        }
-        .btn[name=submit] {
-            width: 100%;
-            font-size: 1.2em;
-        }
-    }
-}
-
-// == 聯絡我們
-.map {
-    iframe {
-        border: 3px solid #F7EDD0;
-        min-height: 300px;
-    }
-}
-
-// == 購物車
-// 購物流程
-.step {
-    @extend .mt-10;
-
-    background: url(#{$img-order-path}/stepBg.gif) 0 0 no-repeat;
-    min-height: 47px;
-
-    li {
-        @include text-hide;
-
-        background-repeat: no-repeat;
-        background-position: 0 0;
-
-        width: 84px;
-        height: 16px;
-
-        @include mq($phone) {
-            margin-top: 33px;
-            display: inline-block;
-            vertical-align: top;
-        }
-
-        &.active {
-            width: 138px;
-            height: 58px;
-            margin-top: 1px;
-            display: inline-block;
-            vertical-align: top;
-        }
-    }
-
-    &1 {
-        background-image: url(#{$img-order-path}/step1.gif);
-        margin-left: 110px;
-
-        &.active {
-            background-image: url(#{$img-order-path}/step1_over.gif);
-        }
-    }
-    &2 {
-        background-image: url(#{$img-order-path}/step2.gif);
-        &.active {
-            background-image: url(#{$img-order-path}/step2_over.gif);
-        }
-    }
-    &3 {
-        background-image: url(#{$img-order-path}/step3.gif);
-        &.active {
-            background-image: url(#{$img-order-path}/step3_over.gif);
-        }
-    }
-}
-
-// 購物車清單+小計
-.shoppingcart {
-    border-collapse: collapse;
-    border-spacing: 0;
-
-    th, td {
-        padding:3px;
-    }
-    th {
-        @extend .text-center;
-
-        vertical-align: middle;
-        background: #f7edd0;
-        border: 1px solid $border-color;
-        color: #896239;
-    }
-    td {
-        border:1px solid #eee;
-    }
-}
-.accounts {
-
-    width: 185px;
-
-}
-.account {
-    @extend .mb-5;
-
-    border: 1px solid #e4e4e4;
-    border-top: none;
-    padding: 4px;
-
-    dl {
-        @extend .p-5, .my-0;
-    }
-    dt {
-        float: left;
-    }
-    dd {
-        overflow: hidden;
-    }
-    .total {
-        border-top: 1px dotted #cccccc;
-        border-bottom: 1px dotted #cccccc;
-        background: #f2f2f2;
     }
 }
 
 // == 編輯器
 .editor {
-    .other & {
-        @extend .font-sm;
-        color: lighten(color(secondary), 12);
-    }
+    line-height: 1.7;
 
     @include clearfix;
 }

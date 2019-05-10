@@ -1,17 +1,32 @@
 ﻿@{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = "聯絡 CONTACT";
+    ViewBag.BodyClass = "ContactUs";
+    ViewBag.BreadCrumb = "聯絡";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+<div id="banner" class="text-center">
+    <h2 class="slogan">CONTACT <span class="text-primary">US</span></h2>
+</div>
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+<section class="contacts clearfix">
+    <div class="map col-md-6">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3617.0924511783433!2d121.21709231500483!3d24.962968984005656!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34682386dd752903%3A0x8dce53cdab46a4e4!2z55CG56ug5rOV5b6L5LqL5YuZ5omA!5e0!3m2!1szh-TW!2stw!4v1557467753264!5m2!1szh-TW!2stw" frameborder="0" style="border:0" allowfullscreen></iframe>
+    </div>
+    <address class="col-md-6 font-norm pt-m">
+        <dl>
+            <dt class="pull-xs-left font-sp">電話：</dt>
+            <dd class="rest">
+                <a href="tel:034265825">03-4265825</a>（呂浩瑋律師）<br>
+                <a href="tel:034265925">03-4265925</a>（張晶瑩律師）
+            </dd>
+        </dl>
+        <dl>
+            <dt class="pull-xs-left font-sp">傳真：</dt>
+            <dd class="rest">03-4265625</dd>
+        </dl>
+        <dl>
+            <dt class="pull-xs-left font-sp">地址：</dt>
+            <dd class="rest"><a href="https://goo.gl/maps/xC61dfyLPwfs4Vi3A" target="new">桃園市中壢區元化路二段126號10樓</a></dd>
+        </dl>
+    </address>
+</section>

@@ -87,7 +87,11 @@
 .text-nowrap  { white-space: nowrap; }
 .overflow     { @include text-overflow(null); }
 
-.font-normal  { font-style: normal; }
+.font-normal  { font-weight: 400; }
+.font-bold    { font-weight: 700; }
+.font-light   { font-weight: 300; }
+.font-norm    { font-style: normal; }
+.font-italic  { font-style: italic; }
 
 @each $breakpoint, $value in $breakpoints {
     @include mq($value) {
@@ -102,8 +106,8 @@
 // == font size
 // ------------------------------------------------------------
 // src: w3.css v4
-@each $abbrev, $value in $font-size {
-    .font-#{$abbrev} { @include rem('font-size', $value); }
+@each $property, $value in $font-size {
+    .font-#{$property} { @include rem('font-size', $value); }
 }
 
 
@@ -129,19 +133,24 @@
 // == 情境 Contextual colors
 // ------------------------------------------------------------
 .text-white { color: #fff; }
+a.text-white, .hover-white {
+    &:hover, &:focus {
+        color: shade(#fff, 15);
+    }
+}
 .bg-white   { background: #fff; }
 
 // $colors in variables.scss
-@each $key, $value in $colors {
-    .text-#{$key}, .hover-#{$key} {
+@each $abbrev, $value in $colors {
+    .text-#{$abbrev}, .hover-#{$abbrev} {
         color: $value;
     }
-    a.text-#{$key}, .hover-#{$key} {
+    a.text-#{$abbrev}, .hover-#{$abbrev} {
         &:hover, &:focus {
             color: shade($value, 15);
         }
     }
-    .bg-#{$key} {
+    .bg-#{$abbrev} {
         background: $value;
     }
 }

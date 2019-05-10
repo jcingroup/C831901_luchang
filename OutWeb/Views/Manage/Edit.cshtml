@@ -1,7 +1,82 @@
 ﻿
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "專欄管理";
+    ViewBag.subnav = "Special";
 }
 
-<h2>Edit</h2>
+@section Breadcrumb {
+    <li>@ViewBag.Title</li>
+}
 
+<form>
+    <dl class="row">
+        <dt class="col-2 text-right label">
+            <sup class="help" title="必填">*</sup>
+            標題
+        </dt>
+        <dd class="col-8">
+            <input type="text" class="form-element full" value="" required>
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-2 text-right label">
+            <sup class="help" title="必填">*</sup>
+            作者
+        </dt>
+        <dd class="col-4">
+            <input type="text" class="form-element full" value="" required>
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-2 text-right label">
+            排序
+        </dt>
+        <dd class="col-8">
+            <input type="number" class="form-element">
+            <small class="text-danger">* 無值或數字相同時以新增時間愈近愈前面，若給值時則數字愈大愈前面。</small>
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-2 text-right label">
+            狀態
+        </dt>
+        <dd class="col-6">
+            <label class="control-group">
+                <input class="radio" type="radio" name="state" checked>
+                <i class="icon"></i> 上架
+            </label>
+            <label class="control-group">
+                <input class="radio" type="radio" name="state">
+                <i class="icon"></i> 下架
+            </label>
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-2 text-right label">
+            顯示於首頁
+        </dt>
+        <dd class="col-6">
+            <label class="switch">
+                <input type="checkbox">
+                <div class="slider round"></div>
+            </label>
+        </dd>
+    </dl>
+    <fieldset class="mb-20">
+        <legend class="underline">[ 文章內容 ]</legend>
+        <aside class="panel-warning mb-s">
+            <strong>編輯器注意事項:</strong>
+            <ol class="pl-l font-tiny my-s">
+                <li>從 WORD 複製文字時，請使用下方的<img src="~/Content/images/_SysAdm/icon-word.jpg" /> 圖示來貼上 WORD 文字，避免跑版</li>
+                <li>編輯器上傳圖片或新增表格等時，請勿設定<u>寬度及高度</u>(將數字刪除) ，以免行動裝置顯示時會跑版。</li>
+                <li>檔案尺寸寬度超過 1600 或 高度超過1200 的圖片會被壓縮(PNG透明背景會變成不透明)</li>
+            </ol>
+        </aside>
+        @* 編輯器 *@
+        <textarea rows="25" class="form-element full"></textarea>
+    </fieldset>
+    <footer class="submit-bar fixed-bottom">
+        <button type="submit" class="btn success oi" data-glyph="circle-check">確定儲存</button>
+        <button type="button" class="btn cancel oi" data-glyph="circle-x" onclick="location.href='@Url.Content("../List/1")'">取消</button>
+    </footer>
+</form>

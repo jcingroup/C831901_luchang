@@ -5,28 +5,22 @@
 }
 
 <h1 class="site-title">理章法律 網站管理系統 <small class="ml-m">Web Manager</small></h1>
-<h6 class="sub-copyright">Lu&Chang Attorenys-at-Law &copy; 2019</h6>
-<form class="wrap login">
-    <h2 class="title mt-0">System Login</h2>
-
-    <div class="field oi" data-glyph="person">
+<h5 class="sub-copyright">Lu&Chang Attorenys-at-Law &copy; 2019</h5>
+<form class="wrap login form-stacked">
+    <h2 class="title text-left text-primary">System Login</h2>
+    <main class="text-left">
         <label class="label">帳號 Username</label>
         <input class="form-element" type="text" required>
-    </div>
 
-    <div class="field oi" data-glyph="lock-locked">
         <label class="label">密碼 Password</label>
         <input class="form-element" type="password" required>
-    </div>
 
-    <div class="field oi" data-glyph="shield">
 
         <label class="label">驗證碼 Code</label>
         <input class="form-element" type="text" required>
-        <button type="button" class="tooltip" data-tip="點選可切換驗證碼"></button>
-    </div>
+    </main>
 
     <footer class="action-bar">
-        <button type="submit" class="btn">登入 LOGIN</button>
+        <button type="button" class="btn" onclick="location.href='@Url.Content("~/_sysadm/List/1")'">登入 LOGIN</button>
     </footer>
 </form>

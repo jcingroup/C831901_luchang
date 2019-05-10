@@ -133,6 +133,23 @@
     <Content Include="Content\css\vendor\open-iconic.css" />
     <Content Include="Content\css\vendor\swiper.min.css" />
     <Content Include="Content\font\open-iconic\open-iconic.svg" />
+    <Content Include="Content\images\badge.gif" />
+    <Content Include="Content\images\banner-contactus.jpg" />
+    <Content Include="Content\images\banner-profession.jpg" />
+    <Content Include="Content\images\banner-special.jpg" />
+    <Content Include="Content\images\banner-team.jpg" />
+    <Content Include="Content\images\icon-call.gif" />
+    <Content Include="Content\images\icon-foot.gif" />
+    <Content Include="Content\images\icon-phone.gif" />
+    <Content Include="Content\images\icon-quot.gif" />
+    <Content Include="Content\images\icon-quot2.gif" />
+    <Content Include="Content\images\index\banner.jpg" />
+    <Content Include="Content\images\index\banner2.jpg" />
+    <Content Include="Content\images\index\banner3.jpg" />
+    <Content Include="Content\images\index\logo.png" />
+    <Content Include="Content\images\phone-call.svg" />
+    <Content Include="Content\images\profile-bg.gif" />
+    <Content Include="Content\images\_SysAdm\icon-word.jpg" />
     <Content Include="Content\js\swiper.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -153,7 +170,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\images\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

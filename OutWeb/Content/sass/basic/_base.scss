@@ -44,6 +44,12 @@ h1 {
     margin: $h1-margin;
 }
 
+@if $headings {
+    @each $property, $value in $headings {
+        #{$property} { @include rem('font-size', $value);  }
+    }
+}
+
 
 // == Group content
 // -----------------------------------------------------------------

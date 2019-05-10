@@ -5,9 +5,11 @@
 @function grid($width, $gap: false) {
     $percentage: percentage($width);
 
+    // if $gap 有值並且無單位時(ex. 1.6), 因為有帶單位時，百分比會算不出來
     @if $gap and unitless($gap) {
         @return decimal-round( $percentage - ($gap - $width * $gap), 2, 'floor');
     }
+    // $gap: false, null, 有單位的ex. 16px
     @else {
         @return decimal-round( $percentage, 2, 'floor');
     }
@@ -22,6 +24,7 @@
 }
 
 @mixin make-grid-columns($columns: 12, $gap: $grid-gap, $breakpoints) {
+
     // 全營幕通用
     %grid-set {
         float: left;
@@ -34,14 +37,17 @@
             width: grid($i/$columns, $gap);
         }
         @if $i != $columns {
-            .push-#{$i} {
-                left: grid($i/$columns, $gap) + if(unitless($gap), $gap, 0);
-            }
-            .pull-#{$i} {
-                right: grid($i/$columns, $gap) + if(unitless($gap), $gap, 0);
-            }
-            .offset-#{$i} {
-                margin-left: grid($i/$columns, $gap) + if(unitless($gap), $gap, 0);
+            @each $abbrev, $prop in ( push: left, pull: right, offset: margin-left ) {
+                .#{$abbrev}-#{$i} {
+                    #{$prop}: grid($i/$columns, false);
+
+                    @if $gap {
+                       .padding & {
+                            // if $gap 無單位
+                           #{$prop}: if(unitless($gap), grid($i/$columns, $gap) + $gap, calc(#{grid($i/$columns)} + #{$gap/2}));
+                        }
+                    }
+                }
             }
         }
     }
@@ -62,15 +68,27 @@
                 }
 
                 @if $i != $columns {
-                    .push-#{$breakpoint}-#{$i} {
-                        left: grid($i/$columns, $gap) + if(unitless($gap), $gap, 0);
-                    }
-                    .pull-#{$breakpoint}-#{$i} {
-                        right: grid($i/$columns, $gap) + if(unitless($gap), $gap, 0);
-                    }
-                    .offset-#{$breakpoint}-#{$i} {
-                        margin-left: grid($i/$columns, $gap) + if(unitless($gap), $gap, 0);
-                    }
+                   @each $abbrev, $prop in ( push: left, pull: right, offset: margin-left ) {
+                       // .#{$abbrev}-#{$breakpoint}-#{$i} {
+                       //      @if $gap and unitless($gap) { // if $gap是用百分比時
+                       //          .padding #{$prop}: grid($i/$columns, $gap) + $gap;
+                       //      }
+                       //      @else {
+                       //          .padding #{$prop}: calc(#{grid($i/$columns)} + #{$gap/2});
+                       //      }
+                       // }
+
+                       .#{$abbrev}-#{$breakpoint}-#{$i} {
+                           #{$prop}: grid($i/$columns, false);
+
+                            @if $gap {
+                               .padding & {
+                                    // if $gap 無單位
+                                   #{$prop}: if(unitless($gap), grid($i/$columns, $gap) + $gap, calc(#{grid($i/$columns)} + #{$gap/2}));
+                                }
+                            }
+                       }
+                   }
                 }
             }
 

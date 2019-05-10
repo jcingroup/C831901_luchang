@@ -8,12 +8,10 @@
     box-sizing: border-box;
 
     border-radius: if($input-radius, $input-radius, 0);
-    height: if($input-border-width, em($input-height + ($input-border-width*2)), em($input-height));
+    // height: if($input-border-width, em($input-height + ($input-border-width*2)), em($input-height));
+    height: if($input-border-width, em($input-height + ($input-border-width*2), $input-font-size), em($input-height, $input-font-size));
 
-    @include size-auto($input-height, $input-font-size, $input-line-height, $input-pd-ratio);
-    // padding: $input-pd-ratio;
-    // font-size: rem($input-font-size);
-    // line-height: $input-line-height;
+    @include size-auto($input-height, $input-font-size, $input-line-height, $input-padding-x);
 
     @if $input-color        { color: $input-color; }
     @if $input-bg           { background-color: $input-bg; background-clip: padding-box; }
@@ -103,8 +101,13 @@ legend {
     &-stacked {
         .form-element, .label {
             display: block;
-            margin-bottom: em($field-spacer)*0.5;
             width: 100%;
+        }
+        .label {
+            margin-bottom: em($field-spacer) * .2;
+        }
+        .form-element {
+            margin-bottom: em($field-spacer);
         }
         .form-element.inline {
             display: inline;
@@ -168,7 +171,7 @@ legend {
         white-space: nowrap;
     }
     &-addon {
-        @include size-auto($input-height, $input-font-size, $input-line-height, $input-pd-ratio);
+        @include size-auto($input-height, $input-font-size, $input-line-height, $input-padding-x);
 
         @if $input-color { color: $input-color; }
         @if $input-bg    { background-color: $input-bg; }
