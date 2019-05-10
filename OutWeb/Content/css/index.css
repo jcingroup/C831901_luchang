@@ -1438,7 +1438,7 @@ a.text-muted:hover, a.text-muted:focus, .hover-muted:hover, .hover-muted:focus {
 .wrap {
   max-width: 1400px;
 }
-@media (max-width: 87.4375em) {
+@media (max-width: 90em) {
   .wrap {
     padding-left: 10px;
     padding-left: 0.625rem;
