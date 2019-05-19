@@ -1,13 +1,14 @@
 ﻿export class HttpProcess {
     constructor() {
         this.API_PATH = {
-            LOGIN: "http://localhost:5325/_Sysadm/Login"
+            LOGIN: "/_Sysadm/Login"
         }
     }
     
-    getApi(){
+    getApisPath(){
         return this.API_PATH;
     }
+
     fetchSendGet(url,data) {
         let setting = {
             method: 'GET',
@@ -20,7 +21,7 @@
 
         console.log(setting);
 
-        fetch(url, setting)
+        return fetch(url, setting)
             .then((response) => {
                 console.log(response);
                 return response.json();
@@ -44,16 +45,10 @@
             body: JSON.stringify(data)
         };
 
-        console.log(setting);
-
-        fetch(url, setting)
+        return fetch(url, setting)
             .then((response) => {
-                console.log(response);
+                //console.log(response);
                 return response.json();
-            }).then((jsonData) => {
-                console.log(jsonData);
-            }).catch((err) => {
-                console.log('錯誤:', err);
             });
     }
 

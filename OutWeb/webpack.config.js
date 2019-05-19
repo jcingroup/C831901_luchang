@@ -4,6 +4,7 @@ module.exports = {
     entry: {
         app: path.resolve(__dirname, 'Scripts/src/app.jsx'),
         httpunity: path.resolve(__dirname, 'Scripts/src/httpunity.js'),
+        
     },
     output: {
         path: path.resolve(__dirname, 'Scripts/dist'),

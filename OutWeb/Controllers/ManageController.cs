@@ -1,4 +1,6 @@
-﻿using OutWeb.Models;
+﻿using BotDetect.Web;
+using OutWeb.Models;
+using System;
 using System.Web.Mvc;
 
 namespace OutWeb.Controllers
@@ -31,12 +33,29 @@ namespace OutWeb.Controllers
         {
             bool isSuccess = true;
             string msg = string.Empty;
+            string url = string.Empty;
 
+            try
+            {
+                string userEnteredCaptchaCode = body.UserEnteredCaptchaCode;
+                string captchaId = body.CaptchaId;
+
+                SimpleCaptcha captcha = new SimpleCaptcha();
+                isSuccess = captcha.Validate(userEnteredCaptchaCode, captchaId);
+
+                if (!isSuccess)
+                    throw new Exception("驗證碼輸入錯誤!");
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+            }
 
             return Json(new
             {
                 success = isSuccess,
-                msg = msg
+                msg = msg,
+                url = url
             });
         }
 
