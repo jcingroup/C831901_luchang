@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<botdetect xmlns="https://captcha.com/schema/net"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="https://captcha.com/schema/net  
+             https://captcha.com/schema/net/botdetect-4.4.1.xsd">
+
+  <captchaStyles>
+    <captchaStyle>
+      <name>AncientMosaic</name>
+      <userInputID>ca</userInputID>
+    </captchaStyle>
+  </captchaStyles>
+</botdetect>

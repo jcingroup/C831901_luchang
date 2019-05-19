@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="LUCHANGModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="NEWS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AUTHOR" Type="nvarchar" MaxLength="50" />
+          <Property Name="TITLE" Type="nvarchar(max)" />
+          <Property Name="CONTENT" Type="nvarchar(max)" />
+          <Property Name="SORT" Type="int" />
+          <Property Name="DISABLED" Type="bit" />
+          <Property Name="DISABLED_BAK" Type="bit" />
+          <Property Name="BUD_DT" Type="datetime" />
+          <Property Name="BUD_USR_ID" Type="int" />
+          <Property Name="UPD_DT" Type="datetime" />
+          <Property Name="UPD_USR_ID" Type="int" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USR_ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="USR_PWD" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="BUD_DT" Type="datetime" Nullable="false" />
+          <Property Name="BUD_ID" Type="int" Nullable="false" />
+          <Property Name="UPD_DT" Type="datetime" Nullable="false" />
+          <Property Name="UPD_ID" Type="int" Nullable="false" />
+          <Property Name="USR_NM" Type="nvarchar" MaxLength="50" />
+          <Property Name="DISABLE" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="LUCHANGModelStoreContainer">
+          <EntitySet Name="NEWS" EntityType="Self.NEWS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USER" EntityType="Self.USER" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LUCHANGModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="NEWS">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AUTHOR" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TITLE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CONTENT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SORT" Type="Int32" />
+          <Property Name="DISABLED" Type="Boolean" />
+          <Property Name="DISABLED_BAK" Type="Boolean" />
+          <Property Name="BUD_DT" Type="DateTime" Precision="3" />
+          <Property Name="BUD_USR_ID" Type="Int32" />
+          <Property Name="UPD_DT" Type="DateTime" Precision="3" />
+          <Property Name="UPD_USR_ID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USR_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="USR_PWD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BUD_DT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="BUD_ID" Type="Int32" Nullable="false" />
+          <Property Name="UPD_DT" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UPD_ID" Type="Int32" Nullable="false" />
+          <Property Name="USR_NM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DISABLE" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="LUCHANGDB" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="NEWS" EntityType="Self.NEWS" />
+          <EntitySet Name="USER" EntityType="Self.USER" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LUCHANGModelStoreContainer" CdmEntityContainer="LUCHANGDB">
+          <EntitySetMapping Name="NEWS">
+            <EntityTypeMapping TypeName="LUCHANGModel.NEWS">
+              <MappingFragment StoreEntitySet="NEWS">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="AUTHOR" ColumnName="AUTHOR" />
+                <ScalarProperty Name="TITLE" ColumnName="TITLE" />
+                <ScalarProperty Name="CONTENT" ColumnName="CONTENT" />
+                <ScalarProperty Name="SORT" ColumnName="SORT" />
+                <ScalarProperty Name="DISABLED" ColumnName="DISABLED" />
+                <ScalarProperty Name="DISABLED_BAK" ColumnName="DISABLED_BAK" />
+                <ScalarProperty Name="BUD_DT" ColumnName="BUD_DT" />
+                <ScalarProperty Name="BUD_USR_ID" ColumnName="BUD_USR_ID" />
+                <ScalarProperty Name="UPD_DT" ColumnName="UPD_DT" />
+                <ScalarProperty Name="UPD_USR_ID" ColumnName="UPD_USR_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USER">
+            <EntityTypeMapping TypeName="LUCHANGModel.USER">
+              <MappingFragment StoreEntitySet="USER">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="USR_ID" ColumnName="USR_ID" />
+                <ScalarProperty Name="USR_PWD" ColumnName="USR_PWD" />
+                <ScalarProperty Name="BUD_DT" ColumnName="BUD_DT" />
+                <ScalarProperty Name="BUD_ID" ColumnName="BUD_ID" />
+                <ScalarProperty Name="UPD_DT" ColumnName="UPD_DT" />
+                <ScalarProperty Name="UPD_ID" ColumnName="UPD_ID" />
+                <ScalarProperty Name="USR_NM" ColumnName="USR_NM" />
+                <ScalarProperty Name="DISABLE" ColumnName="DISABLE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

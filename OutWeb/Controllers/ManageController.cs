@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using OutWeb.Models;
+using System.Web.Mvc;
 
 namespace OutWeb.Controllers
 {
@@ -23,6 +24,20 @@ namespace OutWeb.Controllers
         {
             ViewBag.IsFirstPage = true;
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult Login(LoginModel body)
+        {
+            bool isSuccess = true;
+            string msg = string.Empty;
+
+
+            return Json(new
+            {
+                success = isSuccess,
+                msg = msg
+            });
         }
 
         // GET: _SysAdm/List/5
