@@ -29,7 +29,7 @@ namespace OutWeb.Controllers
         }
 
         [HttpPost]
-        public JsonResult Login(LoginModel body)
+        public JsonResult Login(FromLoginModel body)
         {
             bool isSuccess = true;
             string msg = string.Empty;
