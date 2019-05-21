@@ -43,6 +43,7 @@ class LoginFormInput extends Component {
 
         let self = this;
         let htp = new HttpProcess();
+
         let promise = htp.fetchSendPost(htp.getApisPath().LOGIN, postData);
 
         promise.then((jsonData) => {

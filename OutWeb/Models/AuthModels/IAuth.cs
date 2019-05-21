@@ -9,7 +9,6 @@ namespace OutWeb.Models.AuthModels
     {
          string id { get; set; }
          string pwd { get; set; }
-         string guid { get; set; }
-        long initialTime { get; set; }
+
     }
 }

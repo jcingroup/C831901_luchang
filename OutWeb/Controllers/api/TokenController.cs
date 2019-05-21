@@ -1,11 +1,15 @@
-﻿using JWT;
+﻿using BotDetect.Web;
+using JWT;
 using JWT.Algorithms;
-using JWT.Builder;
 using JWT.Serializers;
-using Newtonsoft.Json.Linq;
+using LUCHANGEntities.DATA;
+using OutWeb.Models;
 using OutWeb.Models.api;
 using OutWeb.Models.AuthModels;
+using OutWeb.Repositories;
 using System;
+using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -15,6 +19,44 @@ namespace OutWeb.Controllers.api
     public class TokenController : ApiController
     {
         [HttpPost]
+        [Route("login")]
+        public async Task<IHttpActionResult> Login([FromBody]FromLoginModel data)
+        {
+            bool isSuccess = true;
+            string msg = string.Empty;
+            string url = string.Empty;
+            TokenResult result = new TokenResult();
+            try
+            {
+                string userEnteredCaptchaCode = data.UserEnteredCaptchaCode;
+                string captchaId = data.CaptchaId;
+
+                SimpleCaptcha captcha = new SimpleCaptcha();
+                isSuccess = captcha.Validate(userEnteredCaptchaCode, captchaId);
+
+                if (!isSuccess)
+                    throw new Exception("驗證碼輸入錯誤!");
+
+                try
+                {
+                    var task = await Task.Run(() => CreateToken(data));
+                    result.token = task;
+                    result.url = "/_SysAdm/List/1";
+                }
+                catch (Exception ex)
+                {
+                    result.success = false;
+                    result.msg = ex.Message;
+                }
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+            }
+            return Ok(result);
+        }
+
+        [HttpPost]
         [Route("gettoken")]
         public async Task<IHttpActionResult> GetToken(AuthBase loginData)
         {
@@ -22,7 +64,7 @@ namespace OutWeb.Controllers.api
             try
             {
                 var task = await Task.Run(() => CreateToken(loginData));
-                result.Data = task;
+                result.data = task;
             }
             catch (Exception ex)
             {
@@ -33,12 +75,25 @@ namespace OutWeb.Controllers.api
             return Ok(result);
         }
 
-        public Task<string> CreateToken<T>(T payload) where T : AuthBase
+        public async Task<string> CreateToken<T>(T payload) where T : IAuth
         {
+            string secret = UnityStaticProcess.GetConfigAppSetting("JwtSecret");
             string guid = Guid.NewGuid().ToString("N");
-            payload.guid = guid;
-            payload.initialTime = DateTimeOffset.UtcNow.AddHours(8).ToUnixTimeSeconds();
 
+            if (string.IsNullOrEmpty(payload.id) || string.IsNullOrEmpty(payload.pwd))
+                throw new Exception("使用者帳號或密碼為空值。");
+
+            using (var db = new LUCHANGDB())
+            {
+                var source = await db.USER.Where(s => s.USR_NM == payload.id)
+                    .FirstOrDefaultAsync();
+
+                if (source == null)
+                    throw new Exception("無法取得使用者。");
+            }
+
+            payload.GetType().GetProperty("guid").SetValue(payload, guid);
+            payload.GetType().GetProperty("initialTime").SetValue(payload, DateTimeOffset.UtcNow.AddHours(8).ToUnixTimeSeconds());
             IJwtAlgorithm algorithm = new HMACSHA256Algorithm();
             IJsonSerializer serializer = new JsonNetSerializer();
             IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
@@ -46,49 +101,7 @@ namespace OutWeb.Controllers.api
 
             var token = encoder.Encode(payload, secret);
 
-            return Task.FromResult(token);
-        }
-
-        private const string secret = "GQDstcKsx0NHjPOuXOYg5MbeJ1XT0uFiwDVvVBrk";
-
-
-        [HttpPost]
-        [Route("validtoken")]
-        public void ParsingToken(JObject jobj)
-        {
-            JsonResultBase result = new JsonResultBase();
-
-            try
-            {
-                string token = (string)jobj["token"];
-                if (string.IsNullOrEmpty(token))
-                {
-                    throw new Exception("Token驗證失敗");
-                }
-
-                //var payloadStr = new JwtBuilder()
-                //    .WithSecret(secret)
-                //    .MustVerifySignature()
-                //    .Decode(token);
-
-                var payloadObj = new JwtBuilder()
-                        .WithSecret(secret)
-                        .MustVerifySignature()
-                        .Decode<AuthBase>(token);
-
-                var now = DateTimeOffset.UtcNow.AddHours(8);
-                var initialTime = DateTimeOffset.FromUnixTimeSeconds(payloadObj.initialTime);
-
-                var diffSec = (now - initialTime).TotalSeconds;
-                if (diffSec > 3600)
-                {
-                    throw new Exception("Token驗證失敗");
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            return token;
         }
     }
 }

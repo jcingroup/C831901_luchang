@@ -1,7 +1,7 @@
 ﻿export class HttpProcess {
     constructor() {
         this.API_PATH = {
-            LOGIN: "/_Sysadm/Login"
+            LOGIN: "/siteauth/login"
         }
     }
     
