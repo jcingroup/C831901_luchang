@@ -14,7 +14,6 @@ namespace OutWeb.Attritube
 {
     public class JwtAuthActionFilter : ActionFilterAttribute
     {
-
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
             string secret = UnityStaticProcess.GetConfigAppSetting("JwtSecret");
