@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="format-detection" content="telephone=no">
     <title>@ViewBag.Title - 理章法律事務所 Lu&Chang Attorenys-at-Law</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+TC:300|Yantramanav&amp;subset=chinese-traditional">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+TC:600|Yantramanav&amp;subset=chinese-traditional">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="~/Content/css/grid.css">
     @RenderSection("css", required: false)
@@ -29,7 +29,7 @@ else
                     <a href="tel:034265825">03-4265825</a>
                     <a href="tel:034265925">03-4265925</a>
                 </nav>
-                <h1 class="logo" onclick="location.href='@Url.Content("~/Home")'" title="回首頁" tabindex="-1">理章法律<i>事務所</i> <small>Lu&Chang Attorenys-at-Law</small></h1>
+                <h1 class="logo" onclick="location.href='@Url.Content("~/Home")'" title="回首頁" tabindex="-1"><span>理章法律事務所</span> <small>Lu&Chang Attorenys-at-Law</small></h1>
                 <nav id="menu" class="pull-sm-right">
                     <a href="~/Home" class="nav-link @(ViewBag.BodyClass == "Home" ? "active" : "")">首頁</a>
                     <a href="~/Team" class="nav-link @(ViewBag.BodyClass == "Team" ? "active" : "")">團隊</a>

@@ -1474,8 +1474,8 @@ html, body {
 .logo {
   cursor: pointer;
   background: url(../images/index/logo.png) 0 0 no-repeat;
-  width: 406px;
-  height: 96px;
+  width: 738px;
+  height: 164px;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -1690,7 +1690,7 @@ html, body {
   position: absolute;
   left: 30px;
   right: 30px;
-  top: 380px;
+  top: 438px;
 }
 @media (max-width: 63.999em) {
   .slogan {

@@ -453,7 +453,7 @@ legend {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.text-hide {
+.logo span, .text-hide {
   font: 0/0 a;
   color: transparent;
   text-shadow: none;
@@ -1458,7 +1458,7 @@ legend {
     text-align: center;
   }
 }
-.font-tiny {
+.font-tiny, .logo small {
   font-size: 12px;
   font-size: 0.75rem;
 }
@@ -1659,11 +1659,6 @@ html, body {
 
 .logo {
   cursor: pointer;
-  font-size: 27px;
-  font-size: 1.6875rem;
-  font-weight: normal;
-  letter-spacing: 0.15em;
-  text-shadow: 0 0 0.01em;
 }
 @media (min-width: 35.5em) {
   .logo {
@@ -1675,15 +1670,17 @@ html, body {
     margin-bottom: 12px;
   }
 }
-.logo i {
-  color: #c2c2c2;
-  font-style: normal;
+.logo span {
+  background: url(../images/logo.gif) 0 0 no-repeat;
+  width: 235px;
+  height: 34px;
+  display: block;
 }
 .logo small {
   display: block;
   color: #adadad;
-  font-size: 48%;
   letter-spacing: 0.08em;
+  font-weight: normal;
 }
 
 .nav-link {
@@ -1876,7 +1873,7 @@ html, body {
   letter-spacing: 0.05em;
 }
 
-.font-sp, .header, .file-list h4, .logo {
+.font-sp, .header, .file-list h4 {
   font-family: "Yantramanav", "Noto Serif TC", serif;
   font-weight: normal;
 }
