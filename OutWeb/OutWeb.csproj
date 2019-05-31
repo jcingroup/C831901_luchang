@@ -261,6 +261,7 @@
     <Content Include="Views\Manage\Edit.cshtml" />
     <Content Include="Views\Manage\ChangePW.cshtml" />
     <None Include="Properties\PublishProfiles\Server.pubxml" />
+    <Content Include="Views\Manage\News.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LUCHANGEntities\LUCHANGEntities.csproj">
@@ -314,4 +315,11 @@
   </Target>
   <Target Name="AfterBuild">
   </Target> -->
+  <Target Name="CopyRoslynFiles" AfterTargets="AfterBuild" Condition="!$(Disable_CopyWebApplication) And '$(OutDir)' != '$(OutputPath)'">
+    <ItemGroup>
+      <RoslynFiles Include="$(CscToolPath)\*" />
+    </ItemGroup>
+    <MakeDir Directories="$(WebProjectOutputDir)\bin\roslyn" />
+    <Copy SourceFiles="@(RoslynFiles)" DestinationFolder="$(WebProjectOutputDir)\bin\roslyn" SkipUnchangedFiles="true" Retries="$(CopyRetryCount)" RetryDelayMilliseconds="$(CopyRetryDelayMilliseconds)" />
+  </Target>
 </Project>

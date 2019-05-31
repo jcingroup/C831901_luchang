@@ -11,7 +11,9 @@ using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
+using System.Web.Security;
 
 namespace OutWeb.Controllers.api
 {
@@ -39,9 +41,22 @@ namespace OutWeb.Controllers.api
 
                 try
                 {
-                    var task = await Task.Run(() => CreateToken(data));
-                    result.token = task;
-                    result.url = "/_SysAdm/List/1";
+                    //var task = await Task.Run(() => CreateToken(data));
+                    //result.token = task;
+                    var db0 = new LUCHANGDB();
+                    var user = await db0.USER.Where(x => x.USR_ID == data.id && x.USR_PWD == data.pwd).FirstOrDefaultAsync();
+                    if (user == null)
+                        throw new Exception("驗號或密碼錯誤!");
+
+                    string user_data = string.Empty;
+
+                    FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, user.USR_ID, DateTime.Now, DateTime.Now.AddDays(3),
+                                                     false, user_data, FormsAuthentication.FormsCookiePath);
+                    string encTicket = FormsAuthentication.Encrypt(ticket);
+                    HttpContext.Current.Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
+
+
+                    result.url = "/_SysAdm/News";
                 }
                 catch (Exception ex)
                 {
@@ -55,6 +70,16 @@ namespace OutWeb.Controllers.api
             }
             return Ok(result);
         }
+
+        [HttpPost]
+        [Route("logout")]
+        public void Logout()
+        {
+            FormsAuthentication.SignOut();
+            Redirect("~/_SysAdm");
+        }
+
+
 
         [HttpPost]
         [Route("gettoken")]
