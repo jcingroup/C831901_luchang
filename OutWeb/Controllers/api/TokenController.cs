@@ -10,14 +10,19 @@ using OutWeb.Repositories;
 using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
+using System.Web.Security;
 
 namespace OutWeb.Controllers.api
 {
     [RoutePrefix("siteauth")]
     public class TokenController : ApiController
     {
+
+
         [HttpPost]
         [Route("login")]
         public async Task<IHttpActionResult> Login([FromBody]FromLoginModel data)
@@ -56,24 +61,26 @@ namespace OutWeb.Controllers.api
             return Ok(result);
         }
 
-        [HttpPost]
-        [Route("gettoken")]
-        public async Task<IHttpActionResult> GetToken(AuthBase loginData)
-        {
-            JsonResultBase result = new JsonResultBase();
-            try
-            {
-                var task = await Task.Run(() => CreateToken(loginData));
-                result.data = task;
-            }
-            catch (Exception ex)
-            {
-                result.success = false;
-                result.msg = ex.Message;
-            }
 
-            return Ok(result);
-        }
+
+        //[HttpPost]
+        //[Route("gettoken")]
+        //public async Task<IHttpActionResult> GetToken(AuthBase loginData)
+        //{
+        //    JsonResultBase result = new JsonResultBase();
+        //    try
+        //    {
+        //        var task = await Task.Run(() => CreateToken(loginData));
+        //        result.data = task;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        result.success = false;
+        //        result.msg = ex.Message;
+        //    }
+
+        //    return Ok(result);
+        //}
 
         public async Task<string> CreateToken<T>(T payload) where T : IAuth
         {

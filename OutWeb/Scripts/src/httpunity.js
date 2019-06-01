@@ -1,7 +1,11 @@
 ﻿export class HttpProcess {
     constructor() {
         this.API_PATH = {
-            LOGIN: "/siteauth/login"
+            LOGIN: "/_SysAdm/Login",
+            GET_LIST: "/api/manage/getlist",
+            GET_DATA: "/api/manage/getdata",
+            SAVE_DATA: "/api/manage/savedata",
+            REMOVE_DATA: "/api/manage/removedata"
         }
     }
     
