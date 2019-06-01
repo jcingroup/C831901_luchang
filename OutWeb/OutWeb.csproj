@@ -195,6 +195,7 @@
     <Content Include="Content\images\index\banner2.jpg" />
     <Content Include="Content\images\index\banner3.jpg" />
     <Content Include="Content\images\index\logo.png" />
+    <Content Include="Content\images\logo.gif" />
     <Content Include="Content\images\phone-call.svg" />
     <Content Include="Content\images\profile-bg.gif" />
     <Content Include="Content\images\_SysAdm\icon-word.jpg" />
@@ -275,6 +276,7 @@
     <Content Include="Views\Manage\Edit.cshtml" />
     <Content Include="Views\Manage\ChangePW.cshtml" />
     <None Include="Properties\PublishProfiles\Server.pubxml" />
+    <Content Include="Views\Manage\News.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LUCHANGEntities\LUCHANGEntities.csproj">
@@ -328,4 +330,11 @@
   </Target>
   <Target Name="AfterBuild">
   </Target> -->
+  <Target Name="CopyRoslynFiles" AfterTargets="AfterBuild" Condition="!$(Disable_CopyWebApplication) And '$(OutDir)' != '$(OutputPath)'">
+    <ItemGroup>
+      <RoslynFiles Include="$(CscToolPath)\*" />
+    </ItemGroup>
+    <MakeDir Directories="$(WebProjectOutputDir)\bin\roslyn" />
+    <Copy SourceFiles="@(RoslynFiles)" DestinationFolder="$(WebProjectOutputDir)\bin\roslyn" SkipUnchangedFiles="true" Retries="$(CopyRetryCount)" RetryDelayMilliseconds="$(CopyRetryDelayMilliseconds)" />
+  </Target>
 </Project>

@@ -107,5 +107,11 @@ namespace OutWeb.Controllers
         {
             return View();
         }
+
+        [Authorize]
+        public ActionResult News()
+        {
+            return View();
+        }
     }
 }
