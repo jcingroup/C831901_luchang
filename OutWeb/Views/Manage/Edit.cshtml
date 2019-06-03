@@ -8,8 +8,12 @@
     <li>@ViewBag.Title</li>
 }
 
-<form>
-    <dl class="row">
+
+<div id="page_content">
+
+</div>
+
+@*<dl class="row padding">
         <dt class="col-2 text-right label">
             <sup class="help" title="必填">*</sup>
             標題
@@ -18,7 +22,7 @@
             <input type="text" class="form-element full" value="" required>
         </dd>
     </dl>
-    <dl class="row">
+    <dl class="row padding">
         <dt class="col-2 text-right label">
             <sup class="help" title="必填">*</sup>
             作者
@@ -27,7 +31,7 @@
             <input type="text" class="form-element full" value="" required>
         </dd>
     </dl>
-    <dl class="row">
+    <dl class="row padding">
         <dt class="col-2 text-right label">
             排序
         </dt>
@@ -36,7 +40,7 @@
             <small class="text-danger">* 無值或數字相同時以新增時間愈近愈前面，若給值時則數字愈大愈前面。</small>
         </dd>
     </dl>
-    <dl class="row">
+    <dl class="row padding">
         <dt class="col-2 text-right label">
             狀態
         </dt>
@@ -51,7 +55,7 @@
             </label>
         </dd>
     </dl>
-    <dl class="row">
+    <dl class="row padding">
         <dt class="col-2 text-right label">
             顯示於首頁
         </dt>
@@ -72,11 +76,19 @@
                 <li>檔案尺寸寬度超過 1600 或 高度超過1200 的圖片會被壓縮(PNG透明背景會變成不透明)</li>
             </ol>
         </aside>
-        @* 編輯器 *@
-        <textarea rows="25" class="form-element full"></textarea>
+        <textarea name="Content" rows="25" class="form-element full"></textarea>
+
     </fieldset>
     <footer class="submit-bar fixed-bottom">
         <button type="submit" class="btn success oi" data-glyph="circle-check">確定儲存</button>
         <button type="button" class="btn cancel oi" data-glyph="circle-x" onclick="location.href='@Url.Content("../List/1")'">取消</button>
-    </footer>
-</form>
+    </footer>*@
+<script src="~/Scripts/dist/newsadd.js"></script>
+
+
+@*<script src="~/ckeditor/ckeditor.js"></script>*@
+@*<script src="~/ckfinder/ckfinder.js"></script>
+    <script>
+        CKFinder.setupCKEditor(null, { basePath: '/ckfinder/', skin: 'v1' });
+        //CKEDITOR.replace('CONTENT');
+    </script>*@

@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OutWeb", "OutWeb\OutWeb.csproj", "{05547D60-7A72-4492-A344-EFF76316A2EC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assembly", "Assembly", "{3107EA53-8EB4-47E2-9E35-2FA10E9138E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LUCHANGEntities", "LUCHANGEntities\LUCHANGEntities.csproj", "{76D19C65-C19D-49CF-825A-15D60047751D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +19,16 @@ Global
 		{05547D60-7A72-4492-A344-EFF76316A2EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05547D60-7A72-4492-A344-EFF76316A2EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05547D60-7A72-4492-A344-EFF76316A2EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76D19C65-C19D-49CF-825A-15D60047751D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76D19C65-C19D-49CF-825A-15D60047751D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76D19C65-C19D-49CF-825A-15D60047751D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76D19C65-C19D-49CF-825A-15D60047751D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{76D19C65-C19D-49CF-825A-15D60047751D} = {3107EA53-8EB4-47E2-9E35-2FA10E9138E9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {45748A21-28A6-4CEB-9CD8-E6F60BA42DEF}

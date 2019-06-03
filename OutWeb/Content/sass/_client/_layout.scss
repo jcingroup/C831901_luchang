@@ -9,7 +9,7 @@
 
     @include clearfix;
 
-    @include mq-max(break($max-width, -1)) {
+    @include mq-max(break($max-width, +40)) {
         @include rem('padding-left', $wrap-x-spacing);
         @include rem('padding-right', $wrap-x-spacing);
     }
@@ -65,7 +65,7 @@
 
     // this proj only
     @if $page == index {
-        @include text-pic('index/logo.png', 406px, 96px);
+        @include text-pic('index/logo.png', 738px, 164px);
         @include center(x);
         top: 274px;
 
@@ -76,12 +76,13 @@
         }
     }
     @if $page == page {
-        @extend .font-sp, .my-10;
-        @include rem('font-size', 27);
+        @extend .my-10;
+        // @extend .font-sp, .my-10;
+        // @include rem('font-size', 27);
 
-        font-weight: normal;
-        letter-spacing: .15em;
-        text-shadow: 0 0 .01em;
+        // font-weight: normal;
+        // letter-spacing: .15em;
+        // text-shadow: 0 0 .01em;
 
         @include mq($phone) {
             float: left;
@@ -90,15 +91,23 @@
             margin-bottom: 12px;
         }
 
-        i {
-            color: tint($body-color, 70);
-            font-style: normal;
+        // logo字體改裝甲明朝
+        span {
+            @include text-pic('logo.gif', 235px, 34px);
+            display: block;
         }
+
+        // i {
+        //     color: tint($body-color, 70);
+        //     font-style: normal;
+        // }
         small {
+            @extend .font-tiny;
+
             display: block;
             color: tint($body-color, 60);
-            font-size: 48%;
             letter-spacing: .08em;
+            font-weight: normal;
         }
     }
 }

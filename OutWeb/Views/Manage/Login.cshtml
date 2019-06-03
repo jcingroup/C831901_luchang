@@ -3,24 +3,34 @@
     ViewBag.Title = "Login";
     ViewBag.BodyClass = "text-center";
 }
+<style>
+    #AncientMosaic_CaptchaImageDiv > a {
+        position: absolute;
+        top: -50px;
+    }
+</style>
+
 
 <h1 class="site-title">理章法律 網站管理系統 <small class="ml-m">Web Manager</small></h1>
 <h5 class="sub-copyright">Lu&Chang Attorenys-at-Law &copy; 2019</h5>
-<form class="wrap login form-stacked">
-    <h2 class="title text-left text-primary">System Login</h2>
-    <main class="text-left">
-        <label class="label">帳號 Username</label>
-        <input class="form-element" type="text" required>
+<form class="wrap login form-stacked" id="root">
+    @*<h2 class="title text-left text-primary">System Login</h2>
+        <main class="text-left">
 
-        <label class="label">密碼 Password</label>
-        <input class="form-element" type="password" required>
+            <label class="label">帳號 Username</label>
+                <input class="form-element" type="text" required>
+
+                <label class="label">密碼 Password</label>
+                <input class="form-element" type="password" required>
 
 
-        <label class="label">驗證碼 Code</label>
-        <input class="form-element" type="text" required>
-    </main>
+                <label class="label">驗證碼 Code</label>
+                <input class="form-element" type="text" required>
+        </main>
 
-    <footer class="action-bar">
-        <button type="button" class="btn" onclick="location.href='@Url.Content("~/_sysadm/List/1")'">登入 LOGIN</button>
-    </footer>
+        <footer class="action-bar">
+            <button type="button" class="btn">登入 LOGIN</button>
+        </footer>*@
 </form>
+
+<script src="~/Scripts/dist/app.js"></script>
