@@ -98,7 +98,7 @@ class NewsListData extends Component {
             alert(0);
             // console.log(this.state.details);
             // return <NewsDataEdit />
-            ReactDOM.render(<NewsDataEdit />, document.getElementById('page_content'));
+            // ReactDOM.render(<NewsDataEdit />, document.getElementById('page_content'));
         }
         else {
             return (
