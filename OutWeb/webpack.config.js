@@ -3,6 +3,7 @@
 module.exports = {
     entry: {
         app: path.resolve(__dirname, 'Scripts/src/app.jsx'),
+        news: path.resolve(__dirname, 'Scripts/src/news/app.js'),
         httpunity: path.resolve(__dirname, 'Scripts/src/httpunity.js'),
         
     },
@@ -20,6 +21,9 @@ module.exports = {
                 ]
             },
         ]
+    },
+    resolve: {
+        extensions: ['.js', '.css']
     }
 };
 
