@@ -179,4 +179,4 @@ export class NewsDataEdit extends Component {
 }
 
 
-ReactDOM.render(<NewsDataEdit />, document.getElementById('page_content'));
+// ReactDOM.render(<NewsDataEdit />, document.getElementById('page_content'));
