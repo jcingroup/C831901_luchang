@@ -1,20 +1,22 @@
 ﻿declare module server {
     interface Menu {
-        menu_id?: number;
-        parent_menu_id?: number;
-        menu_name?: string;
-        description?: string;
-        area?: string;
-        controller?: string;
-        action?: string;
-        icon_class?: string;
-        sort?: number;
-        is_folder?: boolean;
-        is_use?: boolean;
-        is_on_tablet?: boolean;
-        is_only_tablet?: boolean;
-        sub?: Array<Menu>;
+        Id?: string;
+        Link?: string;
+        Items?: Array<Menu>;
+        Active?: boolean;
+        CultureName?: Array<CultureKeyValue>;
+        ClickMode?: "Down" | "Right" | "None";
+        ItemName?: string;
+        DataGlyph?: string;
+        ClassName?:string;
+        ClassNameH3?:string;
+        PathStrace?: Array<string>
+        //擴充
+        role_array?: Array<LogRole>
+    }
 
-        use?: boolean;
+    interface CultureKeyValue {
+        Culture: string
+        Text: string
     }
 }

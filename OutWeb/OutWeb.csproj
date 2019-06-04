@@ -215,6 +215,10 @@
     <Content Include="Content\js\swiper.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\dist\login.js" />
+    <Content Include="Scripts\dist\manifest.js" />
+    <Content Include="Scripts\dist\news.js" />
+    <Content Include="Scripts\dist\vendors.js" />
     <Content Include="Scripts\src\app.jsx" />
     <Content Include="Scripts\src\httpunity.js" />
     <Content Include="Web.config" />
@@ -235,7 +239,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\dist\" />
     <Folder Include="Views\Valid\" />
   </ItemGroup>
   <ItemGroup>
@@ -302,8 +305,62 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Scripts\comm\ajax.ts" />
+    <TypeScriptCompile Include="Scripts\comm\com-datepick.tsx" />
+    <TypeScriptCompile Include="Scripts\comm\com-datetimepick.tsx" />
+    <TypeScriptCompile Include="Scripts\comm\com-fileupload.tsx" />
+    <TypeScriptCompile Include="Scripts\comm\comm-func.ts" />
+    <TypeScriptCompile Include="Scripts\comm\comm-run.ts" />
+    <TypeScriptCompile Include="Scripts\comm\components.tsx" />
+    <TypeScriptCompile Include="Scripts\comm\dopack.ts" />
+    <TypeScriptCompile Include="Scripts\comm\OrderButton.tsx" />
+    <TypeScriptCompile Include="Scripts\comm\twDistrict.ts" />
+    <TypeScriptCompile Include="Scripts\comm\vwMaskLoading.ts" />
+    <TypeScriptCompile Include="Scripts\def-data.ts" />
+    <TypeScriptCompile Include="Scripts\src\inc\actions.ts" />
+    <TypeScriptCompile Include="Scripts\src\inc\addMaster.tsx" />
+    <TypeScriptCompile Include="Scripts\src\inc\cbnReduce.ts" />
+    <TypeScriptCompile Include="Scripts\src\inc\func.ts" />
+    <TypeScriptCompile Include="Scripts\src\inc\Masterlayout.tsx" />
+    <TypeScriptCompile Include="Scripts\src\inc\reducers.ts" />
+    <TypeScriptCompile Include="Scripts\src\inc\Routelayout.tsx" />
+    <TypeScriptCompile Include="Scripts\src\news.bak\app.tsx" />
     <TypeScriptCompile Include="Scripts\src\news\app.tsx" />
-    <TypeScriptCompile Include="Scripts\ts.d\IEditType.d.ts" />
+    <TypeScriptCompile Include="Scripts\src\news\local.ts" />
+    <TypeScriptCompile Include="Scripts\src\news\pub.ts" />
+    <TypeScriptCompile Include="Scripts\src\path\api-menu.ts" />
+    <TypeScriptCompile Include="Scripts\src\path\api-news.ts" />
+    <TypeScriptCompile Include="Scripts\src\path\api-p100.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\ApiPathStruct.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\enum\IEditType.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\enum\InputViewMode.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\enum\SelectShowType.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\enum\Toastr.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\Global.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\IAjaxResult.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\IKeyValue.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\Jquery.Ext.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\JSExt.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\LangStruct.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\LgInfo.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\SelectTextOptions.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\server\Activities.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\server\AppProcess.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\server\Banner.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\server\Customer.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\server\logaccount.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\server\LogRole.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\server\Menu.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\server\News.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\server\ProdItem.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\server\ProdKind.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\server\Product.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\server\Purchase.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\server\PurchaseDetail.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\server\QnA.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\server\QnAKind.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\server\Spot.d.ts" />
+    <TypeScriptCompile Include="Scripts\ts.d\server\Support.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

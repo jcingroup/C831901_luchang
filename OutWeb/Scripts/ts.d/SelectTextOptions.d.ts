@@ -6,3 +6,7 @@ interface SelectTextOptions {
     is_active?: boolean;
     sub?: SelectTextOptions[]
 }
+
+interface AutoSelectOptions {
+    id: any, name: any
+}

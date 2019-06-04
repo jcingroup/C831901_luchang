@@ -4,40 +4,28 @@
     Error
 }
 
-//interface IResultBase {
-//    state: number;
-//    message: string;
-//    append: any;
-//}
-//interface IResultData<T> extends IResultBase {
-//    data: T;
-//    exist: boolean
-//}
-
 interface ErrDescription {
     field: string
     err: Array<ErrItem>
 }
-
 interface ErrItem {
     err_code: number
     message: string
 }
+interface PBase {
 
-interface ReturnBase {
+}
+interface ResultBase {
     state?: number;
     message?: string;
-    append?: any;
+    version?: string;
 }
-interface ReturnData<T> extends ReturnBase {
+interface ReturnData<T> extends ResultBase {
     exist?: boolean;
     data?: T;
-    alert?: Array<ErrDescription>
+    //alert?: Array<ErrDescription>
 }
-interface DetailQuery<T, T2> extends ReturnData<T> {
-    detail: T2[]
-}
-interface ReturnUpdate<T> extends ReturnBase {
+interface ReturnUpdate<T> extends ResultBase {
     id: number;
     exist: boolean;
     data: T;
@@ -91,7 +79,7 @@ interface ImageUpScope extends FilesUpScope {
     Parm?: Array<ImageSizeParm>
 }
 
-interface CartResult extends ReturnBase {
+interface CartResult extends ResultBase {
     amt: number
     total: number
     item: Array<CartResultItem>
@@ -99,8 +87,6 @@ interface CartResult extends ReturnBase {
 interface CartResultItem {
     product_id?: string
     product_name?: string
-    item_no?: number
-    item_name?:string
     qty?: number
     price?: number
     sub_total?: number

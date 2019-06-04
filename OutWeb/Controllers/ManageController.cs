@@ -67,9 +67,7 @@ namespace OutWeb.Controllers
             //Response.Cookies.Add(cookie_login_name);
 
             #endregion 後台登錄
-
-
-            result.url = Url.Content("~/_SysAdm/List");
+            result.url = Url.Content("~/_SysAdm/News");
 
             return Json(result);
         }

@@ -1,11 +1,11 @@
 ﻿import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { HttpProcess } from './httpunity';
-import { Captcha } from 'reactjs-captcha';
+//import { Captcha } from 'reactjs-captcha';
 import { captchaSettings } from 'reactjs-captcha';
-import axios from 'axios'
+//import axios from 'axios'
 
-class LoginFormInput extends Component {
+class LoginFormInput extends React.Component {
     constructor(prop) {
         super(prop);
         this.state = {
@@ -97,37 +97,33 @@ class LoginFormInput extends Component {
                 break;
         }
     }
-
-
-
+ 
     render() {
         let state = this.state;
         let pId = state.id;
         let pPw = state.pwd;
 
-        return (
-            <div>
-                <h2 class="title text-left text-primary">System Login</h2>
-                <main class="text-left">
+        return (<div>
+            <h2 className="title text-left text-primary">System Login</h2>
+            <main className="text-left">
 
-                    <label class="label">帳號 Username</label>
-                    <input class="form-element" name="id" type="text" required value={pId} onChange={e => this.onInputChange(e)} />
+                <label className="label">帳號 Username</label>
+                <input className="form-element" name="id" type="text" required value={pId} onChange={e => this.onInputChange(e)} />
 
-                    <label class="label">密碼 Password</label>
-                    <input class="form-element" name="pwd" type="password" required value={pPw} onChange={e => this.onInputChange(e)} />
+                <label className="label">密碼 Password</label>
+                <input className="form-element" name="pwd" type="password" required value={pPw} onChange={e => this.onInputChange(e)} />
 
-                    <Captcha captchaStyleName="AncientMosaic"
-                        ref={(captcha) => { this.captcha = captcha }} />
-                    <label class="label">驗證碼 Code</label>
-                    <input class="form-element" id="ca" type="text" required />
+                <Captcha captchaStyleName="AncientMosaic"
+                    ref={(captcha) => { this.captcha = captcha }} />
+                <label className="label">驗證碼 Code</label>
+                <input className="form-element" id="ca" type="text" required />
 
-                </main>
+            </main>
 
-                <footer class="action-bar" id="footer">
-                    <button type="button" class="btn" onClick={(e) => this.captchaOnSubmitHandler(e, state)}>登入 LOGIN</button>
-                </footer>
-            </div>
-        );
+            <footer className="action-bar" id="footer">
+                <button type="button" className="btn" onClick={(e) => this.captchaOnSubmitHandler(e, state)}>登入 LOGIN</button>
+            </footer>
+        </div>);
     }
 }
 

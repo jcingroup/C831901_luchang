@@ -252,3 +252,22 @@ ModelManifest.xml
 /_Release/
 /OutWeb/Content/js/_swiper.min.js
 /OutWeb/Scripts/src/news/app.js.map
+
+# ¦Û©w©¿²¤
+**/_Code/Cache/
+**/_Code/Log/
+**/_Code/SysUpFiles/
+**/_Code/SysDoc/*.html
+**/_Code/SysDoc/*.mp4
+**/_Code/SysDoc/*.css
+**/_Code/SysDoc/**/
+
+**/Scripts/src/*.js
+**/Scripts/src/**/*.js
+**/Scripts/comm/*.js
+**/Scripts/app/*.js
+
+**/Scripts/**/*.map
+**/logs/**/*.txt
+
+**/sass_bk/

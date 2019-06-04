@@ -11,7 +11,6 @@
         upt_id?: string;
         upt_date?: Date;
         lang?: string;
-        is_home?: string;
         //擴充屬性
     }
 }
