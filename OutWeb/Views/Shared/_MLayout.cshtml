@@ -9,12 +9,24 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300">
     <link rel="stylesheet" href="~/Content/css/vendor/open-iconic.css">
     <link rel="stylesheet" href="~/Content/css/grid.css">
-@if (ViewBag.IsFirstPage) {
-    <link rel="stylesheet" href="~/Content/css/login.css">
-} else {
-    <link rel="stylesheet" href="~/Content/css/admin.css">
-}
+    @if (ViewBag.IsFirstPage)
+    {
+        <link rel="stylesheet" href="~/Content/css/login.css">
+    }
+    else
+    {
+        <link rel="stylesheet" href="~/Content/css/admin.css">
+    }
     @RenderSection("IncludeCSS", false)
+    <script>
+        var gb_approot = '@Url.Content("~")';
+        var gb_menu_id = '@(ViewBag.menu_id == null ? 0 : ViewBag.menu_id)';
+        var account='admin';
+        var role = 'A';
+        var gb_culture = 'zh-TW';
+        var gb_Lang = null;
+        var gb_csrf_token = '1234';
+    </script>
 </head>
 
 <body class="@ViewBag.BodyClass">
@@ -81,6 +93,8 @@
             <div class="copyright">Powered By <a class="hover-secondary" href="http://www.jcin.com.tw" target="new">JCIN INFORMATION CO.</a></div>
             <small>本網站適用 Chrome, firefox, IE10.0+, 最佳瀏覽解析度為 1280*800 以上</small>
         </footer><!-- footer //-->
+        <script src="~/Scripts/dist/httpunity.js"></script>
+        <script src="~/Scripts/dist/app.js"></script>
     }
     else
     {
@@ -107,9 +121,11 @@
             });
         </script>
     }
-
+    <script src="~/Scripts/dist/manifest.js"></script>
+    <script src="~/Scripts/dist/vendors.js"></script>
+    <script src="~/Scripts/dist/lang.js"></script>
+    <script src="~/Scripts/dist/commrun.js"></script>
     @RenderSection("IncludeScript", false)
-        <script src="~/Scripts/dist/httpunity.js"></script>
-        <script src="~/Scripts/dist/app.js"></script>
+
 </body>
 </html>

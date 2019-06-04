@@ -12,7 +12,7 @@ export function AddMasterMenu(ContextObject, store, menu_id = '0') {
 
     ft<ReturnData<server.Menu[]>>(apipath.GET_api_Menu_GetByLogin, {})
         .then((res) => {
-
+            console.log(res)
             let storeMenuData: Array<server.Menu>;
             let menu_flat_data: Array<server.Menu> = []
 

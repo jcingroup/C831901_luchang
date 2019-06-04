@@ -109,6 +109,7 @@ namespace OutWeb.Controllers
         [Authorize]
         public ActionResult News()
         {
+            ViewBag.IsFirstPage = false;
             return View();
         }
     }

@@ -2,8 +2,8 @@
 @{
     ViewBag.Title = "News";
 }
-
-<script src="~/Scripts/dist/news.js"></script>
 <h2>News</h2>
-<div id="root1"></div>
-
+<div id="page_content"></div>
+@section IncludeScript{
+    <script src="~/Scripts/dist/news.js"></script>
+}

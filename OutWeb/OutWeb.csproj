@@ -215,6 +215,10 @@
     <Content Include="Content\js\swiper.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\dist\app.js" />
+    <Content Include="Scripts\dist\commrun.js" />
+    <Content Include="Scripts\dist\httpunity.js" />
+    <Content Include="Scripts\dist\lang.js" />
     <Content Include="Scripts\dist\login.js" />
     <Content Include="Scripts\dist\manifest.js" />
     <Content Include="Scripts\dist\news.js" />
@@ -278,6 +282,7 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="JSON\json.json" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

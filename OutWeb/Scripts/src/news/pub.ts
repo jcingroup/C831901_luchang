@@ -12,7 +12,7 @@ import ap from '../path/api-news';
 import { err_code } from '../../def-data';
 import { mask_show, mask_off } from '../../comm/vwMaskLoading';
 import { WarpCommParm } from '../../comm/dopack'
-import { menu_tree, menu_click_id_to_right } from '../inc/reducers';
+import { menu_tree, MenuFlow, menu_click_id_to_right } from '../inc/reducers';
 import cbnReduce from '../inc/cbnReduce';
 import update from 'immutability-helper';
 import "babel-polyfill";
@@ -416,5 +416,5 @@ const oper_id = (state = guid(), action) => {
             return state
     }
 }
-
-export let store = cbnReduce({ menu_click_id_to_right, menu_tree, oper_id, search, page_grid, edit_type, view_mode, field, kfield, exist });
+export let store = cbnReduce({ menu_click_id_to_right, menu_tree, MenuFlow, oper_id, search, page_grid, edit_type, view_mode, field, kfield, exist });
+//export let store = cbnReduce({ menu_click_id_to_right, menu_tree, oper_id, search, page_grid, edit_type, view_mode, field, kfield, exist });
