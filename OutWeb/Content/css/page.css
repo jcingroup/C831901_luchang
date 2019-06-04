@@ -1915,7 +1915,6 @@ html, body {
 
 .list {
   line-height: 1.5;
-  border-top: 1px dashed #ddd;
 }
 .list li {
   border-bottom: 1px dashed #ddd;
@@ -2064,3 +2063,5 @@ html, body {
 .editor {
   line-height: 1.7;
 }
+
+/*# sourceMappingURL=page.css.map */

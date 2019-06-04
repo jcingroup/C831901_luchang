@@ -1653,7 +1653,6 @@ html, body {
 
 .list {
   line-height: 1.5;
-  border-top: 1px dashed #ddd;
 }
 .list li {
   border-bottom: 1px dashed #ddd;
@@ -1839,3 +1838,5 @@ html, body {
 .swiper-pagination-bullet-active {
   background: #7DDCE0;
 }
+
+/*# sourceMappingURL=index.css.map */
