@@ -1,38 +1,78 @@
 {
-  "name": "webpack-test",
+  "name": "aisen",
   "version": "1.0.0",
-  "main": "index.js",
-  "babel": {
-    "presets": [
-      "env",
-      "react"
+  "scripts": {
+    "test": "jest",
+    "build": "webpack",
+    "dev": "webpack-dev-server --devtool eval --progress --colors --hot --content-base build",
+    "deploy": "NODE_ENV=production webpack -p"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
     ]
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack --mode development",
-    "build": "webpack --mode production"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "devDependencies": {
-    "@types/react": "16.4.18",
-    "@types/react-dom": "16.0.9",
-    "@types/react-redux": "^5.0.4",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
-    "react-router-dom": "^5.0.0",
-    "reactjs-captcha": "^1.3.0",
-    "webpack": "^4.31.0",
-    "webpack-cli": "^3.3.2"
-  },
   "dependencies": {
-    "axios": "^0.18.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "@types/jquery": "3.3.29",
+    "@types/react": "16.8.15",
+    "@types/react-dom": "16.8.4",
+    "@types/react-redux": "7.0.8",
+    "@types/moment": "2.13.0",
+    "@types/react-datepicker": "2.3.0",
+    "@babel/core": "7.4.4",
+    "@types/jest": "24.0.13",
+    "jquery": "3.4.1",
+    "moment": "2.24.0",
+    "path": "^0.12.7",
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
+    "react-addons-update": "15.6.2",
+    "immutability-helper": "3.0.0",
+    "react-datepicker": "2.5.0",
+    "react-datetime": "2.16.3",
+    "react-fileupload": "^2.4.0",
+    "react-lazyload": "^2.2.7",
+    "react-modal": "^3.1.0",
+    "react-redux": "^5.0.6",
+    "react-tooltip": "^3.4.0",
+    "prop-types": "^15.6.0",
+    "redux": "4.0.1",
+    "redux-async-await": "^1.0.1",
+    "redux-logger": "4.0.0",
+    "redux-thunk": "2.3.0",
+    "sortablejs": "^1.6.0",
+    "toastr": "^2.1.4",
+    "whatwg-fetch": "3.0.0",
+    "draft-js": "^0.10.3",
+    "draft-js-plugins-editor": "2.1.1",
+    "react-draft-wysiwyg": "1.13.2",
+    "react-quill": "1.3.3",
+    "styled-components": "^2.2.1",
+    "react-super-select": "1.0.8",
+    "uglify-js": "3.5.10"
+  },
+  "devDependencies": {
+    "css-loader": "2.1.1",
+    "style-loader": "0.23.1",
+    "es6-promise": "4.2.6",
+    "babel-loader": "7.1.5",
+    "babel-upgrade": "1.0.1",
+    "babel-polyfill": "6.26.0",
+    "babel-core": "7.0.0-alpha.20",
+    "babel-preset-es2015": "7.0.0-alpha.20",
+    "babel-preset-react": "7.0.0-alpha.20",
+    "babel-preset-stage-0": "7.0.0-alpha.20",
+    "babel-generator": "7.0.0-alpha.20",
+    "webpack": "4.30.0",
+    "webpack-cli": "3.3.1",
+    "jest": "24.8.0",
+    "ts-jest": "24.0.2",
+    "typescript": "3.3.1"
   }
 }

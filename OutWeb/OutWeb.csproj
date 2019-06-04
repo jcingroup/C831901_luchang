@@ -290,6 +290,7 @@
     <Content Include="Views\Manage\ChangePW.cshtml" />
     <None Include="Properties\PublishProfiles\Server.pubxml" />
     <Content Include="Views\Manage\News.cshtml" />
+    <Content Include="tsconfig.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LUCHANGEntities\LUCHANGEntities.csproj">
