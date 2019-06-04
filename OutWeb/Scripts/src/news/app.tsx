@@ -1,14 +1,14 @@
 ﻿
 import React = require('react');
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 
 //頂端元件
 interface TopNodeProps {
     edit_type?: IEditType,
 }
 class TopNode extends React.Component<TopNodeProps, any>{
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {};
     }
 
@@ -37,11 +37,13 @@ interface GridProps {
 
 class Grid extends React.Component<GridProps, any>{
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {};
     }
-    render() { }
+    render() {
+        return <div></div>;
+    }
 }
 
-ReactDOM.render(<TopNode />, document.getElementById('root'));
+render(<TopNode />, document.getElementById('root'));
