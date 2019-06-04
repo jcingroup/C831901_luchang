@@ -13,7 +13,7 @@ class TopNode extends React.Component<TopNodeProps, any>{
     }
 
     render() {
-        return <div></div>;
+        return <div><label>1234</label></div>;
     }
 }
 
@@ -46,4 +46,4 @@ class Grid extends React.Component<GridProps, any>{
     }
 }
 
-render(<TopNode />, document.getElementById('root'));
+render(<TopNode />, document.getElementById('root1'));

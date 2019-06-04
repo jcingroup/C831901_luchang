@@ -75,7 +75,7 @@ namespace OutWeb.Controllers
         }
 
         // GET: _SysAdm/List/5
-        public ActionResult List(int id)
+        public ActionResult List(int id=0)
         {
             return View();
         }

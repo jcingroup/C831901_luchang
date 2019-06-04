@@ -1,5 +1,5 @@
 ﻿const path = require('path');
-
+var webpack = require('webpack');
 module.exports = {
     entry: {
         app: path.resolve(__dirname, 'Scripts/src/app.jsx'),

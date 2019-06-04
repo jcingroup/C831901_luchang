@@ -14,7 +14,7 @@ class LoginFormInput extends Component {
         };
     }
     postForm(props) {
-        this.props.postForm(props)
+        this.props.postForm(props);
     }
 
     captchaOnSubmitHandler(e, state) {
