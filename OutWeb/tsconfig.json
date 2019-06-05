@@ -13,8 +13,7 @@
 
   "exclude": [
     "node_modules",
-    "wwwroot/js/build",
-    "wwwroot/js/cdn",
+    "Scripts/dist",
     "obj",
     "bin",
     "**/*.spec.ts"
