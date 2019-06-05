@@ -381,21 +381,6 @@ class Edit extends React.Component<EditProps, StateProps>{
                             </dd>
                         </dl>
                     </div>
-
-                    {/*右邊是產品圖片*/}
-                    <div className="col-6">
-                        <dl className="field">
-                            <dt className="col-2">列表圖</dt>
-                            <dd className="col-10">
-                                {
-                                    pp.edit_type == IEditType.modify ?
-                                        <FileUpBtn id={field.news_id} fileKey="news_list" title="圖片上傳" is_img={true} />
-                                        : <span className="text-danger">{gb_Lang.after_insert}</span>
-                                }
-
-                            </dd>
-                        </dl>
-                    </div>
                 </section>
 
                 <fieldset className="mt-16">

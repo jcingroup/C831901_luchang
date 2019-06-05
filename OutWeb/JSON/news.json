@@ -1,0 +1,41 @@
+[
+    {
+        "news_id": 1,
+        "news_title": "標題1",
+        "day": "2019-05-10T00:00:00",
+        "news_content": "最新消息\r\n最新消息\r\n最新消息\r\n最新消息\r\n最新消息\r\n",
+        "sort": 5,
+        "state": "A",
+        "ins_id": "AAA",
+        "ins_date": "2019-05-10T00:00:00",
+        "upt_id": "AAA",
+        "upt_date": "2019-05-10T00:00:00",
+        "lang": "zh-TW"
+    },
+    {
+        "news_id": 2,
+        "news_title": "標題2",
+        "day": "2019-05-11T00:00:00",
+        "news_content": "最新消息BBB\r\n最新消息\r\n最新消息\r\n最新消息\r\n最新消息\r\n",
+        "sort": 5,
+        "state": "A",
+        "ins_id": "AAA",
+        "ins_date": "2019-05-10T00:00:00",
+        "upt_id": "AAA",
+        "upt_date": "2019-05-10T00:00:00",
+        "lang": "zh-TW"
+    },
+    {
+        "news_id": 3,
+        "news_title": "標題3",
+        "day": "2019-05-12T00:00:00",
+        "news_content": "最新消息AAA\r\n最新消息\r\n最新消息\r\n最新消息\r\n最新消息\r\n",
+        "sort": 5,
+        "state": "A",
+        "ins_id": "AAA",
+        "ins_date": "2019-05-10T00:00:00",
+        "upt_id": "AAA",
+        "upt_date": "2019-05-10T00:00:00",
+        "lang": "zh-TW"
+    }
+]

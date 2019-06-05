@@ -100,7 +100,6 @@ export async function ACCallGrid(page: number, field: string, sort: string, quer
     let pm_result = WarpCommParm(pm_query);
 
     let res: ReturnData<GridInfo<server.News>> = await ft(ap.GET_API_News, pm_result);
-    //mask_off();
     if (res.state > 0)
         alert(res.message);
     else
