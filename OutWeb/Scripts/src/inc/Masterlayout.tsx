@@ -124,36 +124,40 @@ class MasterMenu extends React.Component<MasterMenuProps, MasterMenuState>{
         }
     }
 
+    //render() {
+
+    //    let { children, MenuData, MenuFlow } = this.props;
+    //    if (MenuData && MenuFlow)
+    //        return <>
+    //            <main id="main">
+    //                <header className="title">
+    //                    <h2>{MenuFlow.now_menu_name}</h2>
+    //                    <ul className="breadcrumb">
+    //                        <li>HOME</li>
+    //                        {'@RenderSection("Breadcrumb", false)'}
+    //                    </ul>
+    //                </header>
+    //                {children}
+    //            </main>
+
+    //            <aside id="sidebar">
+    //                <select className="switch-com" onChange={this.chgBranchId}>
+    //                    <option value={0} hidden>請選擇子公司</option>
+    //                    <option value={1}>A子公司</option>
+    //                    <option value={2}>B子公司</option>
+    //                    <option value={3}>C子公司</option>
+    //                </select>
+    //                {
+    //                    MenuData.map((e) => {
+    //                        return this.renderSetMenu(e);
+    //                    })
+    //                }
+    //            </aside>
+    //        </>
+    //}
     render() {
-
-        let { children, MenuData, MenuFlow } = this.props;
-        if (MenuData && MenuFlow)
-            return <>
-                <main id="main">
-                    <header className="title">
-                        <h2>{MenuFlow.now_menu_name}</h2>
-                        <ul className="breadcrumb">
-                            <li>HOME</li>
-                            {'@RenderSection("Breadcrumb", false)'}
-                        </ul>
-                    </header>
-                    {children}
-                </main>
-
-                <aside id="sidebar">
-                    <select className="switch-com" onChange={this.chgBranchId}>
-                        <option value={0} hidden>請選擇子公司</option>
-                        <option value={1}>A子公司</option>
-                        <option value={2}>B子公司</option>
-                        <option value={3}>C子公司</option>
-                    </select>
-                    {
-                        MenuData.map((e) => {
-                            return this.renderSetMenu(e);
-                        })
-                    }
-                </aside>
-            </>
+        let { children } = this.props;
+        return <div>{children}</div>
     }
 }
 

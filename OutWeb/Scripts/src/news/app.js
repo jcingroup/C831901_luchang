@@ -65,7 +65,10 @@ class Grid extends React.Component {
     ForPageFooterQuery(page) {
         let { search } = this.props;
         let { field, sort } = this.props.page_grid;
+        // 第一種
         pub_1.store.dispatch(pub_1.ACCallGrid(page, field, sort, search, true));
+        // 第二種
+        this.props.ACCallGrid(page, field, sort, search, true);
     }
     CallGridNow() {
         let { page } = this.props.page_grid;
@@ -276,7 +279,9 @@ const GridToProps = (state, ownProps) => {
     };
 };
 const GridDispatch = (dispatch, ownProps) => {
-    let s = redux_1.bindActionCreators({}, dispatch);
+    let s = redux_1.bindActionCreators({
+        ACCallGrid: pub_1.ACCallGrid
+    }, dispatch);
     return s;
 };
 let GridView = react_redux_1.connect(GridToProps, GridDispatch)(Grid);

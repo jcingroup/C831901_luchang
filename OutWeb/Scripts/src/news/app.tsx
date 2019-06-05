@@ -52,6 +52,7 @@ interface GridProps {
     edit_type?: IEditType,
     menu_name?: string,
     page_grid?: GridInfo<server.News>,
+    ACCallGrid?: (page: number, field: string, sort: string, query: object, is_query_item: boolean) => any
 }
 class Grid extends React.Component<GridProps, any>{
 
@@ -99,7 +100,12 @@ class Grid extends React.Component<GridProps, any>{
     ForPageFooterQuery(page: number) {
         let { search } = this.props;
         let { field, sort } = this.props.page_grid;
+
+        // 第一種
         store.dispatch<any>(ACCallGrid(page, field, sort, search, true));
+
+        // 第二種
+        this.props.ACCallGrid(page, field, sort, search, true);
     }
 
     CallGridNow() {
@@ -444,6 +450,7 @@ const GridToProps = (state, ownProps) => {
 }
 const GridDispatch = (dispatch, ownProps) => {
     let s = bindActionCreators({
+        ACCallGrid
     }, dispatch);
     return s;
 }
