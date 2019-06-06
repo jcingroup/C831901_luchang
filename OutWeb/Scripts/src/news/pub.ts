@@ -26,6 +26,7 @@ export const ac = {
     page: 'page',
     setpage: 'setpage',
     chgFdlVal: 'chgFdlVal',
+    chgTotal:'chgTotal',
     chgQryVal: 'chgQryVal',
     submitOK: 'submitOK',
     submitNot: 'submitNot',
@@ -45,6 +46,7 @@ export const ACInputValue = (field, value) => {
         value
     }
 }
+
 export const ACQueryValue = (field, value) => {
 
     return {
@@ -109,6 +111,27 @@ export async function ACCallGrid(page: number, field: string, sort: string, quer
             exist: res.exist
         }
 }
+
+export async function AddCallGrid(field, value, valueTotal) {
+    console.log(valueTotal);
+    valueTotal = value;
+    return {
+        type: ac.chgFdlVal,
+        field,
+        value,
+        valueTotal
+    }
+}
+
+//export async function  OutputTotal(field, valueX, valueY) {
+
+//    return {
+//        type: ac.chgTotal,
+//        field,
+//        valueX,
+//        valueY
+//    }
+//}
 
 export async function ACCallLoad(p) {
     mask_show(gb_Lang.mk_loading);
@@ -415,5 +438,37 @@ const oper_id = (state = guid(), action) => {
             return state
     }
 }
-export let store = cbnReduce({ menu_click_id_to_right, menu_tree, MenuFlow, oper_id, search, page_grid, edit_type, view_mode, field, kfield, exist });
+
+
+const changeValue = (state = { news_numberX: 0, news_numberY: 0 }, action) => {
+
+    let struct = {};
+    let n_state = {};
+
+    console.log('action.type', action.type);
+    switch (action.type) {
+        case AddCallGrid:
+            struct = {
+                $set: action.data
+            };
+
+            n_state = update(state, struct);
+
+            return n_state;
+        //case OutputTotal:
+
+        //    struct = {
+        //        $set: Number(action.valueX) + Number(action.valueY)
+        //    };
+
+        //    n_state = update(state, struct);
+
+        //    return n_state;
+        default:
+            return state
+    }
+}
+
+
+export let store = cbnReduce({ menu_click_id_to_right, menu_tree, MenuFlow, oper_id, search, page_grid, edit_type, view_mode, field, kfield, exist, changeValue });
 //export let store = cbnReduce({ menu_click_id_to_right, menu_tree, oper_id, search, page_grid, edit_type, view_mode, field, kfield, exist });

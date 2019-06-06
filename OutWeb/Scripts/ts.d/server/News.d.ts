@@ -2,6 +2,10 @@
     interface News {
         news_id?: any;
         news_title?: string;
+        news_author?: string;
+        news_numberX?: number;
+        news_numberY?: number;
+        news_total?: number;
         day?: any;
         news_content?: any;
         sort?: number;
