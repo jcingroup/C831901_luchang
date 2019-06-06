@@ -4,8 +4,8 @@
             LOGIN: "/_SysAdm/login",
             GET_LIST: "/api/News/List",
             GET_DATA: "/api/News/Edit",
-            SAVE_DATA: "/_SysAdm/Save",
-            REMOVE_DATA: "/api/manage/removedata"
+            SAVE_DATA: "/api/News/Save",
+            REMOVE_DATA: "/api/News/Remove"
         }
     }
 

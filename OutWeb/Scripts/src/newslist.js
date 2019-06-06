@@ -2,15 +2,14 @@
 import ReactDOM from 'react-dom';
 import { HttpProcess } from './httpunity';
 import { Aside,Nav, Header, Table, Footer } from './components'
-import  NewsDataEdit  from './newsedit'
 
 
 class NewsListData extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            listData: null,
-            details: null
+            listData: null
+            // details: null
         }
     }
 
@@ -18,24 +17,7 @@ class NewsListData extends Component {
         this.getData();
     }
     renderEditPage(id) {
-        let htp = new HttpProcess();
-        let postData = { id };
-
-        let promise = htp.fetchSendGet(htp.getApisPath().GET_DATA, postData);
-
-        promise.then((jsonData) => {
-            if (jsonData.success) {
-                this.setState({
-                    details: jsonData.data
-                });
-            }
-            else {
-                alert(jsonData.msg);
-            }
-        })
-            .catch((err) => {
-                console.log('錯誤:', err);
-            });
+    window.location.href ='/_SysAdm/Edit?id=' + id;
     }
     //ajax
     // componentDidMount() {
@@ -70,7 +52,6 @@ class NewsListData extends Component {
 
         promise.then((jsonData) => {
             if (jsonData.success) {
-
                 this.setState({
                     listData: jsonData.data
                 });
@@ -85,32 +66,32 @@ class NewsListData extends Component {
     }
 
     render() {
-        // return (
-        //     <div>
-        //         <Aside />
-        //         <Nav />
-        //         <Header />
-        //         <Table vm={this.state.listData} renderEditPage={(id) => this.renderEditPage(id)} />
-        //         <Footer />
-        //     </div>
-        // );
-        if (this.state.details) {
-            alert(0);
-            // console.log(this.state.details);
-            // return <NewsDataEdit />
-            // ReactDOM.render(<NewsDataEdit />, document.getElementById('page_content'));
-        }
-        else {
-            return (
-                <div>
-                    <Aside />
-                    <Nav />
-                    <Header />
-                    <Table vm={this.state.listData} renderEditPage={(id) => this.renderEditPage(id)} />
-                    <Footer />
-                </div>
-            );
-        }
+        return (
+            <div>
+                <Aside />
+                <Nav />
+                <Header />
+                <Table vm={this.state.listData} renderEditPage={(id) => this.renderEditPage(id)} />
+                <Footer />
+            </div>
+        );
+        // if (this.state.details) {
+        //     alert(0);
+        //     // console.log(this.state.details);
+        //     // return <NewsDataEdit />
+        //     // ReactDOM.render(<NewsDataEdit />, document.getElementById('page_content'));
+        // }
+        // else {
+        //     return (
+        //         <div>
+        //             <Aside />
+        //             <Nav />
+        //             <Header />
+        //             <Table vm={this.state.listData} renderEditPage={(id) => this.renderEditPage(id)} />
+        //             <Footer />
+        //         </div>
+        //     );
+        // }
 
     }
 }

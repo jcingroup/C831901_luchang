@@ -62,9 +62,9 @@ export class Header extends Component {
 export class Table extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            details: null
-        };
+        // this.state = {
+        //     details: null
+        // };
         this.renderEditPage = this.renderEditPage.bind(this);
     }
 

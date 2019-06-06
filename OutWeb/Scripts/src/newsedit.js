@@ -13,18 +13,85 @@ export class NewsDataEdit extends Component {
             CONTENT: '',
             SORT: '1',
             DISABLED: 'false',
-            STATUS: true
+            STATUS: true,
+            ID: null
         };
-
+        this.renderEditPage = this.renderEditPage.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.onEditorChange = this.onEditorChange.bind(this);
+        this.cancelHandleClick = this.cancelHandleClick.bind(this);
+        var url = new URL(document.URL);
+        var id = url.searchParams.get("id");
 
+        if (id != null) {
+            this.renderEditPage(id);
+        }
     }
+
+
+    requiredField(data) {
+        let validSuccess = true;
+        let valid = {
+            AUTHOR: true,
+            TITLE: true
+        };
+        Object.keys(data).forEach(function (item) {
+            let fieldCht;
+            switch(item)
+            {
+                case"AUTHOR":
+                fieldCht = "作者";
+                break;
+                case"TITLE":
+                fieldCht = "標題";
+                break;
+            }
+            let isRequired = valid[item];
+            if (isRequired && !data[item]) {
+                alert(`${fieldCht}為必填!`);
+                validSuccess = false;
+                return;
+            }
+            else if(isRequired && data[item].trim() == ''){
+                alert(`${fieldCht}為必填!`);
+            }
+        });
+        return validSuccess;
+    }
+
 
     onEditorChange(evt) {
         this.setState({
             CONTENT: evt.editor.getData()
         });
+    }
+
+    renderEditPage(id) {
+        let htp = new HttpProcess();
+        let postData = { id };
+
+        let promise = htp.fetchSendGet(htp.getApisPath().GET_DATA, postData);
+
+        promise.then((jsonData) => {
+            let data = jsonData.data;
+            if (jsonData.success) {
+                this.setState({
+                    AUTHOR: data.AUTHOR,
+                    TITLE: data.TITLE,
+                    CONTENT: data.CONTENT,
+                    SORT: data.SORT,
+                    DISABLED: data.DISABLED,
+                    STATUS: data.STATUS,
+                    ID: data.ID
+                });
+            }
+            else {
+                alert(jsonData.msg);
+            }
+        })
+            .catch((err) => {
+                console.log('錯誤:', err);
+            });
     }
 
     handleInputChange(event) {
@@ -37,12 +104,22 @@ export class NewsDataEdit extends Component {
         });
     }
 
-    postForm() {
+    cancelHandleClick(e) {
+        e.preventDefault();
+        window.location.href = '/_SysAdm/List/1';
+    };
+    postForm(id) {
 
         let htp = new HttpProcess();
 
         let postData = this.state;
 
+        let isValid = this.requiredField(postData);
+        if (!isValid) {
+            return;
+        }
+
+        postData.id = id;
         let promise = htp.fetchSendPost(htp.getApisPath().SAVE_DATA, postData);
 
         promise.then((jsonData) => {
@@ -50,9 +127,7 @@ export class NewsDataEdit extends Component {
                 if (jsonData.url != '') {
                     window.location.href = jsonData.url;
                 }
-                else {
-                    window.location.reload();
-                }
+
             }
             else {
                 alert(jsonData.msg);
@@ -63,36 +138,14 @@ export class NewsDataEdit extends Component {
             });
 
     }
-
-    getData() {
-        let htp = new HttpProcess();
-        let promise = htp.fetchSendGet(htp.getApisPath().GET_DATA);
-
-        promise.then((jsonData) => {
-            if (jsonData.success) {
-
-                this.setState({
-                    listData: jsonData.data
-                });
-            }
-            else {
-                alert(jsonData.msg);
-            }
-        })
-            .catch((err) => {
-                console.log('錯誤:', err);
-            });
-    }
-
-
-
 
     render() {
         let state = this.state;
+        let id = this.state.ID;
         let AUTHOR = state.AUTHOR;
         let TITLE = state.TITLE;
         let SORT = state.SORT;
-        let DISABLED = state.DISABLED;
+        let DISABLED = state.DISABLED.toString().toLowerCase();
         let STATUS = state.STATUS;
         let CONTENT = state.CONTENT;
         return (
@@ -169,8 +222,8 @@ export class NewsDataEdit extends Component {
                         />
                     </fieldset>
                     <footer class="submit-bar fixed-bottom">
-                        <button type="button" class="btn success oi" data-glyph="circle-check" onClick={() => this.postForm()}>確定儲存</button>
-                        <button type="button" class="btn cancel oi" data-glyph="circle-x">取消</button>
+                        <button type="button" class="btn success oi" data-glyph="circle-check" onClick={() => this.postForm(this.id)}>確定儲存</button>
+                        <button type="button" class="btn cancel oi" data-glyph="circle-x" onClick={(e) => this.cancelHandleClick(e)}>取消</button>
                     </footer>
                 </form>
             </div>
@@ -179,4 +232,4 @@ export class NewsDataEdit extends Component {
 }
 
 
-// ReactDOM.render(<NewsDataEdit />, document.getElementById('page_content'));
+ReactDOM.render(<NewsDataEdit />, document.getElementById('page_content'));
