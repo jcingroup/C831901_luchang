@@ -9,21 +9,42 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
+using System.Linq.Dynamic;
 
 namespace OutWeb.Controllers.api
 {
-    [Authorize]
-    [RoutePrefix("api/News")]
-    public class NewsController : BaseApiController
+    [RoutePrefix("api/Front/News")]
+    public class NewsFrontController : ApiController
     {
-        private int GetUserID()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T">資料表模型</typeparam>
+        /// <param name="item_where">IQueryable物件資料</param>
+        /// <param name="field">要排序的欄位</param>
+        /// <param name="sort">排序順序</param>
+        /// <param name="result">回傳排序後資料</param>
+        /// <returns>是否有進行排序</returns>
+        protected bool SortField<T>(IQueryable<T> item_where, string field, string sort, out IQueryable<T> result)
         {
-            var id = HttpContext.Current.Request.Cookies[WebSetup.Cookie_LoginId].Value;
-            if (string.IsNullOrEmpty(id))
-                throw new Exception("無法取得使用者登入資訊");
-            return Convert.ToInt32(id);
+            if (field != null && sort != null && (sort.ToLower() == "asc" || sort.ToLower() == "desc"))
+            {
+                IQueryable<T> resultOrderItems = null;
+
+                if (sort.ToLower() == "asc")
+                    resultOrderItems = item_where.OrderBy(field);
+
+                if (sort.ToLower() == "desc")
+                    resultOrderItems = item_where.OrderBy(field + " descending");
+                result = resultOrderItems;
+                return true;
+            }
+            else
+            {
+                result = item_where;
+                return false;
+            }
         }
 
         [Route("List")]
@@ -33,6 +54,8 @@ namespace OutWeb.Controllers.api
 
             int page = q.page == null ? 1 : (int)q.page;
             var predicate = PredicateBuilder.True<NEWS>();
+
+            predicate = predicate.And(x => !x.DISABLED && x.STATUS);
 
             if (!string.IsNullOrEmpty(q.qry))
             {
@@ -69,14 +92,15 @@ namespace OutWeb.Controllers.api
                     if (!SortField(item_where, q.field, q.sort, out IQueryable<NEWS> item_order))
                         item_order = item_where.OrderByDescending(x => new { x.ID }); //沒有排序進行預設排序
 
-                    int start_record = PageCount.PageInfo(page, defPageSize, item_count); //計算分頁資訊，取得需跳至開始的那一筆。
+
+                    int start_record = PageCount.PageInfo(page, item_count, item_count); //計算分頁資訊，取得需跳至開始的那一筆。
 
                     //轉模型 一次只處理分頁數量的資料
 
                     resultData = item_order
                     .AsExpandable()
                     .Skip(start_record)
-                    .Take(defPageSize)
+                    .Take(item_count)
                     .AsEnumerable()
                     .Select(s => new ListDataModel()
                     {
@@ -89,7 +113,8 @@ namespace OutWeb.Controllers.api
                         UPD_DT_STR = s.UPD_DT.ToString("yyyy\\-MM\\-dd"),
                         BUD_USR_ID = s.BUD_USR_ID,
                         UPD_USR_ID = s.UPD_USR_ID,
-                        CONTENT = s.CONTENT,
+                        CONTENT = !string.IsNullOrEmpty(s.CONTENT) ?
+                        s.CONTENT.Length > 60 ? HtmlToPlainText(s.CONTENT.Substring(0, 57)) + "..." : HtmlToPlainText(s.CONTENT) : s.CONTENT,
                         SORT = (float)s.SORT
                     })
                     .ToList();
@@ -161,6 +186,9 @@ namespace OutWeb.Controllers.api
                     }
                     else
                     {
+                        if (data.DISABLED || !data.STATUS)
+                            throw new Exception("該專欄已關閉或刪除");
+
                         result.data = new ListDataModel()
                         {
                             ID = data.ID,
@@ -186,89 +214,6 @@ namespace OutWeb.Controllers.api
             result.msg = msg;
             result.success = isSuccess;
 
-            return Ok(result);
-        }
-
-        [Route("Save")]
-        public async Task<IHttpActionResult> SaveData([FromBody] DataModel data)
-        {
-            JsonResultBase result = new JsonResultBase();
-            bool isSuccess = true;
-            string msg = string.Empty;
-            string url = string.Empty;
-            NEWS source = null;
-            using (var db = new LUCHANGDB())
-            {
-                try
-                {
-                    int userId = GetUserID();
-                    if (data.ID.HasValue)
-                    {
-                        source = await db.NEWS.FindAsync(data.ID.Value);
-                    }
-                    else
-                    {
-                        source = new NEWS() { BUD_DT = DateTime.UtcNow.AddHours(8), BUD_USR_ID = userId };
-                    }
-
-                    source.AUTHOR = data.AUTHOR;
-                    source.TITLE = data.TITLE;
-                    source.SORT = data.SORT;
-                    source.CONTENT = data.CONTENT;
-                    source.DISABLED = data.DISABLED;
-                    source.STATUS = data.STATUS;
-                    source.UPD_DT = DateTime.UtcNow.AddHours(8);
-                    source.UPD_USR_ID = userId;
-
-                    if (data.ID.HasValue)
-                        db.Entry(source).State = EntityState.Modified;
-                    else
-                        db.NEWS.Add(source);
-
-                    await db.SaveChangesAsync();
-                    url = "/_SysAdm/Edit?id=" + source.ID;
-                }
-                catch (Exception ex)
-                {
-                    isSuccess = false;
-                    msg = ex.Message;
-                    url = "/_SysAdm/Login";
-                }
-            }
-            result.url = url;
-            result.msg = msg;
-            result.success = isSuccess;
-            return Ok(result);
-        }
-
-        [Route("Remove")]
-        [HttpPost]
-        public async Task<IHttpActionResult> RemoveData([FromBody]DataModel data)
-        {
-            JsonResultBase result = new JsonResultBase();
-            bool isSuccess = true;
-            string msg = string.Empty;
-            string url = string.Empty;
-            using (var db = new LUCHANGDB())
-            {
-                try
-                {
-                    var source = await db.NEWS.FindAsync(data.ID);
-                    if (source != null)
-                    {
-                        db.Entry(source).State = EntityState.Deleted;
-                        await db.SaveChangesAsync();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    msg = ex.Message;
-                    isSuccess = false;
-                }
-            }
-
-            result.success = isSuccess;
-            result.msg = msg;
             return Ok(result);
         }
     }

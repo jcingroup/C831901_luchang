@@ -6,7 +6,9 @@
             GET_DATA: "/api/News/Edit",
             SAVE_DATA: "/api/News/Save",
             REMOVE_DATA: "/api/News/Remove",
-            CHANGE_PW: "/_SysAdm/ChangePW"
+            CHANGE_PW: "/_SysAdm/ChangePW",
+            GET_FRONT_LIST: "/api/Front/News/List",
+            GET_FRONT_DATA: "/api/Front/News/Edit"
         }
     }
 

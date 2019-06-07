@@ -32,6 +32,7 @@
     "axios": "^0.18.0",
     "ckeditor4-react": "^1.0.0-beta",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "react-render-html": "^0.6.0"
   }
 }

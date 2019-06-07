@@ -105,7 +105,7 @@ export class NewsDataEdit extends Component {
 
     cancelHandleClick(e) {
         e.preventDefault();
-        window.location.href = '/_SysAdm/List/1';
+        window.location.href = '/_SysAdm/List';
     };
     postForm(id) {
 

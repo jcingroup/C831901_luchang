@@ -169,6 +169,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\api\BaseApiController.cs" />
     <Compile Include="Controllers\api\NewsController.cs" />
+    <Compile Include="Controllers\api\NewsFontController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SpecialController.cs" />
@@ -1435,6 +1436,8 @@
     <Content Include="Scripts\src\components.js" />
     <Content Include="Scripts\src\httpunity.js" />
     <Content Include="Scripts\src\newsedit.js" />
+    <Content Include="Scripts\src\newdetailsfront.js" />
+    <Content Include="Scripts\src\newslistfont.js" />
     <Content Include="Scripts\src\newslist.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
