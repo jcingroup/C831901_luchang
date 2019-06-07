@@ -2,9 +2,8 @@
 
 module.exports = {
     entry: {
-        app: path.resolve(__dirname, 'Scripts/src/app.js'),
+        login: path.resolve(__dirname, 'Scripts/src/login.js'),
         newslist: path.resolve(__dirname, 'Scripts/src/newslist.js'),
-        newsadd: path.resolve(__dirname, 'Scripts/src/newsadd.js'),
         newsedit: path.resolve(__dirname, 'Scripts/src/newsedit.js'),
         httpunity: path.resolve(__dirname, 'Scripts/src/httpunity.js'),
         

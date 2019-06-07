@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace OutWeb.Models.api
+﻿namespace OutWeb.Models.api
 {
     public class JsonResultBase
     {
@@ -13,6 +8,5 @@ namespace OutWeb.Models.api
         public object data { get; set; }
 
         public string url { get; set; }
-
     }
 }

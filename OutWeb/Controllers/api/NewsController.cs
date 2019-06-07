@@ -3,6 +3,7 @@ using LUCHANGEntities.DATA;
 using OutWeb.Models;
 using OutWeb.Models.api;
 using OutWeb.Models.NewsModels;
+using ProcCore.WebCore;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -15,7 +16,7 @@ namespace OutWeb.Controllers.api
 {
     [Authorize]
     [RoutePrefix("api/News")]
-    public class NewsController : ApiController
+    public class NewsController : BaseApiController
     {
         private int GetUserID()
         {
@@ -26,16 +27,34 @@ namespace OutWeb.Controllers.api
         }
 
         [Route("List")]
-        public async Task<IHttpActionResult> GetList()
+        public async Task<IHttpActionResult> GetList([FromUri]GridBaseFilterModel q)
         {
-            JsonResultBase result = new JsonResultBase();
+            GridResultBaseModel result = new GridResultBaseModel();
 
-            //LinqLik 預留
-            var predicate = PredicateBuilder.New<NEWS>();
+            int page = q.page == null ? 1 : (int)q.page;
+            var predicate = PredicateBuilder.True<NEWS>();
 
-            //if (q.keyword != null)
-            //    predicate = predicate.And(x => x.name.Contains(q.keyword) || x.zip.Contains(q.keyword) || x.city.Contains(q.keyword)
-            //                || x.country.Contains(q.keyword) || x.address.Contains(q.keyword));
+            if (!string.IsNullOrEmpty(q.qry))
+            {
+                q.qry = q.qry.Trim();
+                predicate = predicate.And(x => x.TITLE.Contains(q.qry));
+            }
+            if (!string.IsNullOrEmpty(q.disabled) && !q.disabled.Equals("A"))
+            {
+                bool filterDisabled = true;
+                switch (q.disabled)
+                {
+                    case "Y":
+                        filterDisabled = false;
+                        break;
+                    case "N":
+                        filterDisabled = true;
+                        break;
+                }
+                predicate = predicate.And(x => x.DISABLED == filterDisabled);
+            }
+
+
             bool isSuccess = true;
             string msg = string.Empty;
             object resultData = null; ;
@@ -43,12 +62,23 @@ namespace OutWeb.Controllers.api
             {
                 try
                 {
-                    //var item_where = db.NEWS.AsExpandable().Where(predicate);
-                    var data = await db.NEWS
-                   .AsExpandable()
-                   .ToListAsync();
+                    var item_where = db.NEWS.AsExpandable().Where(predicate);
+                    var item_count = await item_where.CountAsync(); //取得此條件下總筆數
 
-                    resultData = data.Select(s => new ListDataModel()
+                    //進行排序 或點選欄位排序
+                    if (!SortField(item_where, q.field, q.sort, out IQueryable<NEWS> item_order))
+                        item_order = item_where.OrderByDescending(x => new { x.ID }); //沒有排序進行預設排序
+
+                    int start_record = PageCount.PageInfo(page, defPageSize, item_count); //計算分頁資訊，取得需跳至開始的那一筆。
+
+                    //轉模型 一次只處理分頁數量的資料
+
+                    resultData = item_order
+                    .AsExpandable()
+                    .Skip(start_record)
+                    .Take(defPageSize)
+                    .AsEnumerable()
+                    .Select(s => new ListDataModel()
                     {
                         ID = s.ID,
                         TITLE = s.TITLE,
@@ -61,7 +91,16 @@ namespace OutWeb.Controllers.api
                         UPD_USR_ID = s.UPD_USR_ID,
                         CONTENT = s.CONTENT,
                         SORT = (float)s.SORT
-                    });
+                    })
+                    .ToList();
+
+                    result.page.total = PageCount.TotalPage;
+                    result.page.page = PageCount.Page;
+                    result.page.records = PageCount.RecordCount;
+                    result.page.startcount = PageCount.StartCount;
+                    result.page.endcount = PageCount.EndCount;
+                    result.page.field = q.field;
+                    result.page.sort = q.sort;
                 }
                 catch (Exception ex)
                 {
@@ -69,7 +108,7 @@ namespace OutWeb.Controllers.api
                     msg = ex.Message;
                 }
             }
-
+            result.filter = q;
             result.data = resultData;
             result.success = isSuccess;
             result.msg = msg;
@@ -167,7 +206,6 @@ namespace OutWeb.Controllers.api
                     else
                         db.NEWS.Add(source);
 
-
                     await db.SaveChangesAsync();
                     url = "/_SysAdm/Edit?id=" + source.ID;
                 }
@@ -177,7 +215,6 @@ namespace OutWeb.Controllers.api
                     msg = ex.Message;
                     url = "/_SysAdm/Login";
                 }
-
             }
             result.url = url;
             result.msg = msg;
@@ -185,14 +222,35 @@ namespace OutWeb.Controllers.api
             return Ok(result);
         }
 
-        // PUT: api/News/5
-        public void Put(int id, [FromBody]string value)
+        [Route("Remove")]
+        [HttpPost]
+        public async Task<IHttpActionResult> RemoveData([FromBody]DataModel data)
         {
-        }
+            JsonResultBase result = new JsonResultBase();
+            bool isSuccess = true;
+            string msg = string.Empty;
+            string url = string.Empty;
+            using (var db = new LUCHANGDB())
+            {
+                try
+                {
+                    var source = await db.NEWS.FindAsync(data.ID);
+                    if (source != null)
+                    {
+                        db.Entry(source).State = EntityState.Deleted;
+                        await db.SaveChangesAsync();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    msg = ex.Message;
+                    isSuccess = false;
+                }
+            }
 
-        // DELETE: api/News/5
-        public void Delete(int id)
-        {
+            result.success = isSuccess;
+            result.msg = msg;
+            return Ok(result);
         }
     }
 }

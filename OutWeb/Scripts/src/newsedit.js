@@ -1,7 +1,6 @@
 ﻿import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { HttpProcess } from './httpunity';
-import { jquery } from 'jquery'
 import CKEditor from 'ckeditor4-react';
 
 export class NewsDataEdit extends Component {
