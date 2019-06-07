@@ -5,6 +5,7 @@ using OutWeb.Models.api;
 using OutWeb.Models.AuthModels;
 using OutWeb.Models.NewsModels;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -185,7 +186,7 @@ namespace OutWeb.Controllers
                         db.Entry(entity).State = EntityState.Modified;
                     }
                     await db.SaveChangesAsync();
-                    url = Url.Content("~/_SysAdm/List/1");
+                    url = Url.Content("~/_SysAdm/List");
                 }
                 catch (Exception ex)
                 {
@@ -197,10 +198,70 @@ namespace OutWeb.Controllers
             return Json(new JsonResultBase() { success = isSuccess, msg = msg, url = url });
         }
 
-        // GET: _SysAdm/ChangePW
+        public class ChangePwModel
+        {
+            [Required]
+            public string oPw { get; set; }
+            [Required]
+            public string nPw { get; set; }
+            [Required]
+            public string reNpw { get; set; }
+        }
+
+        [HttpGet]
         public ActionResult ChangePW()
         {
             return View();
+        }
+
+        // GET: _SysAdm/ChangePW
+        public async Task<JsonResult> ChangePW(ChangePwModel data)
+        {
+            bool isSuccess = true;
+            string msg = string.Empty;
+            string url = string.Empty;
+            JsonResultBase result = new JsonResultBase();
+            try
+            {
+                if (!ModelState.IsValid)
+                    throw new Exception("尚有未輸入的欄位。");
+
+                using (var db = new LUCHANGDB())
+                {
+                    var userId = GetUserID();
+                    var source = await db.USER.FindAsync(userId);
+                    if (source == null)
+                        throw new Exception("查無該使用者 請問是否刪除?");
+                    if (!data.oPw.Equals(source.USR_PWD))
+                        throw new Exception("舊密碼驗證失敗，請重新輸入!");
+                    if (!data.nPw.Equals(data.reNpw))
+                        throw new Exception("新密碼兩次輸入不同 驗證失敗，請重新輸入!");
+                    source.USR_PWD = data.reNpw;
+                    var entry = db.Entry<USER>(source);
+                    entry.State = EntityState.Modified;
+                    await db.SaveChangesAsync();
+                    msg = "密碼修改成功 請重新使用新密碼登入!";
+                    url = @"/_SysAdm/LogOut";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+                isSuccess = false;
+            }
+            result.url = url;
+            result.success = isSuccess;
+            result.msg = msg;
+            return Json(result);
+        }
+
+        private int GetUserID()
+        {
+            var id = Request.Cookies[WebSetup.Cookie_LoginId].Value;
+            if (string.IsNullOrEmpty(id))
+                throw new Exception("無法取得使用者登入資訊");
+            return Convert.ToInt32(id);
         }
 
         public ActionResult News()

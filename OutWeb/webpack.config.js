@@ -6,6 +6,8 @@ module.exports = {
         newslist: path.resolve(__dirname, 'Scripts/src/newslist.js'),
         newsedit: path.resolve(__dirname, 'Scripts/src/newsedit.js'),
         httpunity: path.resolve(__dirname, 'Scripts/src/httpunity.js'),
+        changepw: path.resolve(__dirname, 'Scripts/src/changepw.js'),
+        
         
     },
     output: {

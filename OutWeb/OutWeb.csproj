@@ -1430,6 +1430,7 @@
     <Content Include="Content\js\swiper.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\src\changepw.js" />
     <Content Include="Scripts\src\login.js" />
     <Content Include="Scripts\src\components.js" />
     <Content Include="Scripts\src\httpunity.js" />

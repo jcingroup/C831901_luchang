@@ -5,7 +5,8 @@
             GET_LIST: "/api/News/List",
             GET_DATA: "/api/News/Edit",
             SAVE_DATA: "/api/News/Save",
-            REMOVE_DATA: "/api/News/Remove"
+            REMOVE_DATA: "/api/News/Remove",
+            CHANGE_PW: "/_SysAdm/ChangePW"
         }
     }
 
