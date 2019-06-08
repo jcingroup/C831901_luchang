@@ -64,24 +64,22 @@ namespace OutWeb.Controllers.api
         /// <param name="sort">排序順序</param>
         /// <param name="result">回傳排序後資料</param>
         /// <returns>是否有進行排序</returns>
-        protected bool SortField<T>(IQueryable<T> item_where, string field, string sort, out IQueryable<T> result)
+        protected void SortField<T>(IQueryable<T> item_where, string field, string sort, out IQueryable<T> result)
         {
             if (field != null && sort != null && (sort.ToLower() == "asc" || sort.ToLower() == "desc"))
             {
                 IQueryable<T> resultOrderItems = null;
 
                 if (sort.ToLower() == "asc")
-                    resultOrderItems = item_where.OrderBy(field);
+                    resultOrderItems = item_where.OrderBy(field + " , SORT  descending");
 
                 if (sort.ToLower() == "desc")
-                    resultOrderItems = item_where.OrderBy(field + " descending");
+                    resultOrderItems = item_where.OrderBy(field + " descending, SORT  descending");
                 result = resultOrderItems;
-                return true;
             }
             else
             {
-                result = item_where;
-                return false;
+                result = item_where.OrderBy("SORT descending"); 
             }
         }
     }

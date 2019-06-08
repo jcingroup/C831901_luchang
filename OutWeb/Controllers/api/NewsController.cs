@@ -66,8 +66,7 @@ namespace OutWeb.Controllers.api
                     var item_count = await item_where.CountAsync(); //取得此條件下總筆數
 
                     //進行排序 或點選欄位排序
-                    if (!SortField(item_where, q.field, q.sort, out IQueryable<NEWS> item_order))
-                        item_order = item_where.OrderByDescending(x => new { x.ID }); //沒有排序進行預設排序
+                    SortField(item_where, q.field, q.sort, out IQueryable<NEWS> item_order);
 
                     int start_record = PageCount.PageInfo(page, defPageSize, item_count); //計算分頁資訊，取得需跳至開始的那一筆。
 
