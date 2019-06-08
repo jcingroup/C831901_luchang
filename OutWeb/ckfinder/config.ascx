@@ -1,6 +1,5 @@
 <%@ Control Language="C#" EnableViewState="false" AutoEventWireup="false" Inherits="CKFinder.Settings.ConfigFile" %>
 <%@ Import Namespace="CKFinder.Settings" %>
-<%@ Import Namespace="OutWeb.Provider" %>
 
 <script runat="server">
 
