@@ -53,7 +53,7 @@ namespace OutWeb.Controllers.api
             int page = q.page == null ? 1 : (int)q.page;
             var predicate = PredicateBuilder.True<NEWS>();
 
-            predicate = predicate.And(x => !x.DISABLED && x.STATUS);
+            predicate = predicate.And(x => !x.DISABLED);
 
             if (!string.IsNullOrEmpty(q.qry))
             {
