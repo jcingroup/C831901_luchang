@@ -89,7 +89,7 @@ namespace OutWeb.Controllers.api
                     //進行排序 或點選欄位排序
                     SortField(item_where, q.field, q.sort, out IQueryable<NEWS> item_order);
 
-
+                    item_count = item_count <= 0 ? 1 : item_count;
                     int start_record = PageCount.PageInfo(page, item_count, item_count); //計算分頁資訊，取得需跳至開始的那一筆。
 
                     //轉模型 一次只處理分頁數量的資料
