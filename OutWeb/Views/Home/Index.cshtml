@@ -94,11 +94,13 @@
     <div class="flex-md-7 flex-lg-8 contents padding">
         <header class="title">專欄</header>
         @* 最多3則 *@
-        <article class="col-sm-6 col-lg-4 article" onclick="location.href='@Url.Content("~/Special/Details/1")'">
-            <h3>吐口水在坐墊上不行嗎</h3> @* 文字不限 *@
-            <p>有一則新聞是這樣的，某地院法官助理因為不滿鄰居小孩太吵，雙方協調不成後，竟每日趁無人之時在鄰居機車座墊上吐口水...</p> @* 文字最多抓60字 *@
+        <div id="list_view">
+        </div>
+        @*<article class="col-sm-6 col-lg-4 article" onclick="location.href='@Url.Content("~/Special/Details/1")'">
+            <h3>吐口水在坐墊上不行嗎</h3> 文字不限 
+            <p>有一則新聞是這樣的，某地院法官助理因為不滿鄰居小孩太吵，雙方協調不成後，竟每日趁無人之時在鄰居機車座墊上吐口水...</p> 文字最多抓60字 
             <a href="~/Special/Details/1" class="font-sm text-white more">READ MORE</a>
-        </article>
+        </article>*@
 
         @*
         <article class="col-sm-6 col-lg-4 article" onclick="location.href='@Url.Content("~/Special/Details/1")'">
@@ -113,3 +115,5 @@
         </article> *@
     </div>
 </section>
+<script src="~/Scripts/dist/homepage.js"></script>
+

@@ -1437,6 +1437,7 @@
     <Content Include="Scripts\src\httpunity.js" />
     <Content Include="Scripts\src\newsedit.js" />
     <Content Include="Scripts\src\newdetailsfront.js" />
+    <Content Include="Scripts\src\homepage.js" />
     <Content Include="Scripts\src\newslistfont.js" />
     <Content Include="Scripts\src\newslist.js" />
     <Content Include="Web.config" />

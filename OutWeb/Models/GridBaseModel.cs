@@ -24,5 +24,7 @@ namespace OutWeb.Models
         /// 狀態(上下架)
         /// </summary>
         public string disabled { get; set; }
+
+        public string mode { get; set; }
     }
 }

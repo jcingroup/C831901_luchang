@@ -49,7 +49,7 @@ namespace OutWeb.Controllers.api
         public async Task<IHttpActionResult> GetList([FromUri]GridBaseFilterModel q)
         {
             GridResultBaseModel result = new GridResultBaseModel();
-
+            bool isHomeFetch = q.mode.Equals("home") ? true : false;
             int page = q.page == null ? 1 : (int)q.page;
             var predicate = PredicateBuilder.True<NEWS>();
 
@@ -60,6 +60,12 @@ namespace OutWeb.Controllers.api
                 q.qry = q.qry.Trim();
                 predicate = predicate.And(x => x.TITLE.Contains(q.qry));
             }
+
+            if (isHomeFetch)
+            {
+                predicate = predicate.And(x => !x.DISABLED && x.STATUS);
+            }
+
             if (!string.IsNullOrEmpty(q.disabled) && !q.disabled.Equals("A"))
             {
                 bool filterDisabled = true;
@@ -90,6 +96,10 @@ namespace OutWeb.Controllers.api
                     SortField(item_where, q.field, q.sort, out IQueryable<NEWS> item_order);
 
                     item_count = item_count <= 0 ? 1 : item_count;
+
+                    if (isHomeFetch)
+                        item_count = 3;
+
                     int start_record = PageCount.PageInfo(page, item_count, item_count); //計算分頁資訊，取得需跳至開始的那一筆。
 
                     //轉模型 一次只處理分頁數量的資料
