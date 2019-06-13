@@ -130,7 +130,8 @@ export class Table extends Component {
                             <th><button type="button" onClick={(e) => this.conditionGetData(e)} id="DISABLED" sort-type={this.props.filter.field === "DISABLED" ? this.props.filter.sort : ""}
                                 class={`th-sort-toggle ${this.props.filter.field === "DISABLED" ? this.props.filter.sort : ''}`}>上架狀態</button></th>
                             <th><button type="button" onClick={(e) => this.conditionGetData(e)} id="STATUS" sort-type={this.props.filter.field === "STATUS" ? this.props.filter.sort : ""}
-                                class={`th-sort-toggle ${this.props.filter.field === "STATUS" ? this.props.filter.sort : ''}`}>顯示</button></th>
+                                class={`th-sort-toggle ${this.props.filter.field === "STATUS" ? this.props.filter.sort : ''}`}>顯示於前台</button></th>
+                            <th><button id="sortIndex" sort-type="" type="button" class="th-sort-toggle">排序</button></th>
                             <th class="text-left">修改時間</th>
                             <th class="item-edit">刪除</th>
                         </tr>
@@ -139,7 +140,7 @@ export class Table extends Component {
                         {
                             this.props.vm.map((item, i) => {
                                 let disabledDesc = item.DISABLED ? '下架' : '上架';
-                                let statusDesc = item.STATUS ? '顯示' : '隱藏';
+                                let statusDesc = item.STATUS ? <button class="hover-success oi" title="顯示" data-glyph="check" type="button"></button> : '';
 
                                 return (
                                     <tr key={'row-' + i}>
@@ -149,9 +150,11 @@ export class Table extends Component {
                                         <td>{item.BUD_DT_STR}</td>
                                         <td class="text-left">{item.TITLE}</td>
                                         <td><span class="label-success" class={`label-${item.DISABLED ? 'danger' : 'success'}`}>{disabledDesc}</span></td>
+                                        
                                         <td>{statusDesc}</td>
+                                        <th>0</th>
                                         <td class="text-left">{item.UPD_DT_STR}</td>
-                                        <td><button class="hover-danger oi" title="刪除" type="button" data-glyph="trash" onClick={() => this.removeData(item.ID)}>刪除</button></td>
+                                        <td><button class="hover-danger oi" title="刪除" type="button" data-glyph="trash" onClick={() => this.removeData(item.ID)}></button></td>
                                     </tr>
                                 )
                             })
