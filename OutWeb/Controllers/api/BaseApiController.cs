@@ -79,7 +79,7 @@ namespace OutWeb.Controllers.api
             }
             else
             {
-                result = item_where.OrderBy("SORT descending"); 
+                result = item_where.OrderBy("BUD_DT descending"); 
             }
         }
     }
