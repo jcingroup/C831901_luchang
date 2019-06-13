@@ -53,27 +53,29 @@ class addGrid extends React.Component<addProps, any>{
     constructor(props) {
         super(props);
         this.chgFldVal = this.chgFldVal.bind(this);
-        //this.chgTotal = this.chgTotal.bind(this);
         this.state = {};
     }
 
     chgFldVal(addName: string, e: React.SyntheticEvent<EventTarget>) {
         let input: HTMLInputElement = e.target as HTMLInputElement;
-        let valueTotal = 0;
-        store.dispatch<any>(AddCallGrid(addName, input.value, valueTotal));
+        store.dispatch<any>(AddCallGrid(addName, input.value));
     }
-
-    //chgTotal() {
-    //    let { field } = this.props;
-    //    store.dispatch<any>(OutputTotal(field, field.news_numberX, field.news_numberY));
-    //}
 
     render() {
 
         let out_html: JSX.Element = null;
         let pp = this.props;
         let { field } = pp;
-        let total = this.chgFldVal.bind(this, 'total');
+
+        let total = 0;
+
+        if (pp.field.news_numberX && !pp.field.news_numberY) {
+            total = Number(pp.field.news_numberX);
+        } else if(!pp.field.news_numberX && pp.field.news_numberY) {
+            total = Number(pp.field.news_numberY);
+        } else if (pp.field.news_numberX && pp.field.news_numberY) {
+            total = Number(pp.field.news_numberX) + Number(pp.field.news_numberY);
+        }
 
         let show = pp.edit_type == IEditType.none ? 'block' : 'none';
         out_html = <div style={{ display: show }}>

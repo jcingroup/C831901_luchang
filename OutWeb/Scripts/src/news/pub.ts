@@ -112,26 +112,14 @@ export async function ACCallGrid(page: number, field: string, sort: string, quer
         }
 }
 
-export async function AddCallGrid(field, value, valueTotal) {
-    console.log(valueTotal);
-    valueTotal = value;
+export async function AddCallGrid(field, value) {
     return {
         type: ac.chgFdlVal,
         field,
-        value,
-        valueTotal
+        value
     }
 }
 
-//export async function  OutputTotal(field, valueX, valueY) {
-
-//    return {
-//        type: ac.chgTotal,
-//        field,
-//        valueX,
-//        valueY
-//    }
-//}
 
 export async function ACCallLoad(p) {
     mask_show(gb_Lang.mk_loading);
@@ -445,7 +433,7 @@ const changeValue = (state = { news_numberX: 0, news_numberY: 0 }, action) => {
     let struct = {};
     let n_state = {};
 
-    console.log('action.type', action.type);
+
     switch (action.type) {
         case AddCallGrid:
             struct = {
@@ -453,17 +441,7 @@ const changeValue = (state = { news_numberX: 0, news_numberY: 0 }, action) => {
             };
 
             n_state = update(state, struct);
-
             return n_state;
-        //case OutputTotal:
-
-        //    struct = {
-        //        $set: Number(action.valueX) + Number(action.valueY)
-        //    };
-
-        //    n_state = update(state, struct);
-
-        //    return n_state;
         default:
             return state
     }
