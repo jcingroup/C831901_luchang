@@ -130,7 +130,7 @@ export class Table extends Component {
                             <th><button type="button" onClick={(e) => this.conditionGetData(e)} id="DISABLED" sort-type={this.props.filter.field === "DISABLED" ? this.props.filter.sort : ""}
                                 class={`th-sort-toggle ${this.props.filter.field === "DISABLED" ? this.props.filter.sort : ''}`}>上架狀態</button></th>
                             <th><button type="button" onClick={(e) => this.conditionGetData(e)} id="STATUS" sort-type={this.props.filter.field === "STATUS" ? this.props.filter.sort : ""}
-                                class={`th-sort-toggle ${this.props.filter.field === "STATUS" ? this.props.filter.sort : ''}`}>顯示於前台</button></th>
+                                class={`th-sort-toggle ${this.props.filter.field === "STATUS" ? this.props.filter.sort : ''}`}>顯示於首頁</button></th>
 
                             <th><button type="button" onClick={(e) => this.conditionGetData(e)} id="SORT" sort-type={this.props.filter.field === "SORT" ? this.props.filter.sort : ""}
                                 class={`th-sort-toggle ${this.props.filter.field === "SORT" ? this.props.filter.sort : ''}`}>排序</button></th>

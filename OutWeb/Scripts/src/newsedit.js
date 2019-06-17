@@ -224,7 +224,7 @@ export class NewsDataEdit extends Component {
                             <aside class="panel-warning mb-s">
                                 <strong>編輯器注意事項:</strong>
                                 <ol class="pl-l font-tiny my-s">
-                                    <li>從 WORD 複製文字時，請使用下方的<img src="~/Content/images/_SysAdm/icon-word.jpg" /> 圖示來貼上 WORD 文字，避免跑版</li>
+                                    <li>從 WORD 複製文字時，請使用下方的<img src="/Content/images/_SysAdm/icon-word.jpg" /> 圖示來貼上 WORD 文字，避免跑版</li>
                                     <li>編輯器上傳圖片或新增表格等時，請勿設定<u>寬度及高度</u>(將數字刪除) ，以免行動裝置顯示時會跑版。</li>
                                     <li>檔案尺寸寬度超過 1600 或 高度超過1200 的圖片會被壓縮(PNG透明背景會變成不透明)</li>
                                 </ol>
