@@ -12,7 +12,7 @@ import { AddMasterMenu } from '../inc/addMaster';
 import OrderButton from '../../comm/OrderButton';
 import FileUpBtn from '../../comm/com-fileupload';
 import { PWButton, SelectText, AreaText, InputText, InputNum, RadioText, CheckText, PageFooter } from '../../comm/components';
-import { ACCallRemove, ACInsertModel, ACCallEdit, ACQueryValue, ACInputValue, ACCallLoad, ACCallPage, ACSubmit, ACCancel, ACReturnGridView, store, ACSetToPage, ACCallGrid } from './pub';
+import { ACCallRemove, ACInsertModel, ACCallEdit, ACQueryValue, ACInputValue, ACCallLoad, ACCallPage, ACSubmit, ACCancel, ACReturnGridView, store, ACSetToPage, ACCallGrid, AddCallGrid } from './pub';
 import { getMenuName, stdDate, tim } from '../../comm/comm-func';
 import loc from './local';
 
@@ -32,12 +32,68 @@ class TopNode extends React.Component<TopNodeProps, any>{
 
     render() {
 
-        console.log('menu_data', this.props.menu_data, "menu_click_id", this.props.menu_to_right);
+        //console.log('menu_data', this.props.menu_data, "menu_click_id", this.props.menu_to_right);
 
         return <div>
+            <AddView />
             <GridView />
             <EditView />
         </div>;
+    }
+}
+
+
+interface addProps {
+    edit_type?: IEditType,
+    field?: server.News,
+}
+
+class addGrid extends React.Component<addProps, any>{
+
+    constructor(props) {
+        super(props);
+        this.chgFldVal = this.chgFldVal.bind(this);
+        this.state = {};
+    }
+
+    chgFldVal(addName: string, e: React.SyntheticEvent<EventTarget>) {
+        let input: HTMLInputElement = e.target as HTMLInputElement;
+        store.dispatch<any>(AddCallGrid(addName, input.value));
+    }
+
+    render() {
+
+        let out_html: JSX.Element = null;
+        let pp = this.props;
+        let { field } = pp;
+
+        let total = 0;
+
+        if (pp.field.news_numberX && !pp.field.news_numberY) {
+            total = Number(pp.field.news_numberX);
+        } else if(!pp.field.news_numberX && pp.field.news_numberY) {
+            total = Number(pp.field.news_numberY);
+        } else if (pp.field.news_numberX && pp.field.news_numberY) {
+            total = Number(pp.field.news_numberX) + Number(pp.field.news_numberY);
+        }
+
+        let show = pp.edit_type == IEditType.none ? 'block' : 'none';
+        out_html = <div style={{ display: show }}>
+            <input
+                type="number"
+                onChange={this.chgFldVal.bind(this, 'news_numberX')}
+                value={field.news_numberX}
+            /> 
+            +
+            <input
+                type="number"
+                onChange={this.chgFldVal.bind(this, 'news_numberY')}
+                value={field.news_numberY}
+            />
+            = {total}
+        </div>;
+
+        return out_html;
     }
 }
 
@@ -90,7 +146,6 @@ class Grid extends React.Component<GridProps, any>{
     keep_sort;
 
     ChgQryVal(name, value: any, e: React.SyntheticEvent<EventTarget>) {
-
         let { search } = this.props;
         store.dispatch(ACQueryValue(name, value));
         let { field, sort } = this.props.page_grid;
@@ -151,40 +206,53 @@ class Grid extends React.Component<GridProps, any>{
         let show = pp.edit_type == IEditType.none ? 'block' : 'none';
 
         out_html = <div style={{ display: show }}>
-            <h3 className="title">{this.props.menu_name}</h3>
-            <div className="alert-warning mb-16">
-                <strong>前台排序:</strong>數字愈大愈前面
+            <header className="title">
+                <h2>專欄管理</h2>
+                <ul className="breadcrumb">
+                    <li>HOME</li>
+                    <li>專欄管理</li>
+                </ul>
+            </header>
+            <div className="panel-warning mb-m">
+                <strong>排序：</strong>無值或數字相同時以新增時間愈近愈前面，若給值時則數字愈大愈前面。
             </div>
             <div className="topBtn-bar btn-group">
                 <PWButton className="btn success oi" dataGlyph="plus" onClick={this.clkAdd}>{gb_Lang.add}</PWButton>
             </div>
-            <header className="table-head form-inline">
-                <label>日期</label>
-
-                <label>前台顯示</label>
+            <header className="table-head">
+                <label className="label">狀態</label>
                 <SelectText
+                    inputClassName="form-element"
                     onChange={this.ChgQryVal.bind(this, 'state')}
-                    options={[{ value: 'A', label: '顯示' }, { value: 'S', label: '隱藏' }]}
+                    options={[{ value: 'A', label: '上架' }, { value: 'S', label: '下架' }]}
                     is_blank={true}
                     value={pp.search.state}
                 />
 
                 <InputText
+                    inputClassName="form-element"
                     onChange={this.ChgQryVal.bind(this, 'keyword')}
                     value={pp.search.keyword}
                     placeholder="請輸入關鍵字"
+
                 />
             </header>
             <table className="table-list table-hover table-striped">
                 <colgroup>
-                    <col span={3} />
-                    <col style={{ width: '16%' }} />
-                    <col span={2} style={{ width: '14%' }} />
+                    <col span={2} />
+                    <col style={{ width: '40%' }} />
+                    <col span={2} style={{ width: '140px' }} />
                 </colgroup>
                 <thead>
                     <tr>
-                        <th className="item-edit">{gb_Lang.delete}</th>
                         <th className="item-edit">{gb_Lang.modify}</th>
+                        <th>
+                            <OrderButton title={res.grid.publish_date}
+                                field={'day'}
+                                sort={pp.page_grid.sort}
+                                now_field={pp.page_grid.field}
+                                setSort={this.CallGridSort} />
+                        </th>
                         <th className="text-left">
                             <OrderButton title={res.grid.title}
                                 field={'news_title'}
@@ -193,8 +261,8 @@ class Grid extends React.Component<GridProps, any>{
                                 setSort={this.CallGridSort} />
                         </th>
                         <th>
-                            <OrderButton title={res.grid.publish_date}
-                                field={'day'}
+                            <OrderButton title={res.grid.state}
+                                field={'state'}
                                 sort={pp.page_grid.sort}
                                 now_field={pp.page_grid.field}
                                 setSort={this.CallGridSort} />
@@ -207,30 +275,32 @@ class Grid extends React.Component<GridProps, any>{
                                 setSort={this.CallGridSort} />
                         </th>
                         <th>
-                            <OrderButton title={res.grid.state}
-                                field={'state'}
+                            <OrderButton title={res.grid.publish_date}
+                                field={'day'}
                                 sort={pp.page_grid.sort}
                                 now_field={pp.page_grid.field}
                                 setSort={this.CallGridSort} />
                         </th>
+                        <th className="item-edit">{gb_Lang.delete}</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
                         row_data.map((item, i) => {
                             return <tr key={item.news_id}>
-                                <td className="item-edit"><PWButton className="hover-danger oi" title={gb_Lang.delete} dataGlyph="trash" onClick={this.callRemove.bind(this, item.news_id)}></PWButton></td>
                                 <td className="item-edit"><PWButton className="hover-success oi" title={gb_Lang.modify} dataGlyph="pencil" onClick={this.callEdit.bind(this, item.news_id)}></PWButton></td>
-                                <td className="text-left">{item.news_title}</td>
                                 <td>{stdDate(item.day)}</td>
-                                <td>{item.sort}</td>
+                                <td className="text-left">{item.news_title}</td>
                                 <td>{<GridState code={item.state} />}</td>
+                                <td>{item.sort}</td>
+                                <td>{stdDate(item.day)}</td>
+                                <td className="item-edit"><PWButton className="hover-danger oi" title={gb_Lang.delete} dataGlyph="trash" onClick={this.callRemove.bind(this, item.news_id)}></PWButton></td>
                             </tr>
                         })
                     }
                     {
                         row_empty.map((item, i) => { //不足列數補空列數
-                            return <tr key={'empty_row_' + i}><td colSpan={6}>&nbsp;</td></tr>;
+                            return <tr key={'empty_row_' + i}><td colSpan={7}>&nbsp;</td></tr>;
                         })
                     }
                 </tbody>
@@ -286,6 +356,7 @@ class Edit extends React.Component<EditProps, StateProps>{
         //}
     }
     chgFldVal(field: string, value: any, e: React.SyntheticEvent<EventTarget>) {
+        
         store.dispatch(ACInputValue(field, value));
     }
 
@@ -320,12 +391,12 @@ class Edit extends React.Component<EditProps, StateProps>{
             <form className="form-list" onSubmit={this.submit}>
                 <section className="row">
                     {/*左邊是資料*/}
-                    <div className="col-6">
-                        <dl className="field">
-                            <dt className="col-2">標題</dt>
-                            <dd className="col-10">
+                    <div>
+                        <dl className="row padding">
+                            <dt className="col-2 text-right label"><sup className="help" title="必填">*</sup>標題</dt>
+                            <dd className="col-8">
                                 <InputText
-                                    inputClassName="form-element"
+                                    inputClassName="form-element full"
                                     onChange={this.chgFldVal.bind(this, 'news_title')}
                                     value={field.news_title}
                                     required={true}
@@ -333,51 +404,57 @@ class Edit extends React.Component<EditProps, StateProps>{
                                 />
                             </dd>
                         </dl>
-                        <dl className="field">
-                            <dt className="col-2">發布日期</dt>
-                            <dd className="col-10">
-                                <DatePickText
-                                    inputClassName="form-element"
-                                    inputViewMode={InputViewMode.edit}
-                                    onChange={this.chgFldVal.bind(this, 'day')}
-                                    value={field.day}
+                        <dl className="row padding">
+                            <dt className="col-2 text-right label"><sup className="help" title="必填">*</sup>作者</dt>
+                            <dd className="col-4">
+                                <InputText
+                                    inputClassName="form-element full"
+                                    onChange={this.chgFldVal.bind(this, 'news_author')}
+                                    value={field.news_author}
+                                    required={true}
+                                    maxLength={64}
                                 />
                             </dd>
                         </dl>
-                        <dl className="field">
-                            <dt className="col-2">排序</dt>
-                            <dd className="col-10">
+                        <dl className="row padding">
+                            <dt className="col-2 text-right label">排序</dt>
+                            <dd className="col-8">
                                 <InputNum
-                                    inputClassName="form-element inline"
+                                    inputClassName="form-element"
                                     onChange={this.chgFldVal.bind(this, 'sort')}
                                     value={field.sort}
                                     required={true}
                                 />
-                                <small>數字愈大愈前面</small>
+                                <small className="text-danger">* 無值或數字相同時以新增時間愈近愈前面，若給值時則數字愈大愈前面。</small>
                             </dd>
                         </dl>
-                        <dl className="field">
-                            <dt className="col-2">顯示狀態</dt>
-                            <dd className="col-4">
-                                <RadioText
-                                    inputClassName="radio"
-                                    id={'state_0'}
-                                    value={'A'}
-                                    checked={field.state == 'A'}
-                                    inputViewMode={InputViewMode.edit}
-                                    onClick={this.chgFldVal.bind(this, 'state')}
-                                />
-                                <label htmlFor="state_0" />顯示
-
-                                <RadioText
-                                    inputClassName="radio"
-                                    id={'state_1'}
-                                    value={'S'}
-                                    checked={field.state == 'S'}
-                                    inputViewMode={InputViewMode.edit}
-                                    onClick={this.chgFldVal.bind(this, 'state')}
-                                />
-                                <label htmlFor="state_1" />隱藏
+                        <dl className="row padding">
+                            <dt className="col-2 text-right label">狀態</dt>
+                            <dd className="col-6">
+                                <label htmlFor="state_0" className="control-group">
+                                    <RadioText
+                                        inputClassName="radio"
+                                        id={'state_0'}
+                                        value={'A'}
+                                        checked={field.state == 'A'}
+                                        inputViewMode={InputViewMode.edit}
+                                        onClick={this.chgFldVal.bind(this, 'state')}
+                                    />
+                                    <i className="icon"></i>
+                                    上架
+                                </label>
+                                <label htmlFor="state_1" className="control-group">
+                                    <RadioText
+                                        inputClassName="radio"
+                                        id={'state_1'}
+                                        value={'S'}
+                                        checked={field.state == 'S'}
+                                        inputViewMode={InputViewMode.edit}
+                                        onClick={this.chgFldVal.bind(this, 'state')}
+                                    />
+                                    <i className="icon"></i>
+                                    下架
+                                </label>
                             </dd>
                         </dl>
                     </div>
@@ -439,6 +516,22 @@ const GridDispatch = (dispatch, ownProps) => {
     }, dispatch);
     return s;
 }
+
+const addGridToProps = (state, ownProps) => {
+
+    return {
+        edit_type: state.edit_type,
+        field: state.field
+    }
+}
+const addGridDispatch = (dispatch, ownProps) => {
+    let s = bindActionCreators({
+        AddCallGrid
+    }, dispatch);
+    return s;
+}
+let AddView = connect<{}, {}, {}>(addGridToProps, addGridDispatch)(addGrid)
+
 let GridView = connect<{}, {}, {}>(GridToProps, GridDispatch)(Grid)
 
 const EditToProps = (state, ownProps) => {
