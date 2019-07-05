@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+//
+// import
+// ------------------------------------------------------------
+@import "core/function"; // (置頂)
+
+@import "_client/setting"; // 覆蓋下方的變數
+@import "core/variables";
+@import "core/mixins";
+
+// output
+@import "basic/base";
+@import "basic/util";
+
+// plugin
+@import "_client/modules";
+
+
+// output
+// ------------------------------------------------------------
+body {
+    padding: 10px 15px; height: auto;
+    text-align: left;
+}
+
+img {
+    max-width: 100%;
+}
+
+ul, ol {
+    @extend .ml-l;
+}

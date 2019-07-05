@@ -24,15 +24,15 @@ class LoginFormInput extends Component {
             return;
         }
 
-        // the user-entered captcha code value to be validated at the backend side 
+        // the user-entered captcha code value to be validated at the backend side
         let userEnteredCaptchaCode = this.captcha.getUserEnteredCaptchaCode();
 
-        if (userEnteredCaptchaCode == "" || userEnteredCaptchaCode.toString().trim() == "") {
+        if (userEnteredCaptchaCode === "" || userEnteredCaptchaCode.toString().trim() === "") {
             alert("請輸入驗證碼");
             return;
         }
 
-        // the id of a captcha instance that the user tried to solve 
+        // the id of a captcha instance that the user tried to solve
         let captchaId = this.captcha.getCaptchaId();
 
         let postData = Object.assign({}, state, {
@@ -47,7 +47,7 @@ class LoginFormInput extends Component {
 
         promise.then((jsonData) => {
             if (jsonData.success) {
-                if (jsonData.url != '') {
+                if (jsonData.url !== '') {
                     window.location.href = jsonData.url;
                 }
                 else {
@@ -104,27 +104,27 @@ class LoginFormInput extends Component {
         let pPw = state.pwd;
 
         return (
-            <div>
+            <form class="wrap login form-stacked">
                 <h2 class="title text-left text-primary">System Login</h2>
                 <main class="text-left">
 
                     <label class="label">帳號 Username</label>
-                    <input class="form-element" name="id" type="text" required value={pId} onChange={e => this.onInputChange(e)} />
+                    <input class="form-element" name="id" type="text" required value={pId} onChange={e => this.onInputChange(e)} tabindex="1" />
 
                     <label class="label">密碼 Password</label>
-                    <input class="form-element" name="pwd" type="password" required value={pPw} onChange={e => this.onInputChange(e)} />
+                    <input class="form-element" name="pwd" type="password" required value={pPw} onChange={e => this.onInputChange(e)} tabindex="2" />
 
                     <Captcha captchaStyleName="AncientMosaic"
                         ref={(captcha) => { this.captcha = captcha }} />
                     <label class="label">驗證碼 Code</label>
-                    <input class="form-element" id="ca" type="text" required />
+                    <input class="form-element" id="ca" type="text" required tabindex="3"/>
 
                 </main>
 
-                <footer class="action-bar" id="footer">
-                    <button type="button" class="btn" onClick={(e) => this.captchaOnSubmitHandler(e, state)}>登入 LOGIN</button>
+                <footer class="action-bar">
+                    <button type="button" class="btn" onClick={(e) => this.captchaOnSubmitHandler(e, state)} tabindex="4">登入 LOGIN</button>
                 </footer>
-            </div>
+            </form>
         );
     }
 }

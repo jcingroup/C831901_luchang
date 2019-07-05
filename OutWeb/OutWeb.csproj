@@ -1403,6 +1403,7 @@
     <Content Include="ckfinder\skins\v1\uipanel.css" />
     <Content Include="ckfinder\translations.txt" />
     <Content Include="Content\css\admin.css" />
+    <Content Include="Content\css\editor.css" />
     <Content Include="Content\css\grid.css" />
     <Content Include="Content\css\index.css" />
     <Content Include="Content\css\login.css" />
@@ -1550,6 +1551,7 @@
     <Content Include="ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="ckfinder\userfiles\.htaccess" />
+    <Content Include="Content\sass\editor.scss" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

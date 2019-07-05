@@ -50,7 +50,7 @@
                 'pragma': 'no-cache',
                 'cache-control': 'no-cache'
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data, true)
         };
 
         return fetch(url, setting)
