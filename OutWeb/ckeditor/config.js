@@ -5,7 +5,7 @@
 var d = new Date();
 var n = d.getTime();
 CKEDITOR.editorConfig = function (config) {
-    config.skin = 'bootstrapck';
+    //config.skin = 'bootstrapck';
     config.height = 300;
     config.language = 'zh';
     config.extraPlugins = 'youtube,emojione';
