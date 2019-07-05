@@ -1,9 +1,7 @@
 ﻿import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { HttpProcess } from './httpunity';
-import { Aside, Nav, Header, Table, Footer } from './components'
-
-
+import { Aside, Nav, Header, Table, Footer } from './components';
 class NewsListData extends Component {
     constructor(props) {
         super(props);
@@ -12,7 +10,7 @@ class NewsListData extends Component {
             field: '',
             sort: '',
             qry: '',
-            disabled:''
+            disabled: ''
         };
         this.state = {
             listData: null,
@@ -87,7 +85,7 @@ class NewsListData extends Component {
         let postData = this.state.filter;
         Object.keys(postData).forEach(function (key) {
             let v = postData[key];
-            if (v == null) {
+            if (v === null) {
                 postData[key] = '';
             }
         });
@@ -119,28 +117,11 @@ class NewsListData extends Component {
             <div>
                 <Aside />
                 <Nav />
-                <Header filter={this.state.filter} conditionGetData={() => this.conditionGetData()}/>
+                <Header filter={this.state.filter} conditionGetData={() => this.conditionGetData()} />
                 <Table vm={this.state.listData} filter={this.state.filter} conditionGetData={() => this.conditionGetData()} renderEditPage={(id) => this.renderEditPage(id)} removeData={(id) => this.removeData(id)} />
                 <Footer page={this.state.page} filter={this.state.filter} conditionGetData={() => this.conditionGetData()} />
             </div>
         );
-        // if (this.state.details) {
-        //     alert(0);
-        //     // console.log(this.state.details);
-        //     // return <NewsDataEdit />
-        //     // ReactDOM.render(<NewsDataEdit />, document.getElementById('page_content'));
-        // }
-        // else {
-        //     return (
-        //         <div>
-        //             <Aside />
-        //             <Nav />
-        //             <Header />
-        //             <Table vm={this.state.listData} renderEditPage={(id) => this.renderEditPage(id)} />
-        //             <Footer />
-        //         </div>
-        //     );
-        // }
 
     }
 }

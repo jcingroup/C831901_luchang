@@ -18,6 +18,9 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "babel-polyfill": "^6.26.0",
+    "whatwg-fetch": "3.0.0",
+    "es6-promise": "4.2.8",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-preset-env": "^1.7.0",

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { HttpProcess } from './httpunity';
 import { Captcha } from 'reactjs-captcha';
 import { captchaSettings } from 'reactjs-captcha';
+import 'babel-polyfill';
 
 class LoginFormInput extends Component {
     constructor(props) {

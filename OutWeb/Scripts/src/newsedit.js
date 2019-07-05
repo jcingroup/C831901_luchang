@@ -1,8 +1,18 @@
 ﻿import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { HttpProcess } from './httpunity';
+import 'babel-polyfill';
 // import CKEditor from 'ckeditor4-react';
-
+//查詢QueryString
+export function queryString(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
 export class NewsDataEdit extends Component {
     constructor(props) {
         super(props);
@@ -21,10 +31,9 @@ export class NewsDataEdit extends Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.onEditorChange = this.onEditorChange.bind(this);
         this.cancelHandleClick = this.cancelHandleClick.bind(this);
-        var url = new URL(document.URL);
-        var id = url.searchParams.get("id");
 
-        if (id != null) {
+        let id = queryString('id', null);
+        if (id !== null) {
             this.renderEditPage(id);
         }
     }
@@ -64,7 +73,7 @@ export class NewsDataEdit extends Component {
                 validSuccess = false;
                 return;
             }
-            else if (isRequired && data[item].trim() == '') {
+            else if (isRequired && data[item].trim() === '') {
                 alert(`${fieldCht}為必填!`);
             }
         });
@@ -137,7 +146,7 @@ export class NewsDataEdit extends Component {
 
         promise.then((jsonData) => {
             if (jsonData.success) {
-                if (jsonData.url != '') {
+                if (jsonData.url !== '') {
                     window.location.href = jsonData.url;
                 }
 
@@ -214,7 +223,7 @@ export class NewsDataEdit extends Component {
             </dt>
                             <dd class="col-6">
                                 <label class="switch">
-                                    <input type="checkbox" name="STATUS" checked={STATUS == true} onChange={(e) => this.handleInputChange(e)} />
+                                    <input type="checkbox" name="STATUS" checked={STATUS === true} onChange={(e) => this.handleInputChange(e)} />
                                     <div class="slider round"></div>
                                 </label>
                             </dd>
@@ -243,7 +252,7 @@ export class NewsDataEdit extends Component {
                 </div>
             );
         }
-        return (<div></div>)
+        return (<div></div>);
 
     }
 }
