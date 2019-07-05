@@ -68,25 +68,23 @@ export class NewsListDataFront extends Component {
         let data = this.state.listData;
         if (data) {
             return (
-                <div>
+                <section class="article-list wrap padding mt-xl">
                     {
                         data.map((item, i) => {
                             return (
-                                <section class="article-list wrap padding mt-xl">
-                                    <article class="col-md-6 article">
-                                        <h3 class="header">{item.TITLE}</h3>
-                                        <h4 class="author">{item.AUTHOR} <small class="date">{item.UPD_DT_STR} update</small></h4>
-                                        <p class="font-lg">{item.CONTENT}</p> 
-                                       <a href="javasciprt:void(0)" onClick={(e)=>this.renderEditPage(e,item.ID)} class="font-sm more">READ MORE</a>
-                                    </article>
-                                </section>
+                                <article class="col-md-6 article" onClick={(e) => this.renderEditPage(e, item.ID)}>
+                                    <h3 class="header">{item.TITLE}</h3>
+                                    <h4 class="author">{item.AUTHOR} <small class="date">{item.UPD_DT_STR} update</small></h4>
+                                    <p class="font-lg">{item.CONTENT}</p> 
+                                    <a href="javasciprt:void(0)" onClick={(e)=>this.renderEditPage(e,item.ID)} class="font-sm more">READ MORE</a>
+                                </article>
                             )
                         })
                     }
-                </div>
+                </section>
             )
         }
-        return <div></div>;
+        return null;
     }
 }
 ReactDOM.render(<NewsListDataFront />, document.getElementById('list_view'));
