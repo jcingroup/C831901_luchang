@@ -1559,14 +1559,12 @@
     <Content Include="Views\Home\Profession.cshtml" />
     <Content Include="Views\Special\List.cshtml" />
     <Content Include="Views\Special\Details.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\Manage\Login.cshtml" />
     <Content Include="Views\Shared\_MLayout.cshtml" />
     <Content Include="Views\Manage\List.cshtml" />
     <Content Include="Views\Manage\Edit.cshtml" />
     <Content Include="Views\Manage\ChangePW.cshtml" />
     <None Include="Properties\PublishProfiles\Server.pubxml" />
-    <Content Include="Views\Manage\News.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LUCHANGEntities\LUCHANGEntities.csproj">
