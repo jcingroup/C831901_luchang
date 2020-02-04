@@ -154,16 +154,14 @@ $page:          page;
         @extend .mb-30, .mt-10;
     }
     li {
-        line-height: 1.7;
+        @extend .mb-10;
     }
 }
 
 // == 專欄
-.article-list {
-
-}
 .article {
     @extend .pb-l, .mb-l;
+    transition: .35s;
 
     &:not(:last-child) {
         border-bottom: 2px solid color(muted);
@@ -172,6 +170,10 @@ $page:          page;
         &:nth-last-child(2) {
             border-bottom: 0;
         }
+    }
+
+    &:hover {
+        cursor: pointer;
     }
 
     p {

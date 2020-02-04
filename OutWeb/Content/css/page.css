@@ -794,7 +794,7 @@ legend {
   margin-right: 0.625rem;
 }
 
-.mb-10 {
+.mb-10, .file-list li {
   margin-bottom: 0.625rem;
 }
 
@@ -2014,10 +2014,9 @@ html, body {
     margin-right: 20px;
   }
 }
-.file-list li {
-  line-height: 1.7;
+.article {
+  transition: 0.35s;
 }
-
 .article:not(:last-child) {
   border-bottom: 2px solid #F2F2F2;
 }
@@ -2025,6 +2024,9 @@ html, body {
   .article:nth-last-child(2) {
     border-bottom: 0;
   }
+}
+.article:hover {
+  cursor: pointer;
 }
 .article p {
   line-height: 1.7;
@@ -2063,5 +2065,3 @@ html, body {
 .editor {
   line-height: 1.7;
 }
-
-/*# sourceMappingURL=page.css.map */
